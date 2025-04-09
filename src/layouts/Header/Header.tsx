@@ -6,7 +6,7 @@ import UserInfoButtons from '@/components/UserInfoButtons/UserInfoButtons';
 const Header: React.FC = () => {
   return (
     <>
-      <div className="flex flex-col gap-1 items-center h-55 w-280">
+      <div className="flex flex-col gap-1 h-55 w-280">
         <AuthButtons />
         <div className="flex w-full items-center justify-between">
           <SearchBar />

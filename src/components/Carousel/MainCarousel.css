@@ -1,0 +1,37 @@
+.custom-carousel,
+.custom-carousel .slick-slider,
+.custom-carousel .slick-list,
+.custom-carousel .slick-track,
+.custom-carousel .slick-slide,
+.custom-carousel .slick-slide > div {
+  border-radius: 30px !important;
+  overflow: hidden;
+}
+
+.custom-carousel .slick-slide {
+  transition: border-radius 0s !important;
+}
+
+.custom-carousel,
+.custom-carousel *,
+.custom-carousel img {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.custom-carousel:focus,
+.custom-carousel *:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.custom-carousel .slick-dots li button {
+  background: #1890ff;
+}
+
+.custom-carousel .slick-dots li.slick-active button {
+  background: #096dd9;
+}
