@@ -1,7 +1,7 @@
 import { MenuProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-export const useNavigationItems = () => {
+export const useCategoryItems = () => {
   const navigate = useNavigate();
 
   const domesticItems: MenuProps['items'] = [

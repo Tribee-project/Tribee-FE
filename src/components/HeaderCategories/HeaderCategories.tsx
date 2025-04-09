@@ -2,10 +2,10 @@ import { Button, Space } from 'antd';
 import { Dropdown } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import { useNavigationItems } from '@/hooks/useCategoryItems';
+import { useCategoryItems } from '@/hooks/useCategoryItems';
 
 const HeaderCategories: React.FC = () => {
-  const { domesticItems, internationalItems } = useNavigationItems();
+  const { domesticItems, internationalItems } = useCategoryItems();
   const navigate = useNavigate();
 
   return (
