@@ -1,0 +1,24 @@
+.embla {
+  overflow: hidden;
+  height: 450px;
+  justify-self: center;
+  margin-top: 20px;
+}
+.embla__container {
+  display: flex;
+  height: 100%;
+}
+.embla__slide {
+  flex: 0 0 460px;
+  margin-inline-end: 10px;
+  margin-left: 20px;
+}
+
+.embla__slide img {
+  height: 450px;
+  min-width: 400px;
+  max-width: 400px;
+  width: auto;
+  object-fit: cover;
+  border-radius: 30px;
+}

@@ -1,4 +1,4 @@
-import MainCarousel from '@/components/Carousel/MainCarousel';
+import Carousel from '@/components/Carousel/Carousel';
 import Header from '@/layouts/Header/Header';
 
 const MainPage: React.FC = () => {
@@ -7,7 +7,7 @@ const MainPage: React.FC = () => {
       <div className="flex flex-col gap-1 items-center">
         <Header />
       </div>
-      <MainCarousel />
+      <Carousel />
     </div>
   );
 };
