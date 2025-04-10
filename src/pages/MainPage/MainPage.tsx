@@ -1,4 +1,5 @@
 import Carousel from '@/components/Carousel/Carousel';
+import Footer from '@/layouts/Footer/Footer';
 import Header from '@/layouts/Header/Header';
 
 const MainPage: React.FC = () => {
@@ -8,6 +9,7 @@ const MainPage: React.FC = () => {
         <Header />
       </div>
       <Carousel />
+      <Footer />
     </div>
   );
 };
