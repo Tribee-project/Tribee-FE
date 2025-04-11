@@ -7,7 +7,6 @@ const Carousel: React.FC = () => {
   const [emblaRef] = useEmblaCarousel({ loop: true }, [
     Autoplay({
       stopOnInteraction: false,
-      stopOnMouseEnter: true,
       delay: 3000,
     }),
   ]);

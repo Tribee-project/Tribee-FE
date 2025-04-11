@@ -1,21 +1,23 @@
 .embla {
   overflow: hidden;
+  width: 100%;
 }
 .embla__container {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 23%; /* Each slide covers 80% of the viewport */
-  height: 450px;
+  display: flex;
+  gap: 20px;
+  padding: 0 10px;
 }
 .embla__slide {
-  flex: 0 0 100%;
+  flex: 0 0 auto;
+  min-width: 400px;
+  max-width: 400px;
+  padding: 0 5px;
 }
 
 .embla__slide img {
   margin-top: 15px;
   height: 420px;
-  min-width: 400px;
-  max-width: 400px;
+  width: 100%;
   object-fit: cover;
   border-radius: 20px;
 }
