@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-const AuthButtons: React.FC = () => {
+const HeaderAuthButtons: React.FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -21,4 +21,4 @@ const AuthButtons: React.FC = () => {
   );
 };
 
-export default AuthButtons;
+export default HeaderAuthButtons;

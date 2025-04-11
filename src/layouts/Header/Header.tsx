@@ -1,4 +1,4 @@
-import AuthButtons from '@/components/AuthButtons/AuthButtons';
+import HeaderAuthButtons from '@/components/HeaderAuthButtons/HeaderAuthButtons';
 import HeaderCategories from '@/components/HeaderCategories/HeaderCategories';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import UserInfoButtons from '@/components/UserInfoButtons/UserInfoButtons';
@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   return (
     <>
       <div className="flex flex-col gap-1 h-55 w-280">
-        <AuthButtons />
+        <HeaderAuthButtons />
         <div className="flex w-full items-center justify-between">
           <SearchBar />
           <UserInfoButtons />
