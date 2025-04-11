@@ -8,7 +8,7 @@ const SalesDeadline: React.FC = () => {
     <div className="flex flex-col gap-1 w-[70%] min-w-[1400px] mx-auto my-30">
       <div className="flex items-center gap-2 mb-5">
         <ClockCircleOutlined className="text-4xl" />
-        <span className="text-2xl font-bold mb-0.5">마감 임박 !</span>
+        <span className="text-2xl mb-0.5">마감 임박 !</span>
       </div>
       <div className="flex gap-4 overflow-x-auto pb-3">
         <Card
