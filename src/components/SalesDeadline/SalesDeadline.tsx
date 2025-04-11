@@ -37,10 +37,13 @@ const SalesDeadline: React.FC = () => {
             />
           }
         >
-          <Meta
-            title="후쿠오카 3박 4일"
-            description="2025.04.15 ~ 2025.04.19"
-          />
+          <div className="flex flex-col h-full">
+            <Meta
+              title="후쿠오카 3박 4일"
+              description="2025.04.15 ~ 2025.04.19"
+            />
+            <div className="text-2xl font-bold self-end mt-15">990,000 원~</div>
+          </div>
         </Card>
         <Card
           className="w-full h-95 cursor-pointer"
@@ -51,7 +54,10 @@ const SalesDeadline: React.FC = () => {
             />
           }
         >
-          <Meta title="보홀 3박 5일" description="2025.04.15 ~ 2025.04.19" />
+          <div className="flex flex-col h-full">
+            <Meta title="보홀 3박 5일" description="2025.04.15 ~ 2025.04.19" />
+            <div className="text-2xl font-bold self-end mt-15">990,000 원~</div>
+          </div>
         </Card>
         <Card
           className="w-full h-95 cursor-pointer"
@@ -62,10 +68,13 @@ const SalesDeadline: React.FC = () => {
             />
           }
         >
-          <Meta
-            title="보라카이 3박 5일"
-            description="2025.04.15 ~ 2025.04.19"
-          />
+          <div className="flex flex-col h-full">
+            <Meta
+              title="보라카이 3박 5일"
+              description="2025.04.15 ~ 2025.04.19"
+            />
+            <div className="text-2xl font-bold self-end mt-15">990,000 원~</div>
+          </div>
         </Card>
       </div>
     </div>
