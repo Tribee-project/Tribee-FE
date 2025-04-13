@@ -2,29 +2,29 @@ import { GithubOutlined } from '@ant-design/icons';
 
 const Footer: React.FC = () => {
   return (
-    <div className="flex flex-col gap-1 items-center border-t-3 border-amber-300">
-      <div className="flex justify-between items-center h-40 text-gray-800 w-350 mx-auto">
+    <div className="flex flex-col items-center gap-1 border-t-3 border-amber-300">
+      <div className="mx-auto flex h-40 w-350 items-center justify-between text-gray-800">
         <div className="flex items-center justify-center gap-3">
           <GithubOutlined className="text-4xl" />
           <div className="flex flex-col">
             <a
               href="https://github.com/stoneKong0810"
               target="_blank"
-              className="hover:text-shadow-lg whitespace-nowrap"
+              className="whitespace-nowrap hover:text-shadow-lg"
             >
               Organization : https://github.com/stoneKong0810
             </a>
             <a
               href="https://github.com/stoneKong0810"
               target="_blank"
-              className="hover:text-shadow-lg whitespace-nowrap"
+              className="whitespace-nowrap hover:text-shadow-lg"
             >
               Front-end Developer Github : https://github.com/stoneKong0810
             </a>
             <a
               href="https://github.com/stoneKong0810"
               target="_blank"
-              className="hover:text-shadow-lg whitespace-nowrap"
+              className="whitespace-nowrap hover:text-shadow-lg"
             >
               Back-end Developer Github : https://github.com/stoneKong0810
             </a>

@@ -4,15 +4,15 @@ const HeaderAuthButtons: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center gap-3 text-xs text-gray-900 justify-end mt-3 w-full">
+    <div className="mt-3 flex w-full items-center justify-end gap-3 text-xs text-gray-900">
       <button
-        className="border-none p-0 cursor-pointer"
+        className="cursor-pointer border-none p-0"
         onClick={() => navigate('/login')}
       >
         로그인
       </button>
       <button
-        className="border-none p-0 cursor-pointer"
+        className="cursor-pointer border-none p-0"
         onClick={() => navigate('/signup/email')}
       >
         회원가입

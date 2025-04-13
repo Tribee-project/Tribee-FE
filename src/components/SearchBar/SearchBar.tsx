@@ -5,7 +5,7 @@ const SearchBar: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center w-full">
+    <div className="flex w-full items-center">
       <img
         src={'/src/assets/tribee.png'}
         alt="logo"
@@ -14,11 +14,11 @@ const SearchBar: React.FC = () => {
           navigate('/');
         }}
       />
-      <div className="flex justify-center gap-2 border-3 border-amber-300 rounded-full p-4 w-120 hover:border-amber-400">
+      <div className="flex w-120 justify-center gap-2 rounded-full border-3 border-amber-300 p-4 hover:border-amber-400">
         <input
           type="text"
           placeholder="✈️ 어디로 떠나볼까요?"
-          className="border-none outline-none w-[87%]"
+          className="w-[87%] border-none outline-none"
           maxLength={30}
         />
         <SearchOutlined style={{ color: '#FCD34D' }} className="text-2xl" />

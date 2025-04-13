@@ -9,7 +9,7 @@ const HeaderCategories: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Space direction="vertical" className="w-full items-center mt-7 gap-10">
+    <Space direction="vertical" className="mt-7 w-full items-center gap-10">
       <Space wrap>
         <Dropdown menu={{ items: domesticItems }} placement="bottom">
           <Button size="large" type="text">

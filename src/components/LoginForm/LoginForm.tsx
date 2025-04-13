@@ -3,11 +3,11 @@ import SocialLoginButtons from '../SocialLoginButtons/SocailLoginButtons';
 
 const LoginForm: React.FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center border-1 p-30 border-gray-300 rounded-4xl">
-      <img src={'/src/assets/Tribee.png'} alt="logo" className="w-50 mb-5" />
-      <form className="flex flex-col gap-2 mb-3">
-        <div className="border-3 border-amber-300 rounded-4xl p-2 w-90 flex justify-center mb-5">
-          <label className="flex flex-col w-[90%] gap-0.5">
+    <div className="flex flex-col items-center justify-center rounded-4xl border-1 border-gray-300 p-30">
+      <img src={'/src/assets/Tribee.png'} alt="logo" className="mb-5 w-50" />
+      <form className="mb-3 flex flex-col gap-2">
+        <div className="mb-5 flex w-90 justify-center rounded-4xl border-3 border-amber-300 p-2">
+          <label className="flex w-[90%] flex-col gap-0.5">
             <span className="text-[10px] text-gray-800">이메일</span>
             <input
               placeholder="tourpartner@tribee.com"
@@ -17,8 +17,8 @@ const LoginForm: React.FC = () => {
             />
           </label>
         </div>
-        <div className="border-3 border-amber-300 rounded-4xl p-2 w-90 flex justify-center mb-5">
-          <label className="flex flex-col w-[90%] gap-0.5">
+        <div className="mb-5 flex w-90 justify-center rounded-4xl border-3 border-amber-300 p-2">
+          <label className="flex w-[90%] flex-col gap-0.5">
             <span className="text-[10px] text-gray-800">비밀번호</span>
             <input
               placeholder="비밀번호를 입력해주세요"
@@ -29,7 +29,7 @@ const LoginForm: React.FC = () => {
           </label>
         </div>
         <button
-          className="bg-amber-300 text-gray-800 rounded-4xl p-2 w-70 h-11 self-center cursor-pointer hover:bg-amber-400 mt-5"
+          className="mt-5 h-11 w-70 cursor-pointer self-center rounded-4xl bg-amber-300 p-2 text-gray-800 hover:bg-amber-400"
           type="submit"
         >
           로그인

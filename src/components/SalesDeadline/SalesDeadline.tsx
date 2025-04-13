@@ -5,14 +5,14 @@ const { Meta } = Card;
 
 const SalesDeadline: React.FC = () => {
   return (
-    <div className="flex flex-col gap-1 w-[70%] min-w-[1400px] mx-auto my-30">
-      <div className="flex items-center gap-2 mb-5">
+    <div className="mx-auto my-30 flex w-[70%] min-w-[1400px] flex-col gap-1">
+      <div className="mb-5 flex items-center gap-2">
         <ClockCircleOutlined className="text-4xl" />
-        <span className="text-2xl mb-0.5">마감 임박 !</span>
+        <span className="mb-0.5 text-2xl">마감 임박 !</span>
       </div>
       <div className="flex gap-4 overflow-x-auto pb-3">
         <Card
-          className="w-full h-95 cursor-pointer flex flex-col"
+          className="flex h-95 w-full cursor-pointer flex-col"
           cover={
             <img
               alt="example"
@@ -20,16 +20,16 @@ const SalesDeadline: React.FC = () => {
             />
           }
         >
-          <div className="flex flex-col h-full">
+          <div className="flex h-full flex-col">
             <Meta
               title="가오슝 3박 4일"
               description="2025.04.15 ~ 2025.04.19"
             />
-            <div className="text-2xl font-bold self-end mt-15">990,000 원~</div>
+            <div className="mt-15 self-end text-2xl font-bold">990,000 원~</div>
           </div>
         </Card>
         <Card
-          className="w-full h-95 cursor-pointer"
+          className="h-95 w-full cursor-pointer"
           cover={
             <img
               alt="example"
@@ -37,16 +37,16 @@ const SalesDeadline: React.FC = () => {
             />
           }
         >
-          <div className="flex flex-col h-full">
+          <div className="flex h-full flex-col">
             <Meta
               title="후쿠오카 3박 4일"
               description="2025.04.15 ~ 2025.04.19"
             />
-            <div className="text-2xl font-bold self-end mt-15">990,000 원~</div>
+            <div className="mt-15 self-end text-2xl font-bold">990,000 원~</div>
           </div>
         </Card>
         <Card
-          className="w-full h-95 cursor-pointer"
+          className="h-95 w-full cursor-pointer"
           cover={
             <img
               alt="example"
@@ -54,13 +54,13 @@ const SalesDeadline: React.FC = () => {
             />
           }
         >
-          <div className="flex flex-col h-full">
+          <div className="flex h-full flex-col">
             <Meta title="보홀 3박 5일" description="2025.04.15 ~ 2025.04.19" />
-            <div className="text-2xl font-bold self-end mt-15">990,000 원~</div>
+            <div className="mt-15 self-end text-2xl font-bold">990,000 원~</div>
           </div>
         </Card>
         <Card
-          className="w-full h-95 cursor-pointer"
+          className="h-95 w-full cursor-pointer"
           cover={
             <img
               alt="example"
@@ -68,12 +68,12 @@ const SalesDeadline: React.FC = () => {
             />
           }
         >
-          <div className="flex flex-col h-full">
+          <div className="flex h-full flex-col">
             <Meta
               title="보라카이 3박 5일"
               description="2025.04.15 ~ 2025.04.19"
             />
-            <div className="text-2xl font-bold self-end mt-15">990,000 원~</div>
+            <div className="mt-15 self-end text-2xl font-bold">990,000 원~</div>
           </div>
         </Card>
       </div>

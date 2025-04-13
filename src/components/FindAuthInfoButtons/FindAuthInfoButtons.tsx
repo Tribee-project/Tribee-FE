@@ -4,21 +4,21 @@ const FindAuthInfoButtons: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center gap-4 text-xs text-gray-900 justify-center w-full">
+    <div className="flex w-full items-center justify-center gap-4 text-xs text-gray-900">
       <button
-        className="border-none p-0 cursor-pointer"
+        className="cursor-pointer border-none p-0"
         onClick={() => navigate('/find-id')}
       >
         아이디 찾기
       </button>
       <button
-        className="border-none p-0 cursor-pointer"
+        className="cursor-pointer border-none p-0"
         onClick={() => navigate('/find-password')}
       >
         비밀번호 찾기
       </button>
       <button
-        className="border-none p-0 cursor-pointer"
+        className="cursor-pointer border-none p-0"
         onClick={() => navigate('/signup')}
       >
         회원가입

@@ -5,8 +5,8 @@ import Header from '@/layouts/Header/Header';
 
 const MainPage: React.FC = () => {
   return (
-    <div className="flex flex-col gap-1 w-screen">
-      <div className="flex flex-col gap-1 items-center">
+    <div className="flex w-screen flex-col gap-1">
+      <div className="flex flex-col items-center gap-1">
         <Header />
       </div>
       <Carousel />
