@@ -1,4 +1,4 @@
-const SignupEmail: React.FC = () => {
+const SignupEmailInput: React.FC = () => {
   return (
     <>
       <span className="mb-5 text-lg">이메일을 입력해주세요 😊</span>
@@ -13,4 +13,4 @@ const SignupEmail: React.FC = () => {
   );
 };
 
-export default SignupEmail;
+export default SignupEmailInput;

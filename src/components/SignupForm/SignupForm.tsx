@@ -1,11 +1,11 @@
 import SignupNextButton from '../SignupNextButton/SignupNextButton';
-import SignupEmail from '../SingupEmail/SingupEmail';
+import SignupEmailInput from '../SingupEmailInput/SingupEmailInput';
 
 const SignupForm: React.FC = () => {
   let InputComponent: React.FC = () => <></>;
 
   if (window.location.pathname.split('/')[2] == 'email') {
-    InputComponent = SignupEmail;
+    InputComponent = SignupEmailInput;
   }
 
   return (
