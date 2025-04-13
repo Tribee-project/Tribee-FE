@@ -13,7 +13,7 @@ const HeaderAuthButtons: React.FC = () => {
       </button>
       <button
         className="border-none p-0 cursor-pointer"
-        onClick={() => navigate('/signup')}
+        onClick={() => navigate('/signup/email')}
       >
         회원가입
       </button>
