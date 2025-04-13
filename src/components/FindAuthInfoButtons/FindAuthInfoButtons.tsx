@@ -19,7 +19,7 @@ const FindAuthInfoButtons: React.FC = () => {
       </button>
       <button
         className="cursor-pointer border-none p-0"
-        onClick={() => navigate('/signup')}
+        onClick={() => navigate('/signup/email')}
       >
         회원가입
       </button>
