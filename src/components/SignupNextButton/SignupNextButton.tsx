@@ -12,10 +12,10 @@ const SignupNextButton: React.FC = () => {
 
   return (
     <button
-      className={`mt-20 w-25 cursor-pointer rounded-lg border-1 ${
+      className={`mt-20 w-25 rounded-lg border-1 ${
         isDisabled
           ? 'border-gray-300 bg-gray-100 text-gray-400'
-          : 'border-amber-300 text-gray-700 hover:bg-amber-100'
+          : 'cursor-pointer border-amber-300 text-gray-700 hover:bg-amber-100'
       } p-2`}
       disabled={isDisabled}
     >
