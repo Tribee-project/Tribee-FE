@@ -1,6 +1,7 @@
 import { Popover } from 'antd';
 import { useState } from 'react';
 
+import useUserInfoStore from '@/stores/userInfoStore';
 import useVerifiedStore from '@/stores/verifiedStore';
 import { emailValidation } from '@/utils/validations';
 
@@ -9,9 +10,12 @@ const content = <span>이메일 형식이 잘못됐어요</span>;
 const SignupEmailInput: React.FC = () => {
   const setVerified = useVerifiedStore((state) => state.actions.setVerified);
   const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState('');
+  const email = useUserInfoStore((state) => state.userInfo.email);
+  const setEmail = useUserInfoStore((state) => state.actions.setUserEmail);
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleEmailChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void | undefined => {
     const newEmail = e.target.value;
     const isValidEmail = emailValidation(newEmail);
     setEmail(newEmail);
