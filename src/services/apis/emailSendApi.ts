@@ -11,14 +11,12 @@ const sendVerificationEmail = async (userEmail: string): Promise<void> => {
     passcode: passcode,
   };
 
-  await emailJS
-    .send('tribee_xblv9g8', 'tOTP_nbikbsg', templateParams, 'PV13y234DVvSLC35t')
-    .then((res) => {
-      console.log('Email sent successfully:', res.status, res.text);
-    })
-    .catch((err) => {
-      console.error('Error sending email:', err);
-    });
+  await emailJS.send(
+    'tribee_xblv9g8',
+    'tOTP_nbikbsg',
+    templateParams,
+    'PV13y234DVvSLC35t',
+  );
 };
 
 export default sendVerificationEmail;
