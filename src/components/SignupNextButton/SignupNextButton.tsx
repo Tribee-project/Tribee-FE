@@ -26,6 +26,13 @@ const SignupNextButton: React.FC = () => {
       setVerified(false);
     } else if (window.location.pathname.split('/')[2] == 'validate-email') {
       navigate('/signup/password');
+      setVerified(false);
+    } else if (
+      window.location.pathname.split('/')[2] == 'password' &&
+      verified
+    ) {
+      navigate('/signup/nickname');
+      setVerified(false);
     }
   };
 

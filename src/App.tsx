@@ -13,6 +13,7 @@ const App: React.FC = () => {
       <Route path="/signup">
         <Route path="email" element={<SignupPage />} />
         <Route path="validate-email" element={<SignupPage />} />
+        <Route path="password" element={<SignupPage />} />
       </Route>
     </Routes>
   );
