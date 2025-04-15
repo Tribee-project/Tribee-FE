@@ -15,15 +15,20 @@ const SignupNextButton: React.FC = () => {
   const setPasscode = useValidateEmailStore(
     (state) => state.actions.setPasscode,
   );
+  const setVerified = useVerifiedStore((state) => state.actions.setVerified);
 
   const handleNextButtonClick = (): void => {
     if (window.location.pathname.split('/')[2] == 'email') {
       const newPasscode = generatePasscode();
       setPasscode(newPasscode);
       sendVerificationEmail(userEmail);
-      navigate('/signup/verify-email');
+      navigate('/signup/validate-email');
+      setVerified(false);
+    } else if (window.location.pathname.split('/')[2] == 'validate-email') {
+      navigate('/signup/password');
     }
   };
+
   useEffect(() => {
     setIsDisabled(!verified);
   }, [verified]);

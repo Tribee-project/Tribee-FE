@@ -1,3 +1,4 @@
+import SignupEmailValidateInput from '../SignupEmailValidateInput/SignupEmailValidateInput';
 import SignupNextButton from '../SignupNextButton/SignupNextButton';
 import SignupEmailInput from '../SingupEmailInput/SingupEmailInput';
 
@@ -6,6 +7,8 @@ const SignupForm: React.FC = () => {
 
   if (window.location.pathname.split('/')[2] == 'email') {
     InputComponent = SignupEmailInput;
+  } else if (window.location.pathname.split('/')[2] == 'validate-email') {
+    InputComponent = SignupEmailValidateInput;
   }
 
   return (

@@ -25,7 +25,7 @@ const SignupEmailInput: React.FC = () => {
 
   return (
     <>
-      <span className="mb-2 text-lg">이메일을 입력해주세요 😊</span>
+      <span className="text-md mb-2">이메일을 입력해주세요 😊</span>
       <Popover
         content={content}
         color="#FECA3A"
