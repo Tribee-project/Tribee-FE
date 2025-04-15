@@ -15,8 +15,9 @@ const SalesDeadline: React.FC = () => {
           className="flex h-95 w-full cursor-pointer flex-col"
           cover={
             <img
+              className="h-50"
               alt="example"
-              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              src="https://dimgcdn.ybtour.co.kr/TN/99/99c7de21a6689ea02c0a364a0f093db1.tn.410x280.jpg"
             />
           }
         >
@@ -32,8 +33,9 @@ const SalesDeadline: React.FC = () => {
           className="h-95 w-full cursor-pointer"
           cover={
             <img
+              className="h-50"
               alt="example"
-              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              src="https://dimgcdn.ybtour.co.kr/TN/db/db66c10756bb75e15c3cc880710fc76b.tn.410x280.jpg"
             />
           }
         >
@@ -49,8 +51,9 @@ const SalesDeadline: React.FC = () => {
           className="h-95 w-full cursor-pointer"
           cover={
             <img
+              className="h-50"
               alt="example"
-              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              src="https://dimgcdn.ybtour.co.kr/TN/f5/f5405973faa747b701e524edf2bcd37e.tn.410x280.jpg"
             />
           }
         >
@@ -63,8 +66,9 @@ const SalesDeadline: React.FC = () => {
           className="h-95 w-full cursor-pointer"
           cover={
             <img
+              className="h-50"
               alt="example"
-              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+              src="https://dimgcdn.ybtour.co.kr/TN/f5/f5950faa08b674242bdd441da9c955ec.tn.630x410.jpg"
             />
           }
         >

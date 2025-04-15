@@ -4,8 +4,7 @@
 }
 .embla__container {
   display: flex;
-  gap: 20px;
-  padding: 0 10px;
+  gap: 18px;
 }
 .embla__slide {
   flex: 0 0 auto;

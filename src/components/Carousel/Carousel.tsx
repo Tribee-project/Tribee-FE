@@ -17,37 +17,37 @@ const Carousel: React.FC = () => {
       <div className="embla__container">
         <div className="embla__slide">
           <img
-            src="https://cdn.pixabay.com/photo/2025/03/26/09/08/ai-generated-9494063_640.jpg"
+            src="https://scdn.ybtour.co.kr/banner/common/202504081233057291306001001040.jpg"
             alt="carousel"
           />
         </div>
         <div className="embla__slide">
           <img
-            src="https://cdn.pixabay.com/photo/2025/03/25/20/34/cat-9493147_640.jpg"
+            src="https://scdn.ybtour.co.kr/banner/common/202503250347279602308056001039.jpg"
             alt="carousel"
           />
         </div>
         <div className="embla__slide">
           <img
-            src="https://cdn.pixabay.com/photo/2025/02/20/10/38/robin-9419575_640.jpg"
+            src="https://scdn.ybtour.co.kr/banner/common/202504150406434572301012001014.jpg"
             alt="carousel"
           />
         </div>
         <div className="embla__slide">
           <img
-            src="https://cdn.pixabay.com/photo/2020/08/24/21/44/man-5515150_640.jpg"
+            src="https://scdn.ybtour.co.kr/banner/common/202503210729472292308056001094.jpg"
             alt="carousel"
           />
         </div>
         <div className="embla__slide">
           <img
-            src="https://cdn.pixabay.com/photo/2022/05/22/16/49/outdoors-7213951_640.jpg"
+            src="https://scdn.ybtour.co.kr/banner/common/202504010503251942301012001065.jpg"
             alt="carousel"
           />
         </div>
         <div className="embla__slide">
           <img
-            src="https://cdn.pixabay.com/photo/2025/04/08/10/42/landscape-9521261_1280.jpg"
+            src="https://scdn.ybtour.co.kr/banner/common/202504110909166242308056001025.jpg"
             alt="carousel"
           />
         </div>
