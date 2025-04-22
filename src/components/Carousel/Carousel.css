@@ -1,17 +1,18 @@
 .embla {
   overflow: hidden;
   width: 100%;
+  position: relative;
 }
 .embla__container {
   display: flex;
-  gap: 15px;
+  backface-visibility: hidden;
 }
 .embla__slide {
   flex: 0 0 auto;
   min-width: 400px;
   max-width: 400px;
-  padding: 0 5px;
-  margin-right: 7px;
+  padding-left: 30px;
+  position: relative;
 }
 
 .embla__slide img {
