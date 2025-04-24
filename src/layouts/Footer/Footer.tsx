@@ -8,25 +8,25 @@ const Footer: React.FC = () => {
           <GithubOutlined className="text-4xl" />
           <div className="flex flex-col">
             <a
-              href="https://github.com/stoneKong0810"
+              href="https://github.com/Tribee-project"
               target="_blank"
               className="whitespace-nowrap hover:text-shadow-lg"
             >
-              Organization : https://github.com/Tribee-project
+              Organization
             </a>
             <a
-              href="https://github.com/stoneKong0810"
+              href="https://github.com/Tribee-project/Tribee-FE"
               target="_blank"
               className="whitespace-nowrap hover:text-shadow-lg"
             >
-              Front-end Github : https://github.com/Tribee-project/Tribee-FE
+              Front-end Github
             </a>
             <a
-              href="https://github.com/stoneKong0810"
+              href="https://github.com/Tribee-project/Tribee-BE"
               target="_blank"
               className="whitespace-nowrap hover:text-shadow-lg"
             >
-              Back-end Github : https://github.com/Tribee-project/Tribee-BE
+              Back-end Github
             </a>
           </div>
         </div>
