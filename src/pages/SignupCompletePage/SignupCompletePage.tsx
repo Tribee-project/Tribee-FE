@@ -1,4 +1,5 @@
 import signupCongratulation from '@/assets/congrat.png';
+import SignupCompleteLoginButton from '@/components/SignupCompleteLoginButton/SignupcompleteloginButton';
 
 const SignupCompletePage: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const SignupCompletePage: React.FC = () => {
         />
         <div className="text-2xl font-bold">회원가입이 완료되었어요!</div>
         <div className="mt-5 text-lg text-gray-500">여행을 떠나볼까요?</div>
+        <SignupCompleteLoginButton />
       </div>
     </div>
   );
