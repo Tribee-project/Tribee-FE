@@ -4,6 +4,7 @@ import tribeeLogo from '@/assets/Tribee.png';
 
 import SignupEmailValidateInput from '../SignupEmailValidateInput/SignupEmailValidateInput';
 import SignupNextButton from '../SignupNextButton/SignupNextButton';
+import SignupNicknameInput from '../SignupNicknameInput/SignupNicknameInput';
 import SignupPasswordInput from '../SignupPasswordInput/SignupPasswordInput';
 import SignupEmailInput from '../SingupEmailInput/SingupEmailInput';
 
@@ -15,6 +16,7 @@ const SignupForm: React.FC = () => {
     email: SignupEmailInput,
     'validate-email': SignupEmailValidateInput,
     password: SignupPasswordInput,
+    nickname: SignupNicknameInput,
   };
 
   const InputComponent = componentMap[currentPath] || (() => <></>);

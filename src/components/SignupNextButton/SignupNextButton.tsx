@@ -12,6 +12,7 @@ const ROUTES = {
   VALIDATE_EMAIL: 'validate-email',
   PASSWORD: 'password',
   NICKNAME: 'nickname',
+  SIGNUP_COMPLETE: 'signup-complete',
 };
 
 const SignupNextButton: React.FC = () => {
@@ -50,9 +51,10 @@ const SignupNextButton: React.FC = () => {
         navigateToNextPage(ROUTES.PASSWORD);
       },
       [ROUTES.PASSWORD]: () => {
-        if (verified) {
-          navigateToNextPage(ROUTES.NICKNAME);
-        }
+        navigateToNextPage(ROUTES.NICKNAME);
+      },
+      [ROUTES.NICKNAME]: () => {
+        navigate('/signup-complete');
       },
     };
 
