@@ -12,21 +12,21 @@ const Footer: React.FC = () => {
               target="_blank"
               className="whitespace-nowrap hover:text-shadow-lg"
             >
-              Organization : https://github.com/stoneKong0810
+              Organization : https://github.com/Tribee-project
             </a>
             <a
               href="https://github.com/stoneKong0810"
               target="_blank"
               className="whitespace-nowrap hover:text-shadow-lg"
             >
-              Front-end Developer Github : https://github.com/stoneKong0810
+              Front-end Github : https://github.com/Tribee-project/Tribee-FE
             </a>
             <a
               href="https://github.com/stoneKong0810"
               target="_blank"
               className="whitespace-nowrap hover:text-shadow-lg"
             >
-              Back-end Developer Github : https://github.com/stoneKong0810
+              Back-end Github : https://github.com/Tribee-project/Tribee-BE
             </a>
           </div>
         </div>
