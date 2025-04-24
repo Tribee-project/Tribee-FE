@@ -1,20 +1,55 @@
 import { Popover } from 'antd';
-import React from 'react';
-import { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import useValidatePasswordStore from '@/stores/validatePasswordStore';
 import useVerifiedStore from '@/stores/verifiedStore';
 import { passwordValidation } from '@/utils/validations';
 
-const passwordAlert = (
-  <span>영어, 숫자, !@#$%^&*를 모두 포함하여 최소 8자 이상이어야 해요</span>
+interface PasswordInputProps {
+  label: string;
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  showPopover: boolean;
+  popoverContent: React.ReactNode;
+}
+
+const PasswordInput: React.FC<PasswordInputProps> = ({
+  label,
+  value,
+  onChange,
+  showPopover,
+  popoverContent,
+}) => (
+  <>
+    <span className="text-md mb-2">{label}</span>
+    <Popover
+      content={popoverContent}
+      color="#FECA3A"
+      placement="bottomRight"
+      open={showPopover}
+    >
+      <div className="mb-5 flex w-90 justify-center rounded-4xl border-3 border-amber-300 p-2">
+        <input
+          className="w-[90%] border-none outline-none"
+          type="password"
+          value={value}
+          onChange={onChange}
+        />
+      </div>
+    </Popover>
+  </>
 );
 
-const validPasswordAlert = <span>비밀번호가 일치하지 않아요</span>;
-
 const SignupPasswordInput: React.FC = () => {
-  const [open, setOpen] = useState(false);
-  const [open2, setOpen2] = useState(false);
+  const PASSWORD_ALERT = (
+    <span>영어, 숫자, !@#$%^&*를 모두 포함하여 최소 8자 이상이어야 해요</span>
+  );
+  const VALID_PASSWORD_ALERT = <span>비밀번호가 일치하지 않아요</span>;
+
+  const [showPasswordError, setShowPasswordError] = useState(false);
+  const [showConfirmError, setShowConfirmError] = useState(false);
+  const [isValidPassword, setIsValidPassword] = useState(false);
+
   const password = useValidatePasswordStore((state) => state.password);
   const validPassword = useValidatePasswordStore(
     (state) => state.validPassword,
@@ -22,76 +57,59 @@ const SignupPasswordInput: React.FC = () => {
   const { setValidPassword, setPassword } = useValidatePasswordStore(
     (state) => state.actions,
   );
-  const [isValidPassword, setIsValidPassword] = useState(false);
   const setVerified = useVerifiedStore((state) => state.actions.setVerified);
 
-  const handlePasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
-    setPassword(e.target.value);
-    if (!passwordValidation(e.target.value) && e.target.value.length > 0) {
-      setOpen(true);
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+
+    if (newPassword.length === 0) {
+      setShowPasswordError(false);
       setIsValidPassword(false);
-    } else if (
-      passwordValidation(e.target.value) &&
-      e.target.value.length > 0
-    ) {
-      setOpen(false);
-      setIsValidPassword(true);
+      return;
+    }
+
+    const isValid = passwordValidation(newPassword);
+    setShowPasswordError(!isValid);
+    setIsValidPassword(isValid);
+
+    if (validPassword) {
+      const doPasswordsMatch = validPassword === newPassword;
+      setShowConfirmError(!doPasswordsMatch);
+      setVerified(doPasswordsMatch);
     }
   };
 
-  const handleValidPasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+  const handleConfirmPasswordChange = (
+    e: ChangeEvent<HTMLInputElement>,
   ): void => {
-    setValidPassword(e.target.value);
-    if (e.target.value !== password) {
-      setOpen2(true);
-      setVerified(false);
-    } else {
-      setOpen2(false);
-      setVerified(true);
-    }
+    const confirmPassword = e.target.value;
+    setValidPassword(confirmPassword);
+
+    const doPasswordsMatch = confirmPassword === password;
+    setShowConfirmError(!doPasswordsMatch);
+    setVerified(doPasswordsMatch);
   };
 
   return (
     <>
-      <span className="text-md mb-2">비밀번호를 입력해주세요 🔐</span>
-      <Popover
-        content={passwordAlert}
-        color="#FECA3A"
-        placement="bottomRight"
-        open={open}
-      >
-        <div className="mb-5 flex w-90 justify-center rounded-4xl border-3 border-amber-300 p-2">
-          <input
-            className="w-[90%] border-none outline-none"
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </div>
-      </Popover>
-      {isValidPassword ? (
-        <>
-          <span className="text-md mb-2">다시한번 입력해주세요</span>
-          <Popover
-            content={validPasswordAlert}
-            color="#FECA3A"
-            placement="bottomRight"
-            open={open2}
-          >
-            <div className="mb-5 flex w-90 justify-center rounded-4xl border-3 border-amber-300 p-2">
-              <input
-                className="w-[90%] border-none outline-none"
-                type="password"
-                value={validPassword}
-                onChange={handleValidPasswordChange}
-              />
-            </div>
-          </Popover>
-        </>
-      ) : null}
+      <PasswordInput
+        label="비밀번호를 입력해주세요 🔐"
+        value={password}
+        onChange={handlePasswordChange}
+        showPopover={showPasswordError}
+        popoverContent={PASSWORD_ALERT}
+      />
+
+      {isValidPassword && (
+        <PasswordInput
+          label="다시한번 입력해주세요"
+          value={validPassword}
+          onChange={handleConfirmPasswordChange}
+          showPopover={showConfirmError}
+          popoverContent={VALID_PASSWORD_ALERT}
+        />
+      )}
     </>
   );
 };

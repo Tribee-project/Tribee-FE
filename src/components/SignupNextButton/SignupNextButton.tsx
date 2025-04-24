@@ -7,6 +7,13 @@ import useValidateEmailStore from '@/stores/validateEmailStore';
 import useVerifiedStore from '@/stores/verifiedStore';
 import { generatePasscode } from '@/utils/emailPasscode';
 
+const ROUTES = {
+  EMAIL: 'email',
+  VALIDATE_EMAIL: 'validate-email',
+  PASSWORD: 'password',
+  NICKNAME: 'nickname',
+};
+
 const SignupNextButton: React.FC = () => {
   const navigate = useNavigate();
   const verified = useVerifiedStore((state) => state.verified);
@@ -17,22 +24,41 @@ const SignupNextButton: React.FC = () => {
   );
   const setVerified = useVerifiedStore((state) => state.actions.setVerified);
 
+  const getCurrentPathSegment = (): string => {
+    return window.location.pathname.split('/')[2] || '';
+  };
+
+  const handleEmailVerification = (): void => {
+    const newPasscode = generatePasscode();
+    setPasscode(newPasscode);
+    sendVerificationEmail(userEmail);
+  };
+
+  const navigateToNextPage = (nextRoute: string): void => {
+    navigate(`/signup/${nextRoute}`);
+    setVerified(false);
+  };
+
   const handleNextButtonClick = (): void => {
-    if (window.location.pathname.split('/')[2] == 'email') {
-      const newPasscode = generatePasscode();
-      setPasscode(newPasscode);
-      sendVerificationEmail(userEmail);
-      navigate('/signup/validate-email');
-      setVerified(false);
-    } else if (window.location.pathname.split('/')[2] == 'validate-email') {
-      navigate('/signup/password');
-      setVerified(false);
-    } else if (
-      window.location.pathname.split('/')[2] == 'password' &&
-      verified
-    ) {
-      navigate('/signup/nickname');
-      setVerified(false);
+    const currentPath = getCurrentPathSegment();
+    const routeActions: Record<string, () => void> = {
+      [ROUTES.EMAIL]: () => {
+        handleEmailVerification();
+        navigateToNextPage(ROUTES.VALIDATE_EMAIL);
+      },
+      [ROUTES.VALIDATE_EMAIL]: () => {
+        navigateToNextPage(ROUTES.PASSWORD);
+      },
+      [ROUTES.PASSWORD]: () => {
+        if (verified) {
+          navigateToNextPage(ROUTES.NICKNAME);
+        }
+      },
+    };
+
+    const action = routeActions[currentPath];
+    if (action) {
+      action();
     }
   };
 

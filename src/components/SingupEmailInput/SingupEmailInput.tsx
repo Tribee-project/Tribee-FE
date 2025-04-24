@@ -5,39 +5,43 @@ import useUserInfoStore from '@/stores/userInfoStore';
 import useVerifiedStore from '@/stores/verifiedStore';
 import { emailValidation } from '@/utils/validations';
 
-const content = <span>이메일 형식이 잘못됐어요</span>;
+const ERROR_MESSAGE = '이메일 형식이 잘못됐어요';
 
 const SignupEmailInput: React.FC = () => {
-  const setVerified = useVerifiedStore((state) => state.actions.setVerified);
-  const [open, setOpen] = useState(false);
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
   const email = useUserInfoStore((state) => state.userInfo.email);
   const setEmail = useUserInfoStore((state) => state.actions.setUserEmail);
+  const setVerified = useVerifiedStore((state) => state.actions.setVerified);
 
-  const handleEmailChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ): void | undefined => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const newEmail = e.target.value;
     const isValidEmail = emailValidation(newEmail);
+
     setEmail(newEmail);
-    setOpen(!emailValidation(newEmail) && newEmail !== '');
+    setIsPopoverOpen(newEmail !== '' && !isValidEmail);
     setVerified(isValidEmail);
   };
 
   return (
     <>
-      <span className="text-md mb-2">이메일을 입력해주세요 😊</span>
+      <label htmlFor="email-input" className="text-md mb-2 block">
+        이메일을 입력해주세요 😊
+      </label>
       <Popover
-        content={content}
+        content={<span>{ERROR_MESSAGE}</span>}
         color="#FECA3A"
         placement="bottomRight"
-        open={open}
+        open={isPopoverOpen}
       >
         <div className="mb-5 flex w-90 justify-center rounded-4xl border-3 border-amber-300 p-2">
           <input
+            id="email-input"
             type="email"
             className="w-[90%] border-none outline-none"
             value={email}
             onChange={handleEmailChange}
+            aria-invalid={isPopoverOpen}
           />
         </div>
       </Popover>
