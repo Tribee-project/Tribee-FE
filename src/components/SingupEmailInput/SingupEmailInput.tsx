@@ -1,5 +1,5 @@
 import { Popover } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useUserInfoStore from '@/stores/userInfoStore';
 import useVerifiedStore from '@/stores/verifiedStore';
@@ -22,6 +22,10 @@ const SignupEmailInput: React.FC = () => {
     setIsPopoverOpen(newEmail !== '' && !isValidEmail);
     setVerified(isValidEmail);
   };
+
+  useEffect(() => {
+    setEmail('');
+  }, [setEmail]);
 
   return (
     <>

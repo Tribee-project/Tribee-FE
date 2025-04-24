@@ -1,5 +1,5 @@
 import { Popover } from 'antd';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import useValidatePasswordStore from '@/stores/validatePasswordStore';
 import useVerifiedStore from '@/stores/verifiedStore';
@@ -90,6 +90,11 @@ const SignupPasswordInput: React.FC = () => {
     setShowConfirmError(!doPasswordsMatch);
     setVerified(doPasswordsMatch);
   };
+
+  useEffect(() => {
+    setPassword('');
+    setValidPassword('');
+  }, [setPassword, setValidPassword]);
 
   return (
     <>

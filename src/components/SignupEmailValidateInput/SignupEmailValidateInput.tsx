@@ -1,6 +1,6 @@
 import type { GetProps } from 'antd';
 import { ConfigProvider, Input } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useValidateEmailStore from '@/stores/validateEmailStore';
 import useVerifiedStore from '@/stores/verifiedStore';
@@ -22,6 +22,10 @@ const SignupEmailValidateInput = () => {
       setVerified(true);
     }
   };
+
+  useEffect(() => {
+    setCurrentInput('');
+  }, [setCurrentInput]);
 
   return (
     <>
