@@ -22,7 +22,7 @@ const SignupForm: React.FC = () => {
   const InputComponent = componentMap[currentPath] || (() => <></>);
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-4xl border-1 border-gray-300 p-30">
+    <div className="flex flex-col items-center justify-center rounded-4xl border-1 border-gray-300 bg-white p-30 shadow-md">
       <img src={tribeeLogo} alt="logo" className="mb-10 w-50" />
       <InputComponent />
       <SignupNextButton />

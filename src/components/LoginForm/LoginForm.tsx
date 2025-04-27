@@ -89,7 +89,7 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-4xl border-1 border-gray-300 p-30">
+    <div className="flex flex-col items-center justify-center rounded-4xl border-1 border-gray-300 bg-white p-30 shadow-md">
       <img src={'/src/assets/Tribee.png'} alt="logo" className="mb-5 w-50" />
       <form className="mb-3 flex flex-col gap-2" onSubmit={handleSubmit}>
         <FormInput
