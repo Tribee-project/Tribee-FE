@@ -1,5 +1,5 @@
 import { Popover } from 'antd';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, KeyboardEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { login } from '@/services/axios/authApis';
@@ -99,6 +99,12 @@ const LoginForm: React.FC = () => {
     }
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>): void => {
+    if (e.key === 'Enter') {
+      handleSubmit(e as unknown as FormEvent<HTMLFormElement>);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center rounded-4xl border-1 border-gray-300 bg-white p-30 shadow-md">
       <img src={'/src/assets/Tribee.png'} alt="logo" className="mb-5 w-50" />
@@ -132,6 +138,7 @@ const LoginForm: React.FC = () => {
               : 'cursor-not-allowed bg-gray-300'
           }`}
           type="submit"
+          onKeyDown={handleKeyDown}
           disabled={!isFormValid}
         >
           로그인
