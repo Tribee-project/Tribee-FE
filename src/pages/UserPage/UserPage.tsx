@@ -1,3 +1,4 @@
+import { Divider } from 'antd';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -18,6 +19,9 @@ const UserPage: React.FC = () => {
       <div className="flex flex-col items-center gap-1">
         <Header />
         <UserPageButtons />
+      </div>
+      <div className="w-300 self-center">
+        <Divider />
       </div>
       <Outlet />
       <Footer />
