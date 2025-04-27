@@ -1,17 +1,18 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // 우선 로컬스토리지 이용, 나중에 httpOnly 쿠키 이용
+  const isAuthenticated = () => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      alert('로그인이 필요합니다.');
+      alert('로그인이 필요한 페이지입니다.');
       navigate('/login');
+      return false;
     }
-  }, [navigate]);
+    return true;
+  };
+  return { isAuthenticated };
 };
 
 export default useAuth;
