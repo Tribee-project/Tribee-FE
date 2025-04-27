@@ -1,6 +1,8 @@
 import { Popover } from 'antd';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { login } from '@/services/axios/authApis';
 import { emailValidation, passwordValidation } from '@/utils/validations';
 
 import FindAuthInfoButtons from '../FindAuthInfoButtons/FindAuthInfoButtons';
@@ -57,6 +59,7 @@ const LoginForm: React.FC = () => {
   const [showEmailError, setShowEmailError] = useState(false);
   const [showPasswordError, setShowPasswordError] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
+  const navigate = useNavigate();
 
   const validateForm = (): void => {
     const isEmailValid = emailValidation(email);
@@ -83,8 +86,16 @@ const LoginForm: React.FC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (isFormValid) {
-      // Todo: 로그인 로직 구현
-      console.log('로그인 시도:', { email, password });
+      login({
+        email: email,
+        password: password,
+      })
+        .then(() => {
+          navigate('/');
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   };
 

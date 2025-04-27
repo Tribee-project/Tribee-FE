@@ -1,10 +1,25 @@
 import { useNavigate } from 'react-router-dom';
 
+import { login } from '@/services/axios/authApis';
+import useUserInfoStore from '@/stores/userInfoStore';
+import useValidatePasswordStore from '@/stores/validatePasswordStore';
+
 const SignupCompleteLoginButton: React.FC = () => {
   const navigate = useNavigate();
+  const userEmail = useUserInfoStore((state) => state.userInfo.email);
+  const userPassword = useValidatePasswordStore((state) => state.password);
+
   const handleClick = () => {
-    // 자동으로 로그인 하는 로직 구현
-    navigate(-5);
+    login({
+      email: userEmail,
+      password: userPassword,
+    })
+      .then(() => {
+        navigate(-5);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (

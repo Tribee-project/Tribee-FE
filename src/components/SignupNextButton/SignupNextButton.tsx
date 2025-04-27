@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import sendVerificationEmail from '@/services/apis/emailSendApi';
+import { signUp } from '@/services/axios/authApis';
 import useUserInfoStore from '@/stores/userInfoStore';
 import useValidateEmailStore from '@/stores/validateEmailStore';
+import useValidatePasswordStore from '@/stores/validatePasswordStore';
 import useVerifiedStore from '@/stores/verifiedStore';
 import { generatePasscode } from '@/utils/emailPasscode';
 
@@ -20,6 +22,8 @@ const SignupNextButton: React.FC = () => {
   const verified = useVerifiedStore((state) => state.verified);
   const [isDisabled, setIsDisabled] = useState(true);
   const userEmail = useUserInfoStore((state) => state.userInfo.email);
+  const userPassword = useValidatePasswordStore((state) => state.password);
+  const userNickname = useUserInfoStore((state) => state.userInfo.nickname);
   const setPasscode = useValidateEmailStore(
     (state) => state.actions.setPasscode,
   );
@@ -54,7 +58,17 @@ const SignupNextButton: React.FC = () => {
         navigateToNextPage(ROUTES.NICKNAME);
       },
       [ROUTES.NICKNAME]: () => {
-        navigate('/signup-complete');
+        signUp({
+          email: userEmail,
+          password: userPassword,
+          nickname: userNickname,
+        })
+          .then(() => {
+            navigate('/signup-complete');
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       },
     };
 
