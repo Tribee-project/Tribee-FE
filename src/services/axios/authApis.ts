@@ -43,11 +43,4 @@ const login = async (data: LoginData) => {
   return response;
 };
 
-const logout = async () => {
-  const response = await authApi.post('/logout').then(() => {
-    localStorage.removeItem('accessToken');
-  });
-  return response;
-};
-
-export { login, logout, signUp };
+export { login, signUp };
