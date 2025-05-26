@@ -2,7 +2,7 @@ import { LockOutlined, MailOutlined, SmileOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import { useEffect, useState } from 'react';
 
-import { getUserInfo } from '@/services/axios/userApis';
+import { editUserNickname, getUserInfo } from '@/services/axios/userApis';
 
 interface ProfileItemProps {
   icon: React.ReactNode;
@@ -28,7 +28,6 @@ const ProfileItem: React.FC<ProfileItemProps> = ({ icon, text, action }) => {
           </button>
         )}
       </div>
-      <Divider />
     </>
   );
 };
@@ -38,6 +37,8 @@ const UserInfo: React.FC = () => {
     email: string;
     nickname: string;
   }>({ email: '', nickname: '' });
+  const [isEditingName, setIsEditingName] = useState<boolean>(false);
+  const [newNickname, setNewNickname] = useState<string>('');
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -52,8 +53,22 @@ const UserInfo: React.FC = () => {
     fetchUserInfo();
   }, []);
 
-  const handleEditName = () => {
-    // 이름 수정 로직 구현
+  const clickEditNickname = () => {
+    setIsEditingName(true);
+  };
+
+  const handleEditName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewNickname(e.target.value);
+  };
+
+  const handleSaveName = async () => {
+    try {
+      await editUserNickname({ nickname: newNickname });
+      setUserInfo((prev) => ({ ...prev, nickname: newNickname }));
+      setIsEditingName(false);
+    } catch (error) {
+      console.error('닉네임 변경 실패:', error);
+    }
   };
 
   const handleChangePassword = () => {
@@ -68,14 +83,32 @@ const UserInfo: React.FC = () => {
         </Divider>
         <div className="mb-6 flex flex-col">
           <ProfileItem icon={<MailOutlined />} text={userInfo.email} />
+          <Divider />
           <ProfileItem
             icon={<SmileOutlined />}
             text={userInfo.nickname}
             action={{
               label: '수정',
-              onClick: handleEditName,
+              onClick: clickEditNickname,
             }}
           />
+          {isEditingName && (
+            <div className="mt-4 flex items-center justify-center">
+              <input
+                type="text"
+                value={newNickname}
+                onChange={handleEditName}
+                className="rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 outline-none"
+              />
+              <button
+                className="ml-2 flex cursor-pointer items-center gap-1 rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 hover:bg-gray-100"
+                onClick={handleSaveName}
+              >
+                저장
+              </button>
+            </div>
+          )}
+          <Divider />
 
           <div className="flex items-center justify-center">
             <button

@@ -22,8 +22,12 @@ userApi.interceptors.request.use(
 
 const getUserInfo = async () => {
   const response = await userApi.get('/info');
-  console.log('response:', response.data);
   return response.data;
 };
 
-export { getUserInfo };
+const editUserNickname = async (data: { nickname: string }) => {
+  const response = await userApi.put('/info', data);
+  return response;
+};
+
+export { editUserNickname, getUserInfo };
