@@ -12,24 +12,12 @@ interface LoginData {
 }
 
 const authApi = axios.create({
-  baseURL: 'https://tribee.loca.lt/api/v1/auth',
+  baseURL: 'https://cfb9-125-133-70-87.ngrok-free.app/api/v1/auth',
   headers: {
     'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': '69420',
   },
 });
-
-authApi.interceptors.request.use(
-  (config) => {
-    const token: string | null = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
 
 const signUp = async (data: SignUpData) => {
   const response = await authApi.post('/signup', data);
