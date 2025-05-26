@@ -8,11 +8,11 @@ import Footer from '@/layouts/Footer/Footer';
 import Header from '@/layouts/Header/Header';
 
 const UserPage: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { requireAuth } = useAuth();
 
   useEffect(() => {
-    isAuthenticated();
-  }, [isAuthenticated]);
+    requireAuth();
+  }, [requireAuth]);
 
   return (
     <div className="flex w-screen flex-col gap-1">

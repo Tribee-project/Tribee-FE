@@ -4,17 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from '@/hooks/useAuth';
 
 const UserInfoButtons: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { requireAuth } = useAuth();
   const navigate = useNavigate();
 
   const handleUserInfo = () => {
-    if (isAuthenticated()) {
+    if (requireAuth()) {
       navigate('/user/info');
     }
   };
 
   const handleUserBooked = () => {
-    if (isAuthenticated()) {
+    if (requireAuth()) {
       navigate('/user/booked');
     }
   };

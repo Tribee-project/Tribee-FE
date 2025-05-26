@@ -5,7 +5,11 @@ const useAuth = () => {
 
   const isAuthenticated = () => {
     const token = localStorage.getItem('accessToken');
-    if (!token) {
+    return !!token;
+  };
+
+  const requireAuth = () => {
+    if (!isAuthenticated()) {
       alert('로그인이 필요한 페이지입니다.');
       navigate('/login');
       return false;
@@ -13,7 +17,7 @@ const useAuth = () => {
     return true;
   };
 
-  return { isAuthenticated };
+  return { isAuthenticated, requireAuth };
 };
 
 export default useAuth;
