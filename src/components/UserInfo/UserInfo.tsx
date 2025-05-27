@@ -1,5 +1,5 @@
 import { LockOutlined, MailOutlined, SmileOutlined } from '@ant-design/icons';
-import { Divider, Popover } from 'antd';
+import { Divider, Popover, Skeleton } from 'antd';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { editUserNickname, getUserInfo } from '@/services/axios/userApis';
@@ -45,17 +45,21 @@ const UserInfo: React.FC = () => {
     (state) => state.actions.setUserNickname,
   );
   const [showPopover, setShowPopover] = useState<boolean>(false);
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const NICKNAME_ALERT = <span>자음, 모음을 제외하고 3~8자 이어야 해요</span>;
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
+        setLoading(true);
         const data = await getUserInfo();
         setUserInfo(data);
       } catch (error) {
         console.error('유저 정보 조회 실패:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -101,45 +105,62 @@ const UserInfo: React.FC = () => {
           내 프로필
         </Divider>
         <div className="mb-6 flex flex-col">
-          <ProfileItem icon={<MailOutlined />} text={userInfo.email} />
-          <Divider />
-          <ProfileItem
-            icon={<SmileOutlined />}
-            text={userInfo.nickname}
-            action={{
-              label: '수정',
-              onClick: clickEditNickname,
-            }}
-          />
-          {isEditingName && (
-            <div className="mt-4 flex items-center justify-center">
-              <Popover
-                content={NICKNAME_ALERT}
-                color="#FECA3A"
-                placement="bottomRight"
-                open={showPopover}
-              >
-                <input
-                  type="text"
-                  value={nickname}
-                  onChange={handleNicknameChange}
-                  className="rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 outline-none"
-                />
-              </Popover>
-              <button
-                className={`${
-                  isDisabled
-                    ? 'ml-2 flex cursor-not-allowed items-center gap-1 rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 hover:bg-gray-100'
-                    : 'ml-2 flex cursor-pointer items-center gap-1 rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 hover:bg-gray-100'
-                }`}
-                onClick={handleSaveNickname}
-                disabled={isDisabled}
-              >
-                저장
-              </button>
-            </div>
+          {loading ? (
+            <>
+              <div className="flex items-center gap-2">
+                <MailOutlined />
+                <Skeleton.Input active size="small" style={{ width: 150 }} />
+              </div>
+              <Divider />
+              <div className="flex items-center gap-2">
+                <SmileOutlined />
+                <Skeleton.Input active size="small" style={{ width: 120 }} />
+              </div>
+              <Divider />
+            </>
+          ) : (
+            <>
+              <ProfileItem icon={<MailOutlined />} text={userInfo.email} />
+              <Divider />
+              <ProfileItem
+                icon={<SmileOutlined />}
+                text={userInfo.nickname}
+                action={{
+                  label: '수정',
+                  onClick: clickEditNickname,
+                }}
+              />
+              {isEditingName && (
+                <div className="mt-4 flex items-center justify-center">
+                  <Popover
+                    content={NICKNAME_ALERT}
+                    color="#FECA3A"
+                    placement="bottomRight"
+                    open={showPopover}
+                  >
+                    <input
+                      type="text"
+                      value={nickname}
+                      onChange={handleNicknameChange}
+                      className="rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 outline-none"
+                    />
+                  </Popover>
+                  <button
+                    className={`${
+                      isDisabled
+                        ? 'ml-2 flex cursor-not-allowed items-center gap-1 rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 hover:bg-gray-100'
+                        : 'ml-2 flex cursor-pointer items-center gap-1 rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 hover:bg-gray-100'
+                    }`}
+                    onClick={handleSaveNickname}
+                    disabled={isDisabled}
+                  >
+                    저장
+                  </button>
+                </div>
+              )}
+              <Divider />
+            </>
           )}
-          <Divider />
 
           <div className="flex items-center justify-center">
             <button
