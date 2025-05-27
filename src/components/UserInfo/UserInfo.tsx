@@ -1,8 +1,10 @@
 import { LockOutlined, MailOutlined, SmileOutlined } from '@ant-design/icons';
-import { Divider } from 'antd';
-import { useEffect, useState } from 'react';
+import { Divider, Popover } from 'antd';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { editUserNickname, getUserInfo } from '@/services/axios/userApis';
+import useUserInfoStore from '@/stores/userInfoStore';
+import { nicknameValidation } from '@/utils/validations';
 
 interface ProfileItemProps {
   icon: React.ReactNode;
@@ -38,7 +40,14 @@ const UserInfo: React.FC = () => {
     nickname: string;
   }>({ email: '', nickname: '' });
   const [isEditingName, setIsEditingName] = useState<boolean>(false);
-  const [newNickname, setNewNickname] = useState<string>('');
+  const nickname = useUserInfoStore((state) => state.userInfo.nickname);
+  const setNickname = useUserInfoStore(
+    (state) => state.actions.setUserNickname,
+  );
+  const [showPopover, setShowPopover] = useState<boolean>(false);
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const NICKNAME_ALERT = <span>자음, 모음을 제외하고 3~8자 이어야 해요</span>;
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -46,26 +55,36 @@ const UserInfo: React.FC = () => {
         const data = await getUserInfo();
         setUserInfo(data);
       } catch (error) {
-        console.error('Failed to fetch user info:', error);
+        console.error('유저 정보 조회 실패:', error);
       }
     };
 
     fetchUserInfo();
-  }, []);
+  }, [setNickname]);
 
   const clickEditNickname = () => {
     setIsEditingName(true);
   };
 
-  const handleEditNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewNickname(e.target.value);
+  const handleNicknameChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const newNickname = e.target.value;
+    setNickname(newNickname);
+
+    if (newNickname.length === 0) {
+      setShowPopover(false);
+      return;
+    }
+
+    const isValid = nicknameValidation(newNickname);
+    setShowPopover(!isValid);
+    setIsDisabled(!isValid);
   };
 
   const handleSaveNickname = async () => {
     try {
-      await editUserNickname({ nickname: newNickname });
-      setUserInfo((prev) => ({ ...prev, nickname: newNickname }));
+      setUserInfo((prev) => ({ ...prev, nickname: nickname }));
       setIsEditingName(false);
+      await editUserNickname({ nickname: nickname });
     } catch (error) {
       console.error('닉네임 변경 실패:', error);
     }
@@ -94,15 +113,27 @@ const UserInfo: React.FC = () => {
           />
           {isEditingName && (
             <div className="mt-4 flex items-center justify-center">
-              <input
-                type="text"
-                value={newNickname}
-                onChange={handleEditNickname}
-                className="rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 outline-none"
-              />
+              <Popover
+                content={NICKNAME_ALERT}
+                color="#FECA3A"
+                placement="bottomRight"
+                open={showPopover}
+              >
+                <input
+                  type="text"
+                  value={nickname}
+                  onChange={handleNicknameChange}
+                  className="rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 outline-none"
+                />
+              </Popover>
               <button
-                className="ml-2 flex cursor-pointer items-center gap-1 rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 hover:bg-gray-100"
+                className={`${
+                  isDisabled
+                    ? 'ml-2 flex cursor-not-allowed items-center gap-1 rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 hover:bg-gray-100'
+                    : 'ml-2 flex cursor-pointer items-center gap-1 rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 hover:bg-gray-100'
+                }`}
                 onClick={handleSaveNickname}
+                disabled={isDisabled}
               >
                 저장
               </button>
