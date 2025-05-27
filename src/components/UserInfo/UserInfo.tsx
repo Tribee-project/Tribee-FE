@@ -57,11 +57,11 @@ const UserInfo: React.FC = () => {
     setIsEditingName(true);
   };
 
-  const handleEditName = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEditNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewNickname(e.target.value);
   };
 
-  const handleSaveName = async () => {
+  const handleSaveNickname = async () => {
     try {
       await editUserNickname({ nickname: newNickname });
       setUserInfo((prev) => ({ ...prev, nickname: newNickname }));
@@ -97,12 +97,12 @@ const UserInfo: React.FC = () => {
               <input
                 type="text"
                 value={newNickname}
-                onChange={handleEditName}
+                onChange={handleEditNickname}
                 className="rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 outline-none"
               />
               <button
                 className="ml-2 flex cursor-pointer items-center gap-1 rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 hover:bg-gray-100"
-                onClick={handleSaveName}
+                onClick={handleSaveNickname}
               >
                 저장
               </button>
