@@ -19,16 +19,14 @@ const authApi = axios.create({
   },
 });
 
-const signUp = async (data: SignUpData) => {
-  const response = await authApi.post('/signup', data);
-  return response;
+const signUp = async (data: SignUpData): Promise<void> => {
+  await authApi.post('/signup', data);
 };
 
-const login = async (data: LoginData) => {
+const login = async (data: LoginData): Promise<void> => {
   const response = await authApi.post('/login', data);
   const { accessToken } = response.data;
   localStorage.setItem('accessToken', accessToken);
-  return response;
 };
 
 export { login, signUp };
