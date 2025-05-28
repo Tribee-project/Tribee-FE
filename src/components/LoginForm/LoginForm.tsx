@@ -95,6 +95,9 @@ const LoginForm: React.FC = () => {
         })
         .catch((error) => {
           console.error(error);
+          if (error.response.status === 401) {
+            alert('이메일 또는 비밀번호가 일치하지 않습니다');
+          }
         });
     }
   };
