@@ -14,7 +14,7 @@ const SearchBar: React.FC = () => {
           navigate('/');
         }}
       />
-      <div className="flex w-120 justify-center gap-2 rounded-full border-3 border-amber-300 p-4 hover:border-amber-400">
+      <div className="flex w-120 justify-center gap-2 rounded-full border-3 border-amber-300 bg-white p-4 hover:border-amber-400">
         <input
           type="text"
           placeholder="✈️ 어디로 떠나볼까요?"
