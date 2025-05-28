@@ -25,9 +25,12 @@ const getUserInfo = async () => {
   return response.data;
 };
 
-const editUserNickname = async (data: { nickname: string }) => {
-  const response = await userApi.put('/info', data);
-  return response;
+const editUserNickname = async (data: { nickname: string }): Promise<void> => {
+  await userApi.put('/info', data);
 };
 
-export { editUserNickname, getUserInfo };
+const editUserPassword = async (data: { password: string }): Promise<void> => {
+  await userApi.put('/password', data);
+};
+
+export { editUserNickname, editUserPassword, getUserInfo };
