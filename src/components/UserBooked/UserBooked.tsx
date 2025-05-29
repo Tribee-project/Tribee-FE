@@ -58,7 +58,7 @@ const UserBooked: React.FC = () => {
   const [bookingData, setBookingData] = useState<UserBooked[]>([]);
   const [originalData, setOriginalData] = useState<UserBooked[]>([]);
 
-  const onDateChange: DatePickerProps['onChange'] = (date) => {
+  const handleDateChange: DatePickerProps['onChange'] = (date) => {
     if (date) {
       const filteredData = originalData.filter((booking) => {
         return dayjs(booking.reservationDate).isSame(date, 'year');
@@ -185,7 +185,7 @@ const UserBooked: React.FC = () => {
           >
             <Space direction="vertical" style={{ width: '100%' }}>
               <DatePicker
-                onChange={onDateChange}
+                onChange={handleDateChange}
                 picker="year"
                 placeholder="예약 년도"
                 size="middle"
