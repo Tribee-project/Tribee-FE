@@ -167,7 +167,7 @@ const UserBooked: React.FC = () => {
   return (
     <div className="mt-10 mb-10 flex flex-col items-center">
       <div className="w-400 rounded-md bg-gray-100 p-5 shadow-md">
-        <div className="pt-4">
+        <div className="p-4">
           <ConfigProvider
             locale={locale}
             theme={{
@@ -179,6 +179,8 @@ const UserBooked: React.FC = () => {
                 Table: {
                   headerBg: '#FEDB6B',
                   headerColor: '#000',
+                  borderRadiusLG: 6,
+                  borderRadiusSM: 6,
                 },
               },
             }}
@@ -193,7 +195,7 @@ const UserBooked: React.FC = () => {
               />
             </Space>
             <Divider />
-            <div className="mt-4">
+            <div>
               <Table
                 dataSource={bookingData}
                 columns={columns}
@@ -202,6 +204,7 @@ const UserBooked: React.FC = () => {
                 size="middle"
                 tableLayout="fixed"
                 scroll={{ x: 'max-content' }}
+                className="overflow-hidden rounded-xl"
               />
             </div>
           </ConfigProvider>
