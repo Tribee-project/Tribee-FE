@@ -235,7 +235,7 @@ const UserInfo: React.FC = () => {
           </div>
           {isChangePassword && (
             <div className="mt-4 flex items-center justify-center">
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1 text-sm">
                 <div className="flex items-center gap-2">
                   <span>비밀번호</span>
                   <Popover
