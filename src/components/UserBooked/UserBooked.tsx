@@ -179,8 +179,6 @@ const UserBooked: React.FC = () => {
                 Table: {
                   headerBg: '#FEDB6B',
                   headerColor: '#000',
-                  borderRadiusLG: 6,
-                  borderRadiusSM: 6,
                 },
               },
             }}
