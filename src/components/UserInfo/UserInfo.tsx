@@ -163,7 +163,7 @@ const UserInfo: React.FC = () => {
   return (
     <div className="mt-10 mb-10 flex flex-col items-center">
       <div className="w-100 rounded-lg border-1 border-gray-300 bg-white px-5 shadow-md">
-        <Divider variant="dotted" style={{ borderColor: '#B59171' }}>
+        <Divider variant="dotted" style={{ borderColor: '#FECA3A' }}>
           내 프로필
         </Divider>
         <div className="mb-6 flex flex-col">

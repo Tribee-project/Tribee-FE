@@ -49,7 +49,7 @@ const UserPageButtons: React.FC = () => {
       {buttonItems.map((item, index) =>
         isClicked(item.path) ? (
           <div
-            className="flex h-35 w-40 cursor-pointer flex-col items-center justify-center bg-[#B59171] font-bold"
+            className="flex h-35 w-40 cursor-pointer flex-col items-center justify-center bg-[#FECA3A] font-bold"
             style={{
               clipPath:
                 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
