@@ -113,7 +113,7 @@ const UserReviews: React.FC = () => {
               <DatePicker
                 onChange={handleDateChange}
                 picker="year"
-                placeholder="예약 년도"
+                placeholder="작성 년도"
                 size="middle"
                 style={{ width: '10%' }}
               />
