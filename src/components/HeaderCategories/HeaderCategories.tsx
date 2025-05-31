@@ -1,4 +1,4 @@
-import { Button, Space } from 'antd';
+import { Button, ConfigProvider, Space } from 'antd';
 import { Dropdown } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
@@ -42,27 +42,37 @@ const HeaderCategories: React.FC = () => {
   ];
 
   return (
-    <Space direction="vertical" className="mt-7 w-full items-center gap-10">
-      <Space wrap>
-        {categories.map((category, index) => (
-          <Dropdown
-            key={index}
-            menu={{ items: category.items }}
-            placement="bottom"
-          >
-            <Button
-              size="large"
-              type="text"
-              onClick={
-                category.path ? () => navigate(category.path) : undefined
-              }
+    <ConfigProvider
+      theme={{
+        components: {
+          Dropdown: {
+            controlItemBgHover: '#fcd34d',
+          },
+        },
+      }}
+    >
+      <Space direction="vertical" className="mt-7 w-full items-center gap-10">
+        <Space wrap>
+          {categories.map((category, index) => (
+            <Dropdown
+              key={index}
+              menu={{ items: category.items }}
+              placement="bottom"
             >
-              {category.title}
-            </Button>
-          </Dropdown>
-        ))}
+              <Button
+                size="large"
+                type="text"
+                onClick={
+                  category.path ? () => navigate(category.path) : undefined
+                }
+              >
+                {category.title}
+              </Button>
+            </Dropdown>
+          ))}
+        </Space>
       </Space>
-    </Space>
+    </ConfigProvider>
   );
 };
 
