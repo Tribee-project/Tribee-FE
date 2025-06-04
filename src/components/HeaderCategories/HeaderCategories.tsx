@@ -22,22 +22,22 @@ const HeaderCategories: React.FC = () => {
     {
       title: '투어/입장권',
       items: [],
-      path: '/tour',
+      path: '/product-list/tour',
     },
     {
       title: '허니문',
       items: [],
-      path: '/honeymoon',
+      path: '/product-list/honeymoon',
     },
     {
       title: '워크샵',
       items: [],
-      path: '/workshop',
+      path: '/product-list/workshop',
     },
     {
       title: '이벤트',
       items: [],
-      path: '/event',
+      path: '/product-list/event',
     },
   ];
 
