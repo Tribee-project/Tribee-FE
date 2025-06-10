@@ -104,16 +104,16 @@ const JejuProductList: React.FC = () => {
           </ConfigProvider>
         </div>
       </div>
-      <div className="flex w-200 flex-col items-center gap-10">
+      <div className="flex w-200 flex-col items-center gap-15">
         <Space>
           <div
-            className="w-200 cursor-pointer bg-gray-200 p-2 text-center"
+            className="w-200 cursor-pointer rounded-md bg-gray-200 p-2 text-center"
             onClick={() => openNotification()}
           >
             <p>🍊 제주도 여행시 안내사항을 확인하세요</p>
           </div>
         </Space>
-        <div className="flex w-full flex-col gap-5">
+        <div className="flex w-full flex-col gap-5 shadow-lg">
           <div className="flex">
             <div className="h-50 w-50 bg-gray-300">이미지</div>
             <div className="flex w-150 flex-col bg-gray-200 p-7">
