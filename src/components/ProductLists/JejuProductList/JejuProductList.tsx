@@ -113,9 +113,15 @@ const JejuProductList: React.FC = () => {
             <p>🍊 제주도 여행시 안내사항을 확인하세요</p>
           </div>
         </Space>
-        <div className="flex w-full flex-col gap-5 border-1 border-gray-200 shadow-lg">
+        <div className="flex w-full cursor-pointer flex-col gap-5 border-1 border-gray-200 shadow-lg">
           <div className="flex">
-            <div className="h-50 w-50 bg-gray-300">이미지</div>
+            <div className="h-50 w-50 bg-gray-300">
+              <img
+                alt="product-image"
+                src="https://dimgcdn.ybtour.co.kr/TN/d3/d3249f2a4444a693c16f8b9bfcfcd31c.tn.410x280.jpg"
+                className="h-full w-full object-cover"
+              />
+            </div>
             <div className="flex w-150 flex-col bg-white p-7">
               <p className="overflow-hidden text-lg text-ellipsis whitespace-nowrap">
                 4박 5일 제주도 감성여행 패키지
