@@ -113,10 +113,10 @@ const JejuProductList: React.FC = () => {
             <p>🍊 제주도 여행시 안내사항을 확인하세요</p>
           </div>
         </Space>
-        <div className="flex w-full flex-col gap-5 shadow-lg">
+        <div className="flex w-full flex-col gap-5 border-1 border-gray-200 shadow-lg">
           <div className="flex">
             <div className="h-50 w-50 bg-gray-300">이미지</div>
-            <div className="flex w-150 flex-col bg-gray-200 p-7">
+            <div className="flex w-150 flex-col bg-white p-7">
               <p className="overflow-hidden text-lg text-ellipsis whitespace-nowrap">
                 4박 5일 제주도 감성여행 패키지
                 #우도#렌트카#제주동부#성산일출봉#성산맛집
