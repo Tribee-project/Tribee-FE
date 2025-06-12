@@ -104,33 +104,26 @@ const JejuProductList: React.FC = () => {
     dayFilter: number | null,
     monthFilter: Dayjs | null,
   ) => {
-    let filteredProducts = [...originalProducts];
-
-    if (dayFilter) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.travelDays === dayFilter,
-      );
-    }
-
-    if (monthFilter) {
-      filteredProducts = filteredProducts.filter((product) => {
-        const startDate = dayjs(product.startDate);
-        const endDate = dayjs(product.endDate);
-        return monthFilter.isBetween(startDate, endDate, 'month', '[]');
-      });
-    }
+    const filteredProducts = originalProducts.filter((product) => {
+      const dayMatch = !dayFilter || product.travelDays === dayFilter;
+      const monthMatch =
+        !monthFilter ||
+        monthFilter.isBetween(
+          dayjs(product.startDate),
+          dayjs(product.endDate),
+          'month',
+          '[]',
+        );
+      return dayMatch && monthMatch;
+    });
 
     setCurrentProducts(filteredProducts);
   };
 
   const handleDayClick = (day: number) => {
-    if (selectedDay === day) {
-      setSelectedDay(null);
-      applyFilters(null, selectedMonth);
-    } else {
-      setSelectedDay(day);
-      applyFilters(day, selectedMonth);
-    }
+    const newSelectedDay = selectedDay === day ? null : day;
+    setSelectedDay(newSelectedDay);
+    applyFilters(newSelectedDay, selectedMonth);
   };
 
   const handleMonthChange: DatePickerProps['onChange'] = (date) => {
