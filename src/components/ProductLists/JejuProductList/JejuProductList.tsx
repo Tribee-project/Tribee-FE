@@ -3,22 +3,51 @@ import 'dayjs/locale/ko';
 import { ConfigProvider, DatePicker, notification, Space } from 'antd';
 import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { getProductsByArea } from '@/services/apis/productsApis';
 
 dayjs.locale('ko');
+
+interface Product {
+  _id: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+  standardPrice: number;
+  area: string;
+  image: string[];
+  travelPoint: string;
+  travelDays: number;
+  departureData: {
+    departureTime: string;
+    arrivalTime: string;
+    timeTaken: string;
+  };
+  arrivalData: {
+    departureTime: string;
+    arrivalTime: string;
+    timeTaken: string;
+  };
+  airline: string;
+  status: number;
+  category: string;
+  detailContent: string;
+  detailImage: string;
+}
 
 const TRAVEL_DAYS = [
   {
     label: '3일',
-    value: 'THREE_DAYS',
+    value: 3,
   },
   {
     label: '4일',
-    value: 'FOUR_DAYS',
+    value: 4,
   },
   {
     label: '5일',
-    value: 'FIVE_DAYS',
+    value: 5,
   },
 ];
 
@@ -26,7 +55,19 @@ const JejuProductList: React.FC = () => {
   const [api, contextHolder] = notification.useNotification({
     maxCount: 1,
   });
-  const [selectedDay, setSelectedDay] = useState<string | null>(null);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const productList = await getProductsByArea('JEJU');
+      setProducts(productList);
+      setOriginalProducts(productList);
+    };
+
+    fetchProducts();
+  }, []);
 
   const openNotification = () => {
     api.info({
@@ -50,11 +91,16 @@ const JejuProductList: React.FC = () => {
     });
   };
 
-  const handleDayClick = (day: string) => {
+  const handleDayClick = (day: number) => {
     if (selectedDay === day) {
       setSelectedDay(null);
+      setProducts(originalProducts);
     } else {
       setSelectedDay(day);
+      const filteredProducts = products.filter(
+        (product) => product.travelDays === day,
+      );
+      setProducts(filteredProducts);
     }
   };
 
@@ -113,32 +159,55 @@ const JejuProductList: React.FC = () => {
             <p>🍊 제주도 여행시 안내사항을 확인하세요</p>
           </div>
         </Space>
-        <div className="flex w-full cursor-pointer flex-col gap-5 border-1 border-gray-200 shadow-lg">
-          <div className="flex">
-            <div className="h-50 w-50 bg-gray-300">
-              <img
-                alt="product-image"
-                src="https://dimgcdn.ybtour.co.kr/TN/d3/d3249f2a4444a693c16f8b9bfcfcd31c.tn.410x280.jpg"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="flex w-150 flex-col bg-white p-7">
-              <p className="overflow-hidden text-lg text-ellipsis whitespace-nowrap">
-                4박 5일 제주도 감성여행 패키지
-                #우도#렌트카#제주동부#성산일출봉#성산맛집
-              </p>
-              <div className="mt-auto flex items-end justify-between gap-2">
-                <div className="flex gap-2">
-                  <p>여행 일정 | </p>
-                  <p>2025.06.10 ~ 2025.06.14</p>
-                </div>
-                <div className="text-lg font-bold">
-                  <p>399,000원 ~</p>
+        {products.map((product) => (
+          <div
+            className="flex w-full cursor-pointer flex-col gap-5 border-1 border-gray-200 shadow-lg"
+            key={product._id}
+          >
+            <div className="flex">
+              <div className="h-50 w-50">
+                <img
+                  alt={product.title}
+                  src={product.image[0]}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="flex w-150 flex-col bg-white p-7">
+                <p className="overflow-hidden text-xl font-semibold text-ellipsis whitespace-nowrap">
+                  {product.title + ' ' + product.travelDays + '일'}
+                </p>
+                <div className="mt-auto flex items-end justify-between">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex gap-4 text-sm">
+                      <p>출발 기간</p>
+                      <p className="text-gray-600">
+                        {dayjs(product.startDate).format('YYYY.MM.DD')} ~{' '}
+                        {dayjs(product.endDate).format('YYYY.MM.DD')}
+                      </p>
+                    </div>
+                    <div className="flex gap-5 text-sm">
+                      <div className="flex gap-4">
+                        <p>이용 항공</p>
+                        <p className="text-gray-600">{product.airline}</p>
+                      </div>
+                      <p className="text-gray-300">|</p>
+                      <div className="flex gap-4">
+                        <p>비행 시간</p>
+                        <p className="text-gray-600">
+                          {product.departureData.timeTaken.split(':')[0] +
+                            '시간'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="text-lg font-bold">
+                    <p>{product.standardPrice.toLocaleString()} 원 ~</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
