@@ -66,12 +66,12 @@ const JejuProductList: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<Dayjs | null>(null);
   const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const productList = await getProductsByArea('JEJU');
-      setProducts(productList);
+      setCurrentProducts(productList);
       setOriginalProducts(productList);
     };
 
@@ -120,7 +120,7 @@ const JejuProductList: React.FC = () => {
       });
     }
 
-    setProducts(filteredProducts);
+    setCurrentProducts(filteredProducts);
   };
 
   const handleDayClick = (day: number) => {
@@ -198,7 +198,7 @@ const JejuProductList: React.FC = () => {
             <p>🍊 제주도 여행시 안내사항을 확인하세요</p>
           </div>
         </Space>
-        {products.map((product) => (
+        {currentProducts.map((product) => (
           <div
             className="flex w-full cursor-pointer flex-col gap-5 border-1 border-gray-200 shadow-lg"
             key={product._id}
