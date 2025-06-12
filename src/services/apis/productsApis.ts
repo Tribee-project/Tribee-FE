@@ -17,4 +17,9 @@ const getProductById = async (id: string) => {
   return response.data;
 };
 
-export { getAllProducts, getProductById };
+const getProductsByArea = async (area: string) => {
+  const response = await productsApi.get(`?area1=${area}`);
+  return response.data;
+};
+
+export { getAllProducts, getProductById, getProductsByArea };
