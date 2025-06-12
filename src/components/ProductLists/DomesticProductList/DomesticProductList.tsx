@@ -178,7 +178,7 @@ const DomesticProductList: React.FC = () => {
                     </div>
                     <div className="flex gap-5 text-sm">
                       <div className="flex gap-4">
-                        <p>여행 지역</p>
+                        <p>여행 설명</p>
                         <p className="text-gray-600">{product.travelPoint}</p>
                       </div>
                     </div>
