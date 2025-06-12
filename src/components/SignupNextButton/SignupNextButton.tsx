@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import sendVerificationEmail from '@/services/apis/emailSendApi';
-import { signUp } from '@/services/axios/authApis';
+import { signUp } from '@/services/apis/authApis';
+import sendVerificationEmail from '@/services/externalApis/emailSendApi';
 import useUserInfoStore from '@/stores/userInfoStore';
 import useValidateEmailStore from '@/stores/validateEmailStore';
 import useValidatePasswordStore from '@/stores/validatePasswordStore';

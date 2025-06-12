@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { login } from '@/services/axios/authApis';
+import { login } from '@/services/apis/authApis';
 import useUserInfoStore from '@/stores/userInfoStore';
 import useValidatePasswordStore from '@/stores/validatePasswordStore';
 

@@ -2,7 +2,7 @@ import { Popover } from 'antd';
 import { ChangeEvent, FormEvent, KeyboardEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { login } from '@/services/axios/authApis';
+import { login } from '@/services/apis/authApis';
 import { emailValidation, passwordValidation } from '@/utils/validations';
 
 import FindAuthInfoButtons from '../FindAuthInfoButtons/FindAuthInfoButtons';

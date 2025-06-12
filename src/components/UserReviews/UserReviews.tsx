@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-import { getProductById } from '@/services/axios/productsApis';
+import { getProductById } from '@/services/apis/productsApis';
 
 dayjs.locale('ko');
 

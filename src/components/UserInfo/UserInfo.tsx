@@ -7,7 +7,7 @@ import {
   editUserNickname,
   editUserPassword,
   getUserInfo,
-} from '@/services/axios/userApis';
+} from '@/services/apis/userApis';
 import useUserInfoStore from '@/stores/userInfoStore';
 import { nicknameValidation, passwordValidation } from '@/utils/validations';
 interface ProfileItemProps {

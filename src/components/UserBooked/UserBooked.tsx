@@ -13,8 +13,8 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
-import { getProductById } from '@/services/axios/productsApis';
-import { getUserBooked } from '@/services/axios/userApis';
+import { getProductById } from '@/services/apis/productsApis';
+import { getUserBooked } from '@/services/apis/userApis';
 
 dayjs.locale('ko');
 
