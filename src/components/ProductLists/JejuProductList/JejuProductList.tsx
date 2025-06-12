@@ -165,6 +165,10 @@ const JejuProductList: React.FC = () => {
                   colorBorder: '#FECA3A',
                   hoverBorderColor: '#FECA3A',
                   activeBorderColor: '#FECA3A',
+                  colorPrimary: '#FECA3A',
+                  colorPrimaryHover: '#FED047',
+                  colorPrimaryActive: '#FEB800',
+                  colorTextLightSolid: '#000000',
                 },
               },
             }}
@@ -182,10 +186,10 @@ const JejuProductList: React.FC = () => {
           </ConfigProvider>
         </div>
       </div>
-      <div className="flex w-200 flex-col items-center gap-15">
+      <div className="flex w-200 flex-col items-center gap-10">
         <Space>
           <div
-            className="w-200 cursor-pointer rounded-md bg-gray-200 p-2 text-center"
+            className="mb-8 w-200 cursor-pointer rounded-md bg-gray-200 p-2 text-center"
             onClick={() => openNotification()}
           >
             <p>🍊 제주도 여행시 안내사항을 확인하세요</p>
@@ -193,7 +197,7 @@ const JejuProductList: React.FC = () => {
         </Space>
         {currentProducts.map((product) => (
           <div
-            className="flex w-full cursor-pointer flex-col gap-5 border-1 border-gray-200 shadow-lg"
+            className="flex w-full cursor-pointer flex-col border-1 border-gray-200 shadow-lg"
             key={product._id}
           >
             <div className="flex">
@@ -232,7 +236,7 @@ const JejuProductList: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="text-lg font-bold">
+                  <div className="text-red-450 text-lg font-bold text-red-400">
                     <p>{product.standardPrice.toLocaleString()} 원 ~</p>
                   </div>
                 </div>
