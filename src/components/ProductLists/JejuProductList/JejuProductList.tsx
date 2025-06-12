@@ -1,12 +1,20 @@
 import 'dayjs/locale/ko';
 
-import { ConfigProvider, DatePicker, notification, Space } from 'antd';
+import {
+  ConfigProvider,
+  DatePicker,
+  DatePickerProps,
+  notification,
+  Space,
+} from 'antd';
 import locale from 'antd/locale/ko_KR';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
 import { useEffect, useState } from 'react';
 
 import { getProductsByArea } from '@/services/apis/productsApis';
 
+dayjs.extend(isBetween);
 dayjs.locale('ko');
 
 interface Product {
@@ -56,6 +64,7 @@ const JejuProductList: React.FC = () => {
     maxCount: 1,
   });
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [selectedMonth, setSelectedMonth] = useState<Dayjs | null>(null);
   const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -91,17 +100,46 @@ const JejuProductList: React.FC = () => {
     });
   };
 
+  const applyFilters = (
+    dayFilter: number | null,
+    monthFilter: Dayjs | null,
+  ) => {
+    let filteredProducts = [...originalProducts];
+
+    if (dayFilter) {
+      filteredProducts = filteredProducts.filter(
+        (product) => product.travelDays === dayFilter,
+      );
+    }
+
+    if (monthFilter) {
+      filteredProducts = filteredProducts.filter((product) => {
+        const startDate = dayjs(product.startDate);
+        const endDate = dayjs(product.endDate);
+        return monthFilter.isBetween(startDate, endDate, 'month', '[]');
+      });
+    }
+
+    setProducts(filteredProducts);
+  };
+
   const handleDayClick = (day: number) => {
     if (selectedDay === day) {
       setSelectedDay(null);
-      setProducts(originalProducts);
+      applyFilters(null, selectedMonth);
     } else {
       setSelectedDay(day);
-      const filteredProducts = products.filter(
-        (product) => product.travelDays === day,
-      );
-      setProducts(filteredProducts);
+      applyFilters(day, selectedMonth);
     }
+  };
+
+  const handleMonthChange: DatePickerProps['onChange'] = (date) => {
+    setSelectedMonth(date);
+    applyFilters(selectedDay, date);
+  };
+
+  const disabledDate = (current: Dayjs) => {
+    return current && current.isBefore(dayjs(), 'month');
   };
 
   return (
@@ -140,7 +178,8 @@ const JejuProductList: React.FC = () => {
           >
             <Space direction="vertical" style={{ width: '100%' }}>
               <DatePicker
-                onChange={() => {}}
+                onChange={handleMonthChange}
+                disabledDate={disabledDate}
                 picker="month"
                 placeholder="출발 월"
                 size="middle"
