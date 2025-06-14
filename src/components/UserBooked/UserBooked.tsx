@@ -15,19 +15,9 @@ import { useEffect, useState } from 'react';
 
 import { getProductById } from '@/services/apis/productsApis';
 import { getUserBooked } from '@/services/apis/userApis';
+import type { UserBooked } from '@/types';
 
 dayjs.locale('ko');
-
-interface UserBooked {
-  id: string;
-  userId: string;
-  prodId: string;
-  reservationDate: string;
-  departureDate: string;
-  cost: number;
-  personnel: number;
-  status: number;
-}
 
 const ProductNameCell: React.FC<{ prodId: string }> = ({ prodId }) => {
   const [productName, setProductName] = useState<string>('로딩 중...');
@@ -36,8 +26,7 @@ const ProductNameCell: React.FC<{ prodId: string }> = ({ prodId }) => {
     const loadProductName = async () => {
       try {
         const product = await getProductById(prodId);
-        const bookedProduct = product[0];
-        setProductName(bookedProduct.title);
+        setProductName(product.title);
       } catch (error) {
         console.error(`API 호출 실패 for ${prodId}:`, error);
         setProductName('API 호출 실패');

@@ -6,35 +6,9 @@ import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
 import { getProductsByArea } from '@/services/apis/productsApis';
+import type { Product } from '@/types';
 
 dayjs.locale('ko');
-
-interface Product {
-  _id: string;
-  title: string;
-  startDate: string;
-  endDate: string;
-  standardPrice: number;
-  area: string;
-  image: string[];
-  travelPoint: string;
-  travelDays: number;
-  departureData: {
-    departureTime: string;
-    arrivalTime: string;
-    timeTaken: string;
-  };
-  arrivalData: {
-    departureTime: string;
-    arrivalTime: string;
-    timeTaken: string;
-  };
-  airline: string;
-  status: number;
-  category: string;
-  detailContent: string;
-  detailImage: string;
-}
 
 const TRAVEL_DAYS = [
   {

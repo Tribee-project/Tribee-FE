@@ -1,17 +1,8 @@
 import { create } from 'zustand';
 
-interface userInfoStore {
-  userInfo: {
-    email: string;
-    nickname: string;
-  };
-  actions: {
-    setUserEmail: (email: string) => void;
-    setUserNickname: (nickname: string) => void;
-  };
-}
+import type { UserInfoStore } from '@/types';
 
-const useUserInfoStore = create<userInfoStore>((set) => ({
+const useUserInfoStore = create<UserInfoStore>((set) => ({
   userInfo: {
     email: '',
     nickname: '',

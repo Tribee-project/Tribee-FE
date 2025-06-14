@@ -1,9 +1,6 @@
 import React from 'react';
 
-interface SocialButtonProps {
-  name: string;
-  imagePath: string;
-}
+import type { SocialButtonProps, SocialProvider } from '@/types';
 
 const SocialLoginButtons: React.FC = () => {
   const socialButtons: SocialButtonProps[] = [
@@ -21,7 +18,7 @@ const SocialLoginButtons: React.FC = () => {
     },
   ];
 
-  const handleSocialLogin = (provider: string) => {
+  const handleSocialLogin = (provider: SocialProvider) => {
     // 소셜 로그인 처리 로직 구현
     console.log(`${provider} 로그인 시도`);
   };
@@ -34,7 +31,7 @@ const SocialLoginButtons: React.FC = () => {
           src={button.imagePath}
           alt={button.name}
           className="w-10 cursor-pointer rounded-[50%]"
-          onClick={() => handleSocialLogin(button.name)}
+          onClick={() => handleSocialLogin(button.name as SocialProvider)}
         />
       ))}
     </div>

@@ -1,11 +1,6 @@
 import { create } from 'zustand';
 
-interface VerifiedStore {
-  verified: boolean;
-  actions: {
-    setVerified: (verified: boolean) => void;
-  };
-}
+import type { VerifiedStore } from '@/types';
 
 const useVerifiedStore = create<VerifiedStore>((set) => ({
   verified: false,

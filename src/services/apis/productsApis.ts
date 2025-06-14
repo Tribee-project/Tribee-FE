@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import type { Product } from '@/types';
+
 const productsApi = axios.create({
   baseURL: 'https://cfb9-125-133-70-87.ngrok-free.app/api/v1/product',
   headers: {
@@ -7,18 +9,18 @@ const productsApi = axios.create({
   },
 });
 
-const getAllProducts = async () => {
-  const response = await productsApi.get('/');
+const getAllProducts = async (): Promise<Product[]> => {
+  const response = await productsApi.get<Product[]>('/');
   return response.data;
 };
 
-const getProductById = async (id: string) => {
-  const response = await productsApi.get(`/list?id=${id}`);
+const getProductById = async (id: string): Promise<Product> => {
+  const response = await productsApi.get<Product>(`/list?id=${id}`);
   return response.data;
 };
 
-const getProductsByArea = async (area: string) => {
-  const response = await productsApi.get(`?area1=${area}`);
+const getProductsByArea = async (area: string): Promise<Product[]> => {
+  const response = await productsApi.get<Product[]>(`?area1=${area}`);
   return response.data;
 };
 

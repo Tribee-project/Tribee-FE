@@ -1,4 +1,6 @@
-const questionList = [
+import type { Question } from '@/types';
+
+const questionList: Question[] = [
   {
     key: '1',
     label: '예약 취소 및 변경은 어떻게 해야하나요?',

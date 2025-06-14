@@ -1,12 +1,15 @@
 import { Collapse, CollapseProps, ConfigProvider } from 'antd';
 
-import questionList from '@/constant/questionList';
+import questionList from '@/constants/questionList';
+import type { Question } from '@/types';
 
-const items: CollapseProps['items'] = questionList.map((question) => ({
-  key: question.key,
-  label: question.label,
-  children: <p>{question.children}</p>,
-}));
+const items: CollapseProps['items'] = questionList.map(
+  (question: Question) => ({
+    key: question.key,
+    label: question.label,
+    children: <p>{question.children}</p>,
+  }),
+);
 
 const UserQuestions: React.FC = () => {
   return (

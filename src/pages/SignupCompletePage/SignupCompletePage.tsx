@@ -1,5 +1,5 @@
 import signupCongratulation from '@/assets/congrat.png';
-import SignupCompleteLoginButton from '@/components/SignupCompleteLoginButton/SignupcompleteloginButton';
+import SignupCompleteLoginButton from '@/components/SignupCompleteLoginButton/SignupCompleteLoginButton';
 
 const SignupCompletePage: React.FC = () => {
   return (

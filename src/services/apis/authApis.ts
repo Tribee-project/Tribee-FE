@@ -1,15 +1,6 @@
 import axios from 'axios';
 
-interface SignUpData {
-  email: string;
-  password: string;
-  nickname: string;
-}
-
-interface LoginData {
-  email: string;
-  password: string;
-}
+import type { LoginData, SignUpData } from '@/types';
 
 const authApi = axios.create({
   baseURL: 'https://cfb9-125-133-70-87.ngrok-free.app/api/v1/auth',

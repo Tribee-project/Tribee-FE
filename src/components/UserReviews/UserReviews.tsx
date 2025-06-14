@@ -34,8 +34,7 @@ const ProductNameCell: React.FC<{ prodId: string }> = ({ prodId }) => {
     const loadProductName = async () => {
       try {
         const product = await getProductById(prodId);
-        const bookedProduct = product[0];
-        setProductName(bookedProduct.title);
+        setProductName(product.title);
       } catch (error) {
         console.error(`API 호출 실패 for ${prodId}:`, error);
         setProductName('API 호출 실패');

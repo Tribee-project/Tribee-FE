@@ -1,13 +1,6 @@
 import { create } from 'zustand';
 
-interface ValidateEmailStore {
-  passcode: string;
-  isValidEmail: boolean;
-  actions: {
-    setPasscode: (passcode: string) => void;
-    setIsValid: (isValid: boolean) => void;
-  };
-}
+import type { ValidateEmailStore } from '@/types';
 
 const useValidateEmailStore = create<ValidateEmailStore>((set) => ({
   passcode: '',

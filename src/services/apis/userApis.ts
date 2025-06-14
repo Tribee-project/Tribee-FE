@@ -1,15 +1,11 @@
 import axios from 'axios';
 
-interface UserBooked {
-  id: string;
-  userId: string;
-  prodId: string;
-  reservationDate: string;
-  departureDate: string;
-  cost: number;
-  personnel: number;
-  status: number;
-}
+import type {
+  EditUserNicknameRequest,
+  EditUserPasswordRequest,
+  UserBooked,
+  UserInfo,
+} from '@/types';
 
 const userApi = axios.create({
   baseURL: 'https://cfb9-125-133-70-87.ngrok-free.app/api/v1',
@@ -31,16 +27,20 @@ userApi.interceptors.request.use(
   },
 );
 
-const getUserInfo = async () => {
-  const response = await userApi.get('/user/info');
-  return response.data;
+const getUserInfo = async (): Promise<UserInfo> => {
+  const response = await userApi.get<{ data: UserInfo }>('/user/info');
+  return response.data.data;
 };
 
-const editUserNickname = async (data: { nickname: string }): Promise<void> => {
+const editUserNickname = async (
+  data: EditUserNicknameRequest,
+): Promise<void> => {
   await userApi.put('/user/info', data);
 };
 
-const editUserPassword = async (data: { password: string }): Promise<void> => {
+const editUserPassword = async (
+  data: EditUserPasswordRequest,
+): Promise<void> => {
   await userApi.put('/user/password', data);
 };
 

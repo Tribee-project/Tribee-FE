@@ -1,13 +1,6 @@
 import { create } from 'zustand';
 
-interface ValidatePasswordStore {
-  password: string;
-  validPassword: string;
-  actions: {
-    setPassword: (password: string) => void;
-    setValidPassword: (validPassword: string) => void;
-  };
-}
+import type { ValidatePasswordStore } from '@/types';
 
 const useValidatePasswordStore = create<ValidatePasswordStore>((set) => ({
   password: '',
