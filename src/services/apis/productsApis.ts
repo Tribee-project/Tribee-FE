@@ -15,7 +15,7 @@ const getAllProducts = async (): Promise<Product[]> => {
 };
 
 const getProductById = async (id: string): Promise<Product> => {
-  const response = await productsApi.get<Product>(`/list?id=${id}`);
+  const response = await productsApi.get<Product>(`/single?id=${id}`);
   return response.data;
 };
 
