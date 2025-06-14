@@ -5,6 +5,8 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
+import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
+
 dayjs.locale('ko');
 
 const TRAVEL_DAYS = [
@@ -29,24 +31,7 @@ const ChinaProductList: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   const openNotification = () => {
-    api.info({
-      message: `중국 여행 안내사항`,
-      description: (
-        <ul className="list-disc">
-          <li>
-            중국 입국 시 비자가 필요하며, 여권 유효기간을 6개월 이상 확인하세요.
-          </li>
-          <li>구글, 페이스북 등 일부 사이트가 차단되니 VPN을 준비하세요.</li>
-          <li>
-            대기오염이 심할 수 있으니 마스크를 준비하고, 물은 생수를 드세요.
-          </li>
-        </ul>
-      ),
-      placement: 'top',
-      style: {
-        width: 650,
-      },
-    });
+    api.info(TRAVEL_NOTIFICATIONS.CHINA);
   };
 
   const handleDayClick = (day: string) => {

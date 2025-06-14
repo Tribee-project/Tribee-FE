@@ -5,6 +5,8 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
+import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
+
 dayjs.locale('ko');
 
 const TRAVEL_DAYS = [
@@ -29,23 +31,7 @@ const AmericasProductList: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   const openNotification = () => {
-    api.info({
-      message: `괌/사이판 여행 안내사항`,
-      description: (
-        <ul className="list-disc">
-          <li>
-            괌/사이판은 한국인 무비자 입국이 가능하며, 여권 유효기간 6개월 이상
-            필요합니다.
-          </li>
-          <li>자외선이 매우 강하니 선크림과 선글라스를 필수로 준비하세요.</li>
-          <li>팁 문화가 있으니 레스토랑과 호텔에서 10-15% 팁을 준비하세요.</li>
-        </ul>
-      ),
-      placement: 'top',
-      style: {
-        width: 650,
-      },
-    });
+    api.info(TRAVEL_NOTIFICATIONS.AMERICAS);
   };
 
   const handleDayClick = (day: string) => {

@@ -12,6 +12,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useEffect, useState } from 'react';
 
+import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
 import { getProductsByArea } from '@/services/apis/productsApis';
 import type { Product } from '@/types';
 
@@ -53,25 +54,7 @@ const JejuProductList: React.FC = () => {
   }, []);
 
   const openNotification = () => {
-    api.info({
-      message: `제주도 여행 안내사항`,
-      description: (
-        <ul className="list-disc">
-          <li>
-            제주도 여행 시 날씨 변화가 심하니 우산과 바람막이를 준비하세요.
-          </li>
-          <li>
-            렌터카 이용 시 도로가 좁으니 주의 운전하시고, 현지 맛집은 미리
-            예약하는 것을 추천합니다.
-          </li>
-          <li>햇빛이 강하니 자외선 차단제를 준비하세요.</li>
-        </ul>
-      ),
-      placement: 'top',
-      style: {
-        width: 650,
-      },
-    });
+    api.info(TRAVEL_NOTIFICATIONS.JEJU);
   };
 
   const applyFilters = (

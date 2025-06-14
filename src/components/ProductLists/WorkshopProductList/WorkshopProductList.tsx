@@ -5,6 +5,8 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
+import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
+
 dayjs.locale('ko');
 
 const TRAVEL_DAYS = [
@@ -29,20 +31,7 @@ const WorkshopProductList: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   const openNotification = () => {
-    api.info({
-      message: `워크샵 여행 안내사항`,
-      description: (
-        <ul className="list-disc">
-          <li>워크샵 여행은 체험 활동이 많으니 편한 복장을 준비하세요.</li>
-          <li>전문 강사의 지도를 받으며 새로운 기술을 배울 수 있습니다.</li>
-          <li>재료비나 도구 대여비가 별도로 발생할 수 있으니 확인하세요.</li>
-        </ul>
-      ),
-      placement: 'top',
-      style: {
-        width: 650,
-      },
-    });
+    api.info(TRAVEL_NOTIFICATIONS.WORKSHOP);
   };
 
   const handleDayClick = (day: string) => {

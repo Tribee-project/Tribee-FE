@@ -5,6 +5,8 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
+import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
+
 dayjs.locale('ko');
 
 const TRAVEL_DAYS = [
@@ -29,27 +31,7 @@ const JapanProductList: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   const openNotification = () => {
-    api.info({
-      message: `일본 여행 안내사항`,
-      description: (
-        <ul className="list-disc">
-          <li>
-            일본은 현금 사회이므로 충분한 엔화를 준비하시고, IC카드를 미리
-            구매하세요.
-          </li>
-          <li>
-            온천 이용 시 문신이 있으면 입장이 제한될 수 있으니 미리 확인하세요.
-          </li>
-          <li>
-            지진이 빈번하니 안전 수칙을 숙지하고, 휴대폰 재난 알림을 설정하세요.
-          </li>
-        </ul>
-      ),
-      placement: 'top',
-      style: {
-        width: 650,
-      },
-    });
+    api.info(TRAVEL_NOTIFICATIONS.JAPAN);
   };
 
   const handleDayClick = (day: string) => {

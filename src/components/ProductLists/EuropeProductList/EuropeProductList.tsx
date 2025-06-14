@@ -5,6 +5,8 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
+import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
+
 dayjs.locale('ko');
 
 const TRAVEL_DAYS = [
@@ -29,22 +31,7 @@ const EuropeProductList: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   const openNotification = () => {
-    api.info({
-      message: `유럽 여행 안내사항`,
-      description: (
-        <ul className="list-disc">
-          <li>유럽 여행 시 솅겐 비자가 필요할 수 있으니 미리 확인하세요.</li>
-          <li>
-            소매치기가 많으니 귀중품 관리에 주의하고, 가방은 앞으로 메세요.
-          </li>
-          <li>대부분 카드 결제가 가능하지만 소액 팁용 현금을 준비하세요.</li>
-        </ul>
-      ),
-      placement: 'top',
-      style: {
-        width: 650,
-      },
-    });
+    api.info(TRAVEL_NOTIFICATIONS.EUROPE);
   };
 
   const handleDayClick = (day: string) => {

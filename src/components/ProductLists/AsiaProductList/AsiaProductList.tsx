@@ -5,6 +5,8 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
+import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
+
 dayjs.locale('ko');
 
 const TRAVEL_DAYS = [
@@ -60,22 +62,7 @@ const AsiaProductList: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   const openNotification = () => {
-    api.info({
-      message: `동남아시아 여행 안내사항`,
-      description: (
-        <ul className="list-disc">
-          <li>동남아시아는 우기와 건기가 있으니 여행 시기를 잘 선택하세요.</li>
-          <li>
-            모기가 많으니 방충제를 준비하고, 열대병 예방접종을 고려하세요.
-          </li>
-          <li>길거리 음식 섭취 시 주의하고, 생수를 마시는 것을 권장합니다.</li>
-        </ul>
-      ),
-      placement: 'top',
-      style: {
-        width: 650,
-      },
-    });
+    api.info(TRAVEL_NOTIFICATIONS.ASIA);
   };
 
   const handleDayClick = (day: string) => {

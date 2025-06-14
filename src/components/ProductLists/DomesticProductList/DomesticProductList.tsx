@@ -5,6 +5,7 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
+import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
 import { getProductsByArea } from '@/services/apis/productsApis';
 import type { Product } from '@/types';
 
@@ -40,20 +41,7 @@ const DomesticProductList: React.FC = () => {
   }, []);
 
   const openNotification = () => {
-    api.info({
-      message: `국내 여행 안내사항`,
-      description: (
-        <ul className="list-disc">
-          <li>국내 여행 시 대중교통 이용이 편리하니 교통카드를 준비하세요.</li>
-          <li>계절별 날씨 변화가 크니 여행 지역의 날씨를 미리 확인하세요.</li>
-          <li>지역 특산품과 맛집 정보를 미리 알아보고 방문하세요.</li>
-        </ul>
-      ),
-      placement: 'top',
-      style: {
-        width: 650,
-      },
-    });
+    api.info(TRAVEL_NOTIFICATIONS.DOMESTIC);
   };
 
   const handleDayClick = (day: number) => {

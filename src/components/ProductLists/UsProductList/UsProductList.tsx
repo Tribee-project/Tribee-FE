@@ -5,6 +5,8 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
+import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
+
 dayjs.locale('ko');
 
 const TRAVEL_DAYS = [
@@ -29,25 +31,7 @@ const UsProductList: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   const openNotification = () => {
-    api.info({
-      message: `미국 여행 안내사항`,
-      description: (
-        <ul className="list-disc">
-          <li>
-            미국 입국 시 ESTA 또는 비자가 필요하며, 여권 유효기간을 확인하세요.
-          </li>
-          <li>
-            팁 문화가 발달되어 있으니 레스토랑, 택시 등에서 15-20% 팁을
-            준비하세요.
-          </li>
-          <li>의료비가 비싸니 여행자 보험 가입을 권장합니다.</li>
-        </ul>
-      ),
-      placement: 'top',
-      style: {
-        width: 650,
-      },
-    });
+    api.info(TRAVEL_NOTIFICATIONS.US);
   };
 
   const handleDayClick = (day: string) => {

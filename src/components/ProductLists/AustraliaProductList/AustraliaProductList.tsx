@@ -5,6 +5,8 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
+import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
+
 dayjs.locale('ko');
 
 const TRAVEL_DAYS = [
@@ -29,20 +31,7 @@ const AustraliaProductList: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   const openNotification = () => {
-    api.info({
-      message: `호주 여행 안내사항`,
-      description: (
-        <ul className="list-disc">
-          <li>호주는 계절이 반대이므로 여행 시기에 맞는 옷을 준비하세요.</li>
-          <li>자외선이 매우 강하니 선크림과 모자를 필수로 준비하세요.</li>
-          <li>팁 문화가 없으며, 대부분 카드 결제가 가능합니다.</li>
-        </ul>
-      ),
-      placement: 'top',
-      style: {
-        width: 650,
-      },
-    });
+    api.info(TRAVEL_NOTIFICATIONS.AUSTRALIA);
   };
 
   const handleDayClick = (day: string) => {

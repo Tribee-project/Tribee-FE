@@ -5,6 +5,8 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
+import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
+
 dayjs.locale('ko');
 
 const TRAVEL_DAYS = [
@@ -29,22 +31,7 @@ const HoneymoonProductList: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   const openNotification = () => {
-    api.info({
-      message: `허니문 여행 안내사항`,
-      description: (
-        <ul className="list-disc">
-          <li>
-            허니문 여행은 미리 예약하여 특별한 서비스를 받을 수 있도록 하세요.
-          </li>
-          <li>로맨틱한 레스토랑과 스파는 사전 예약이 필수입니다.</li>
-          <li>여권과 비자, 그리고 결혼증명서를 준비하세요.</li>
-        </ul>
-      ),
-      placement: 'top',
-      style: {
-        width: 650,
-      },
-    });
+    api.info(TRAVEL_NOTIFICATIONS.HONEYMOON);
   };
 
   const handleDayClick = (day: string) => {
