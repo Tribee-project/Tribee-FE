@@ -28,8 +28,8 @@ userApi.interceptors.request.use(
 );
 
 const getUserInfo = async (): Promise<UserInfo> => {
-  const response = await userApi.get<{ data: UserInfo }>('/user/info');
-  return response.data.data;
+  const response = await userApi.get('/user/info');
+  return response.data;
 };
 
 const editUserNickname = async (

@@ -42,7 +42,7 @@ const UserInfo: React.FC = () => {
   const [userInfo, setUserInfo] = useState<{
     email: string;
     nickname: string;
-  }>({ email: '', nickname: '' });
+  } | null>(null);
   const [isEditingNickname, setIsEditingNickname] = useState<boolean>(false);
   const [isChangePassword, setIsChangePassword] = useState<boolean>(false);
   const nickname = useUserInfoStore((state) => state.userInfo.nickname);
@@ -100,7 +100,7 @@ const UserInfo: React.FC = () => {
 
   const handleSaveNickname = async () => {
     try {
-      setUserInfo((prev) => ({ ...prev, nickname: nickname }));
+      setUserInfo((prev) => (prev ? { ...prev, nickname: nickname } : null));
       setIsEditingNickname(false);
       await editUserNickname({ nickname: nickname });
       alert('닉네임이 변경되었습니다.');
@@ -180,7 +180,7 @@ const UserInfo: React.FC = () => {
               </div>
               <Divider />
             </>
-          ) : (
+          ) : userInfo ? (
             <>
               <ProfileItem icon={<MailOutlined />} text={userInfo.email} />
               <Divider />
@@ -222,17 +222,23 @@ const UserInfo: React.FC = () => {
               )}
               <Divider />
             </>
+          ) : (
+            <div className="flex items-center justify-center text-gray-500">
+              사용자 정보를 불러올 수 없습니다.
+            </div>
           )}
 
-          <div className="flex items-center justify-center">
-            <button
-              className="flex cursor-pointer items-center gap-1 rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 hover:bg-gray-100"
-              onClick={clickChangePassword}
-            >
-              <LockOutlined />
-              비밀번호 수정
-            </button>
-          </div>
+          {userInfo && (
+            <div className="flex items-center justify-center">
+              <button
+                className="flex cursor-pointer items-center gap-1 rounded-md border-1 border-gray-300 p-1 px-2 text-sm text-gray-800 hover:bg-gray-100"
+                onClick={clickChangePassword}
+              >
+                <LockOutlined />
+                비밀번호 수정
+              </button>
+            </div>
+          )}
           {isChangePassword && (
             <div className="mt-4 flex items-center justify-center">
               <div className="flex flex-col gap-1 text-sm">
