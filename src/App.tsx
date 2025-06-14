@@ -23,6 +23,7 @@ import UserBooked from './components/UserBooked/UserBooked';
 import UserInfo from './components/UserInfo/UserInfo';
 import UserQuestions from './components/UserQuestions/UserQuestions';
 import UserReviews from './components/UserReviews/UserReviews';
+import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
 import ProductListPage from './pages/ProductListPage/ProductListPage';
 
 const App: React.FC = () => {
@@ -58,6 +59,7 @@ const App: React.FC = () => {
         <Route path="workshop" element={<WorkshopProductList />} />
         <Route path="event" element={<EventProductList />} />
       </Route>
+      <Route path="/product-detail" element={<ProductDetailPage />} />
     </Routes>
   );
 };

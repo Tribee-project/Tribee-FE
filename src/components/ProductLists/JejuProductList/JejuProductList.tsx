@@ -13,6 +13,7 @@ import isBetween from 'dayjs/plugin/isBetween';
 import { useEffect, useState } from 'react';
 
 import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
+import { useQueryParams } from '@/hooks/useQueryParams';
 import { getProductsByArea } from '@/services/apis/productsApis';
 import type { Product } from '@/types';
 
@@ -42,6 +43,7 @@ const JejuProductList: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<Dayjs | null>(null);
   const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
   const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
+  const { navigateToProductDetail } = useQueryParams();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -86,6 +88,10 @@ const JejuProductList: React.FC = () => {
   const handleMonthChange: DatePickerProps['onChange'] = (date) => {
     setSelectedMonth(date);
     applyFilters(selectedDay, date);
+  };
+
+  const handleProductClick = (productId: string) => {
+    navigateToProductDetail(productId);
   };
 
   const disabledDate = (current: Dayjs) => {
@@ -156,6 +162,7 @@ const JejuProductList: React.FC = () => {
           <div
             className="flex w-full cursor-pointer flex-col border-1 border-gray-200 shadow-lg"
             key={product._id}
+            onClick={() => handleProductClick(product._id)}
           >
             <div className="flex">
               <div className="h-50 w-50">
