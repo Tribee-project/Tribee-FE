@@ -20,6 +20,7 @@ const Carousel: React.FC = () => {
     ],
   );
 
+  // 캐러셀 이미지 데이터 최소 6개 이상 추가
   const carouselImages = [
     'https://scdn.ybtour.co.kr/banner/common/202504081233057291306001001040.jpg',
     'https://scdn.ybtour.co.kr/banner/common/202503250347279602308056001039.jpg',
