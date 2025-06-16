@@ -1,24 +1,21 @@
 import { ConfigProvider, Divider, Tabs, TabsProps } from 'antd';
 import { useEffect, useState } from 'react';
 
-import { useQueryParams } from '@/hooks/useQueryParams';
+import { useProductId } from '@/hooks/useProductId';
 import { getProductById } from '@/services/apis/productsApis';
 import { Product } from '@/types';
 
 const ProductDetail: React.FC = () => {
-  const { getParam } = useQueryParams();
-  const productId = getParam('id');
-  const productCode = productId?.split('-')[0];
-
+  const { id, productCode } = useProductId();
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const response = await getProductById(productId as string);
+      const response = await getProductById(id as string);
       setProduct(response);
     };
     fetchProduct();
-  }, [productId]);
+  }, [id]);
 
   const items: TabsProps['items'] = [
     {

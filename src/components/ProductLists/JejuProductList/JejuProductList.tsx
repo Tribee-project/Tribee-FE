@@ -13,7 +13,7 @@ import isBetween from 'dayjs/plugin/isBetween';
 import { useEffect, useState } from 'react';
 
 import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
-import { useQueryParams } from '@/hooks/useQueryParams';
+import { useProductId } from '@/hooks/useProductId';
 import { getProductsByArea } from '@/services/apis/productsApis';
 import type { Product } from '@/types';
 
@@ -43,7 +43,7 @@ const JejuProductList: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<Dayjs | null>(null);
   const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
   const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
-  const { navigateToProductDetail } = useQueryParams();
+  const { navigateToProductDetail } = useProductId();
 
   useEffect(() => {
     const fetchProducts = async () => {

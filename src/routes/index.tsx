@@ -135,7 +135,7 @@ const AppRoutes: React.FC = () => {
 
       {/* 상품 상세 페이지 */}
       <Route
-        path="/product-detail"
+        path="/product-detail/:id"
         element={
           <Suspense fallback={<LoadingSpinner />}>
             <ProductDetailPage />
