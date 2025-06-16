@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import type { Product } from '@/types';
+import type { Product, QueryParams } from '@/types';
 
 const productsApi = axios.create({
   baseURL: 'https://cfb9-125-133-70-87.ngrok-free.app/api/v1/product',
@@ -24,4 +24,33 @@ const getProductsByArea = async (area: string): Promise<Product[]> => {
   return response.data;
 };
 
-export { getAllProducts, getProductById, getProductsByArea };
+const getProductsByQueryParams = async (
+  queryParams: QueryParams,
+): Promise<Product[]> => {
+  const searchParams = new URLSearchParams();
+
+  if (queryParams.area) {
+    searchParams.append('area1', queryParams.area);
+  }
+
+  if (queryParams.params) {
+    Object.entries(queryParams.params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        searchParams.append(key, String(value));
+      }
+    });
+  }
+
+  const response = await productsApi.get<Product[]>(
+    `?${searchParams.toString()}`,
+  );
+
+  return response.data;
+};
+
+export {
+  getAllProducts,
+  getProductById,
+  getProductsByArea,
+  getProductsByQueryParams,
+};

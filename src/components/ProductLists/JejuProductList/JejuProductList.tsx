@@ -11,11 +11,12 @@ import locale from 'antd/locale/ko_KR';
 import dayjs, { Dayjs } from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
 import { useProductId } from '@/hooks/useProductId';
-import { getProductsByArea } from '@/services/apis/productsApis';
-import type { Product } from '@/types';
+import { getProductsByQueryParams } from '@/services/apis/productsApis';
+import type { Product, QueryParams } from '@/types';
 
 dayjs.extend(isBetween);
 dayjs.locale('ko');
@@ -40,54 +41,32 @@ const JejuProductList: React.FC = () => {
     maxCount: 1,
   });
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [selectedMonth, setSelectedMonth] = useState<Dayjs | null>(null);
-  const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
   const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
   const { navigateToProductDetail } = useProductId();
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const productList = await getProductsByArea('JEJU');
-      setCurrentProducts(productList);
-      setOriginalProducts(productList);
-    };
-
-    fetchProducts();
-  }, []);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const openNotification = () => {
     api.info(TRAVEL_NOTIFICATIONS.JEJU);
   };
 
-  const applyFilters = (
-    dayFilter: number | null,
-    monthFilter: Dayjs | null,
-  ) => {
-    const filteredProducts = originalProducts.filter((product) => {
-      const dayMatch = !dayFilter || product.travelDays === dayFilter;
-      const monthMatch =
-        !monthFilter ||
-        monthFilter.isBetween(
-          dayjs(product.startDate),
-          dayjs(product.endDate),
-          'month',
-          '[]',
-        );
-      return dayMatch && monthMatch;
-    });
-
-    setCurrentProducts(filteredProducts);
-  };
-
   const handleDayClick = (day: number) => {
     const newSelectedDay = selectedDay === day ? null : day;
     setSelectedDay(newSelectedDay);
-    applyFilters(newSelectedDay, selectedMonth);
+    if (newSelectedDay) {
+      searchParams.set('travelDays', newSelectedDay.toString());
+    } else {
+      searchParams.delete('travelDays');
+    }
+    setSearchParams(searchParams);
   };
 
   const handleMonthChange: DatePickerProps['onChange'] = (date) => {
-    setSelectedMonth(date);
-    applyFilters(selectedDay, date);
+    if (date) {
+      searchParams.set('startDate', date.format('YYYY-MM'));
+    } else {
+      searchParams.delete('startDate');
+    }
+    setSearchParams(searchParams);
   };
 
   const handleProductClick = (productId: string) => {
@@ -97,6 +76,31 @@ const JejuProductList: React.FC = () => {
   const disabledDate = (current: Dayjs) => {
     return current && current.isBefore(dayjs(), 'month');
   };
+
+  useEffect(() => {
+    const travelDays = Number(searchParams.get('travelDays'));
+    const startDate = searchParams.get('startDate');
+
+    const fetchProducts = async () => {
+      const queryParams: QueryParams = {
+        area: 'JEJU',
+        params: {},
+      };
+
+      if (travelDays && !isNaN(travelDays)) {
+        queryParams.params.travelDays = travelDays;
+      }
+
+      if (startDate && dayjs(startDate).isValid()) {
+        queryParams.params.startDate = dayjs(startDate).format('YYYY-MM');
+      }
+
+      const productList = await getProductsByQueryParams(queryParams);
+      setCurrentProducts(productList);
+    };
+
+    fetchProducts();
+  }, [searchParams]);
 
   return (
     <div className="mt-10 mb-10 flex justify-center gap-15">
