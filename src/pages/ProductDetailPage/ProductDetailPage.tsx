@@ -1,4 +1,5 @@
 import ProductDetail from '@/components/ProductDetail/ProductDetail';
+import PurchaseWidget from '@/components/PurchaseWidget/PurchaseWidget';
 import Footer from '@/layouts/Footer/Footer';
 import Header from '@/layouts/Header/Header';
 
@@ -11,6 +12,8 @@ const ProductDetailPage: React.FC = () => {
       <div className="flex justify-center">
         <ProductDetail />
       </div>
+
+      <PurchaseWidget />
 
       <Footer />
     </div>

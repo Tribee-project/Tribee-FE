@@ -23,3 +23,73 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 }
+
+.purchase-modal .custom-calendar .ant-picker-calendar-header {
+  padding: 8px 0;
+}
+
+.purchase-modal .custom-calendar .ant-picker-content {
+  width: 100%;
+}
+
+.purchase-modal .custom-calendar .ant-picker-cell {
+  position: relative;
+}
+
+.purchase-modal .custom-calendar .ant-picker-cell-disabled {
+  background-color: #f5f5f5;
+  color: #d9d9d9;
+}
+
+.purchase-modal
+  .custom-calendar
+  .ant-picker-cell-selected
+  .ant-picker-cell-inner {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+.purchase-modal .custom-calendar .ant-picker-cell:hover .ant-picker-cell-inner {
+  background-color: #fef3cd !important;
+  color: #856404 !important;
+}
+
+.purchase-modal .custom-calendar .ant-picker-cell-today .ant-picker-cell-inner {
+  border-color: #feca3a !important;
+}
+
+.purchase-modal .ant-btn-primary {
+  background-color: #feca3a !important;
+  border-color: #feca3a !important;
+}
+
+.purchase-modal .ant-btn-primary:hover {
+  background-color: #e6b533 !important;
+  border-color: #e6b533 !important;
+}
+
+.purchase-modal .ant-input-number:focus,
+.purchase-modal .ant-input-number-focused {
+  border-color: #feca3a !important;
+  box-shadow: 0 0 0 2px rgba(254, 202, 58, 0.2) !important;
+}
+
+.purchase-modal .ant-input-number:hover {
+  border-color: #feca3a !important;
+  background-color: #fef3cd !important;
+}
+
+.purchase-modal .ant-input-number-handler:hover {
+  color: #feca3a !important;
+}
+
+.purchase-modal .ant-input-number-handler-up:hover,
+.purchase-modal .ant-input-number-handler-down:hover {
+  background-color: #fef3cd !important;
+  border-color: #feca3a !important;
+}
+
+.purchase-modal .min-w-20 {
+  min-width: 5rem;
+  text-align: right;
+}
