@@ -1,5 +1,3 @@
-import { Dayjs } from 'dayjs';
-
 import { Product } from '../models/product';
 
 export interface ProductListResponse {
@@ -19,6 +17,6 @@ export interface QueryParams {
   area: string;
   params: {
     travelDays?: number;
-    startDate?: Dayjs;
+    startDate?: string;
   };
 }
