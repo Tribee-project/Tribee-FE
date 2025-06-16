@@ -61,11 +61,19 @@ body {
 .purchase-modal .ant-btn-primary {
   background-color: #feca3a !important;
   border-color: #feca3a !important;
+  color: #000000 !important;
 }
 
 .purchase-modal .ant-btn-primary:hover {
   background-color: #e6b533 !important;
   border-color: #e6b533 !important;
+  color: #000000 !important;
+}
+
+.purchase-modal .ant-btn-primary:disabled {
+  background-color: #d1d5db !important;
+  border-color: #d1d5db !important;
+  color: #6b7280 !important;
 }
 
 .purchase-modal .ant-input-number:focus,

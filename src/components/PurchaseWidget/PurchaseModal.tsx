@@ -33,7 +33,12 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
   const disabledDate = (current: Dayjs) => {
     const today = dayjs();
     const sevenDaysLater = today.add(7, 'day');
-    return current && current.isBefore(sevenDaysLater, 'day');
+    const fiveMonthsLater = today.add(5, 'month');
+    return (
+      current &&
+      (current.isBefore(sevenDaysLater, 'day') ||
+        current.isAfter(fiveMonthsLater, 'day'))
+    );
   };
 
   const onDateSelect: CalendarProps<Dayjs>['onSelect'] = (date) => {
@@ -100,7 +105,7 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
                 onSelect={onDateSelect}
                 value={calendarValue}
                 className="custom-calendar"
-                onChange={(newValue) => {
+                onChange={(newValue: Dayjs) => {
                   setCalendarValue(newValue);
                   if (
                     newValue.month() !== calendarValue.month() ||
@@ -121,7 +126,7 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
 
                   const yearOptions = [];
                   const currentYear = dayjs().year();
-                  for (let i = currentYear; i <= currentYear + 2; i++) {
+                  for (let i = currentYear; i <= currentYear + 1; i++) {
                     yearOptions.push(
                       <option key={i} value={i}>
                         {i}년
@@ -191,7 +196,7 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
                   </span>
                   <InputNumber
                     min={1}
-                    max={10}
+                    max={15}
                     value={adultCount}
                     onChange={(value) => setAdultCount(value || 1)}
                     className="w-20"
@@ -223,8 +228,8 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
             disabled={!selectedDate}
             className={`h-12 text-lg font-semibold ${
               selectedDate
-                ? 'bg-yellow-400 hover:bg-yellow-500'
-                : 'cursor-not-allowed bg-gray-300'
+                ? 'bg-yellow-400 text-black hover:bg-yellow-500'
+                : 'cursor-not-allowed bg-gray-300 text-gray-500'
             }`}
           >
             예약하기
