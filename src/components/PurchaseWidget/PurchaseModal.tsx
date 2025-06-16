@@ -16,7 +16,11 @@ import {
 import { CalendarProps } from 'antd';
 import locale from 'antd/locale/ko_KR';
 import dayjs, { Dayjs } from 'dayjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { getDynamicPrice } from '@/services/apis/priceApis';
+import { DynamicPrice } from '@/types';
 
 interface PurchaseModalProps {
   isOpen: boolean;
@@ -25,8 +29,12 @@ interface PurchaseModalProps {
 
 const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
-  const [adultCount, setAdultCount] = useState<number>(1);
+  const [personnelCount, setPersonnelCount] = useState<number>(1);
   const [calendarValue, setCalendarValue] = useState<Dayjs>(dayjs());
+  const [prices, setPrices] = useState<DynamicPrice | null>(null);
+  const [isLoadingPrice, setIsLoadingPrice] = useState<boolean>(false);
+  const [priceError, setPriceError] = useState<string | null>(null);
+  const { id } = useParams();
 
   dayjs.locale('ko');
 
@@ -51,6 +59,12 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
   const getPrice = (date: Dayjs | null) => {
     if (!date) return 150000;
 
+    // API에서 받은 동적 가격이 있으면 사용
+    if (prices && date.format('YYYY-MM-DD') === prices.selectedDate) {
+      return prices.price;
+    }
+
+    // 기본 가격 로직 (API 데이터가 없을 때)
     const isWeekend = date.day() === 0 || date.day() === 6;
     const basePrice = 150000;
     const weekendSurcharge = 30000;
@@ -59,7 +73,7 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
   };
 
   const pricePerPerson = selectedDate ? getPrice(selectedDate) : 150000;
-  const totalPrice = pricePerPerson * adultCount;
+  const totalPrice = pricePerPerson * personnelCount;
 
   const handleBooking = () => {
     if (!selectedDate) {
@@ -69,13 +83,53 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
 
     console.log({
       date: selectedDate.format('YYYY-MM-DD'),
-      adults: adultCount,
+      adults: personnelCount,
       totalPrice,
     });
 
     alert('예약이 완료되었습니다!');
     onClose();
   };
+
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    const fetchPrice = async () => {
+      if (!id) return;
+
+      setIsLoadingPrice(true);
+      setPriceError(null);
+
+      try {
+        const monthStart = calendarValue.startOf('month').format('YYYY-MM-DD');
+        const monthEnd = calendarValue.endOf('month').format('YYYY-MM-DD');
+
+        const dynamicPrice = await getDynamicPrice(id, monthStart, monthEnd);
+
+        if (!abortController.signal.aborted) {
+          setPrices(dynamicPrice);
+        }
+      } catch (error) {
+        if (!abortController.signal.aborted) {
+          console.error('가격 정보를 불러오는데 실패했습니다:', error);
+          setPriceError('가격 정보를 불러올 수 없습니다. 다시 시도해주세요.');
+          setPrices(null);
+        }
+      } finally {
+        if (!abortController.signal.aborted) {
+          setIsLoadingPrice(false);
+        }
+      }
+    };
+
+    if (isOpen) {
+      fetchPrice();
+    }
+
+    return () => {
+      abortController.abort();
+    };
+  }, [id, calendarValue, isOpen]);
 
   return (
     <ConfigProvider locale={locale}>
@@ -92,12 +146,23 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
           <h2 className="mb-6 text-xl font-bold text-gray-800">
             여행 예약하기
           </h2>
+          <button onClick={() => console.log(prices)}>calendarValue</button>
 
           <div className="mb-6">
             <div className="mb-3 flex items-center gap-2">
               <CalendarOutlined className="text-yellow-500" />
               <span className="font-semibold text-gray-700">여행 날짜</span>
+              {isLoadingPrice && (
+                <span className="text-sm text-gray-500">
+                  가격 정보 로딩 중...
+                </span>
+              )}
             </div>
+            {priceError && (
+              <div className="mb-3 rounded-md bg-red-50 p-3">
+                <p className="text-sm text-red-600">{priceError}</p>
+              </div>
+            )}
             <div className="rounded-lg border border-gray-200 p-4">
               <Calendar
                 fullscreen={false}
@@ -107,10 +172,7 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
                 className="custom-calendar"
                 onChange={(newValue: Dayjs) => {
                   setCalendarValue(newValue);
-                  if (
-                    newValue.month() !== calendarValue.month() ||
-                    newValue.year() !== calendarValue.year()
-                  ) {
+                  if (selectedDate && !selectedDate.isSame(newValue, 'month')) {
                     setSelectedDate(null);
                   }
                 }}
@@ -143,7 +205,12 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
                             .clone()
                             .year(parseInt(e.target.value));
                           onChange(newValue);
-                          setSelectedDate(null);
+                          if (
+                            selectedDate &&
+                            !selectedDate.isSame(newValue, 'year')
+                          ) {
+                            setSelectedDate(null);
+                          }
                         }}
                         className="rounded border border-gray-300 px-2 py-1 text-sm focus:border-yellow-400 focus:outline-none"
                       >
@@ -156,7 +223,12 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
                             .clone()
                             .month(parseInt(e.target.value));
                           onChange(newValue);
-                          setSelectedDate(null);
+                          if (
+                            selectedDate &&
+                            !selectedDate.isSame(newValue, 'month')
+                          ) {
+                            setSelectedDate(null);
+                          }
                         }}
                         className="rounded border border-gray-300 px-2 py-1 text-sm focus:border-yellow-400 focus:outline-none"
                       >
@@ -197,8 +269,8 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
                   <InputNumber
                     min={1}
                     max={15}
-                    value={adultCount}
-                    onChange={(value) => setAdultCount(value || 1)}
+                    value={personnelCount}
+                    onChange={(value) => setPersonnelCount(value || 1)}
                     className="w-20"
                   />
                 </div>
@@ -217,7 +289,9 @@ const PurchaseModal: React.FC<PurchaseModalProps> = ({ isOpen, onClose }) => {
                 {totalPrice.toLocaleString()}원
               </span>
             </div>
-            <div className="mt-2 text-sm text-gray-500">총 {adultCount}명</div>
+            <div className="mt-2 text-sm text-gray-500">
+              총 {personnelCount}명
+            </div>
           </div>
 
           <Button
