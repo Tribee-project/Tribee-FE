@@ -3,7 +3,7 @@ import axios from 'axios';
 import type { Product, QueryParams } from '@/types';
 
 const productsApi = axios.create({
-  baseURL: 'https://cfb9-125-133-70-87.ngrok-free.app/api/v1/product',
+  baseURL: 'https://tribee-be.onrender.com/api/v1/product',
   headers: {
     'ngrok-skip-browser-warning': '69420',
   },

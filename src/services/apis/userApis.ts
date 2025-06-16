@@ -8,7 +8,7 @@ import type {
 } from '@/types';
 
 const userApi = axios.create({
-  baseURL: 'https://cfb9-125-133-70-87.ngrok-free.app/api/v1',
+  baseURL: 'https://tribee-be.onrender.com/api/v1',
   headers: {
     'ngrok-skip-browser-warning': '69420',
   },
