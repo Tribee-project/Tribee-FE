@@ -13,11 +13,16 @@ const getDynamicPrice = async (
   prodId: string,
   startDate: string,
   endDate: string,
-): Promise<DynamicPrice> => {
-  const response = await priceApi.get<DynamicPrice>(
-    `?prodId=${prodId}&startDate=${startDate}&endDate=${endDate}`,
-  );
-  return response.data;
+): Promise<DynamicPrice[]> => {
+  try {
+    const response = await priceApi.get<DynamicPrice[]>(
+      `?prodId=${prodId}&startDate=${startDate}&endDate=${endDate}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export { getDynamicPrice };
