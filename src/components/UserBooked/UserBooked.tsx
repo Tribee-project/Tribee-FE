@@ -13,35 +13,10 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
-import { getProductById } from '@/services/apis/productsApis';
 import { getUserBooked } from '@/services/apis/userApis';
-import type { UserBooked } from '@/types';
+import type { Product, UserBooked } from '@/types';
 
 dayjs.locale('ko');
-
-const ProductNameCell: React.FC<{ prodId: string }> = ({ prodId }) => {
-  const [productName, setProductName] = useState<string>('로딩 중...');
-
-  useEffect(() => {
-    const loadProductName = async () => {
-      try {
-        const product = await getProductById(prodId);
-        setProductName(product.title);
-      } catch (error) {
-        console.error(`API 호출 실패 for ${prodId}:`, error);
-        setProductName('API 호출 실패');
-      }
-    };
-
-    if (prodId) {
-      loadProductName();
-    } else {
-      setProductName('상품 ID 없음');
-    }
-  }, [prodId]);
-
-  return <span>{productName}</span>;
-};
 
 const UserBooked: React.FC = () => {
   const [bookingData, setBookingData] = useState<UserBooked[]>([]);
@@ -85,11 +60,11 @@ const UserBooked: React.FC = () => {
     },
     {
       title: '상품명',
-      dataIndex: 'prodId',
-      key: 'prodId',
+      dataIndex: 'product',
+      key: 'product',
       width: 250,
       align: 'center' as const,
-      render: (prodId: string) => <ProductNameCell prodId={prodId} />,
+      render: (product: Product) => `${product.title}`,
     },
     {
       title: '출국일',
