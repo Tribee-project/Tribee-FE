@@ -15,3 +15,11 @@ export interface EditUserNicknameRequest {
 export interface EditUserPasswordRequest {
   password: string;
 }
+
+export interface ReservationRequest {
+  prodId: string;
+  reservationDate: string;
+  departureDate: string;
+  cost: number;
+  personnel: number;
+}

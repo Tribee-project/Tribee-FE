@@ -3,6 +3,7 @@ import axios from 'axios';
 import type {
   EditUserNicknameRequest,
   EditUserPasswordRequest,
+  ReservationRequest,
   UserBooked,
   UserInfo,
 } from '@/types';
@@ -49,4 +50,19 @@ const getUserBooked = async (): Promise<UserBooked[]> => {
   return response.data;
 };
 
-export { editUserNickname, editUserPassword, getUserBooked, getUserInfo };
+const createReservation = async (data: ReservationRequest): Promise<void> => {
+  try {
+    await userApi.post('/reservation', data);
+  } catch (error) {
+    console.error('Reservation creation failed:', error);
+    throw error;
+  }
+};
+
+export {
+  createReservation,
+  editUserNickname,
+  editUserPassword,
+  getUserBooked,
+  getUserInfo,
+};
