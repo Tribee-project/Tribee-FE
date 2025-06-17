@@ -115,7 +115,7 @@ const UserBooked: React.FC = () => {
             break;
           case 1:
             color = 'red';
-            text = '취소됨';
+            text = '취소';
             break;
         }
 
