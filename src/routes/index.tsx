@@ -62,6 +62,9 @@ const ProductDetailPage = lazy(
 
 const EventPage = lazy(() => import('@/pages/EventPage/EventPage'));
 const TourPage = lazy(() => import('@/pages/TourPage/TourPage'));
+const SearchResultPage = lazy(
+  () => import('@/pages/SearchResultPage/SearchResultPage'),
+);
 
 const LoadingSpinner = () => (
   <div className="flex min-h-96 items-center justify-center">
@@ -144,6 +147,9 @@ const AppRoutes: React.FC = () => {
 
       {/* 투어 페이지 */}
       <Route path="/tour" element={<TourPage />} />
+
+      {/* 검색 결과 페이지 */}
+      <Route path="/search" element={<SearchResultPage />} />
     </Routes>
   );
 };
