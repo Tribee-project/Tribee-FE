@@ -44,9 +44,7 @@ const AustraliaProductList = lazy(
 const UsProductList = lazy(
   () => import('@/components/ProductLists/UsProductList/UsProductList'),
 );
-const TourProductList = lazy(
-  () => import('@/components/ProductLists/TourProductList/TourProductList'),
-);
+
 const HoneymoonProductList = lazy(
   () =>
     import(
@@ -61,7 +59,9 @@ const WorkshopProductList = lazy(
 const ProductDetailPage = lazy(
   () => import('@/pages/ProductDetailPage/ProductDetailPage'),
 );
+
 const EventPage = lazy(() => import('@/pages/EventPage/EventPage'));
+const TourPage = lazy(() => import('@/pages/TourPage/TourPage'));
 
 const LoadingSpinner = () => (
   <div className="flex min-h-96 items-center justify-center">
@@ -88,7 +88,6 @@ const productListRoutes = [
   { path: 'americas', component: AmericasProductList },
   { path: 'australia', component: AustraliaProductList },
   { path: 'us', component: UsProductList },
-  { path: 'tour', component: TourProductList },
   { path: 'honeymoon', component: HoneymoonProductList },
   { path: 'workshop', component: WorkshopProductList },
 ];
@@ -142,6 +141,9 @@ const AppRoutes: React.FC = () => {
 
       {/* 이벤트 페이지 */}
       <Route path="/event" element={<EventPage />} />
+
+      {/* 투어 페이지 */}
+      <Route path="/tour" element={<TourPage />} />
     </Routes>
   );
 };
