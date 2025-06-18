@@ -22,4 +22,5 @@ export interface ReservationRequest {
   departureDate: string;
   cost: number;
   personnel: number;
+  category: 'PACKAGE' | 'TOUR_TICKET';
 }

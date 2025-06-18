@@ -112,6 +112,7 @@ const ReservationWidget = () => {
       departureDate: selectedDate?.format('YYYY-MM-DD') as string,
       cost: totalPrice,
       personnel: personCount,
+      category: 'PACKAGE',
     });
     setIsReservationLoading(false);
     alert('예약이 완료되었습니다.');
