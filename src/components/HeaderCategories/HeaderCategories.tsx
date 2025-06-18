@@ -22,7 +22,7 @@ const HeaderCategories: React.FC = () => {
     {
       title: '투어/입장권',
       items: [],
-      path: '/product-list/tour',
+      path: '/tour',
     },
     {
       title: '허니문',
@@ -37,7 +37,7 @@ const HeaderCategories: React.FC = () => {
     {
       title: '이벤트',
       items: [],
-      path: '/product-list/event',
+      path: '/event',
     },
   ];
 
