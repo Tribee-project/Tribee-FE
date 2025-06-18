@@ -64,7 +64,8 @@ const UserBooked: React.FC = () => {
       key: 'product',
       width: 250,
       align: 'center' as const,
-      render: (product: Product) => `${product.title}`,
+      ellipsis: true,
+      render: (product: Product) => product.title,
     },
     {
       title: '출국일',
