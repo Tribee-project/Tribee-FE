@@ -57,13 +57,11 @@ const WorkshopProductList = lazy(
   () =>
     import('@/components/ProductLists/WorkshopProductList/WorkshopProductList'),
 );
-const EventProductList = lazy(
-  () => import('@/components/ProductLists/EventProductList/EventProductList'),
-);
 
 const ProductDetailPage = lazy(
   () => import('@/pages/ProductDetailPage/ProductDetailPage'),
 );
+const EventPage = lazy(() => import('@/pages/EventPage/EventPage'));
 
 const LoadingSpinner = () => (
   <div className="flex min-h-96 items-center justify-center">
@@ -93,7 +91,6 @@ const productListRoutes = [
   { path: 'tour', component: TourProductList },
   { path: 'honeymoon', component: HoneymoonProductList },
   { path: 'workshop', component: WorkshopProductList },
-  { path: 'event', component: EventProductList },
 ];
 
 const AppRoutes: React.FC = () => {
@@ -142,6 +139,9 @@ const AppRoutes: React.FC = () => {
           </Suspense>
         }
       />
+
+      {/* 이벤트 페이지 */}
+      <Route path="/event" element={<EventPage />} />
     </Routes>
   );
 };
