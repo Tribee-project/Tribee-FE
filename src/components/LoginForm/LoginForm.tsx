@@ -1,5 +1,11 @@
 import { Popover } from 'antd';
-import { ChangeEvent, FormEvent, KeyboardEvent, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  KeyboardEvent,
+  useCallback,
+  useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { login } from '@/services/apis/authApis';
@@ -61,52 +67,64 @@ const LoginForm: React.FC = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const navigate = useNavigate();
 
-  const validateForm = (): void => {
+  const validateForm = useCallback((): void => {
     const isEmailValid = emailValidation(email);
     const isPasswordValid = passwordValidation(password);
     setIsFormValid(isEmailValid && isPasswordValid);
-  };
+  }, [email, password]);
 
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-    setShowEmailError(newEmail !== '' && !emailValidation(newEmail));
-    validateForm();
-  };
+  const handleEmailChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>): void => {
+      const newEmail = e.target.value;
+      setEmail(newEmail);
+      setShowEmailError(newEmail !== '' && !emailValidation(newEmail));
+      validateForm();
+    },
+    [validateForm],
+  );
 
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    setShowPasswordError(
-      newPassword !== '' && !passwordValidation(newPassword),
-    );
-    validateForm();
-  };
+  const handlePasswordChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>): void => {
+      const newPassword = e.target.value;
+      setPassword(newPassword);
+      setShowPasswordError(
+        newPassword !== '' && !passwordValidation(newPassword),
+      );
+      validateForm();
+    },
+    [validateForm],
+  );
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    if (isFormValid) {
-      login({
-        email: email,
-        password: password,
-      })
-        .then(() => {
-          navigate('/');
+  const handleSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>): void => {
+      e.preventDefault();
+      if (isFormValid) {
+        login({
+          email: email,
+          password: password,
         })
-        .catch((error) => {
-          console.error(error);
-          if (error.response.status === 401) {
-            alert('이메일 또는 비밀번호가 일치하지 않습니다');
-          }
-        });
-    }
-  };
+          .then(() => {
+            navigate('/');
+          })
+          .catch((error) => {
+            console.error(error);
+            if (error.response.status === 401) {
+              alert('이메일 또는 비밀번호가 일치하지 않습니다');
+            }
+          });
+      }
+    },
+    [isFormValid, email, password, navigate],
+  );
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>): void => {
-    if (e.key === 'Enter') {
-      handleSubmit(e as unknown as FormEvent<HTMLFormElement>);
-    }
-  };
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLButtonElement>): void => {
+      if (e.key === 'Enter') {
+        handleSubmit(e as unknown as FormEvent<HTMLFormElement>);
+      }
+    },
+    [handleSubmit],
+  );
 
   return (
     <div className="flex flex-col items-center justify-center rounded-4xl border-1 border-gray-300 bg-white p-30 shadow-md">

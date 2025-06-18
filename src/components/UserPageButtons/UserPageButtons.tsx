@@ -4,6 +4,7 @@ import {
   QuestionCircleOutlined,
   UserOutlined,
 } from '@ant-design/icons';
+import { useCallback, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface ButtonItem {
@@ -17,32 +18,38 @@ const UserPageButtons: React.FC = () => {
   const location = useLocation();
   const isClicked = (path: string) => location.pathname === path;
 
-  const buttonItems: ButtonItem[] = [
-    {
-      icon: <UserOutlined />,
-      text: '내 정보',
-      path: '/user/info',
-    },
-    {
-      icon: <CalendarOutlined />,
-      text: '예약 내역',
-      path: '/user/booked',
-    },
-    {
-      icon: <AlignLeftOutlined />,
-      text: '나의 여행 후기',
-      path: '/user/reviews',
-    },
-    {
-      icon: <QuestionCircleOutlined />,
-      text: '자주 찾는 질문',
-      path: '/user/questions',
-    },
-  ];
+  const buttonItems: ButtonItem[] = useMemo(
+    () => [
+      {
+        icon: <UserOutlined />,
+        text: '내 정보',
+        path: '/user/info',
+      },
+      {
+        icon: <CalendarOutlined />,
+        text: '예약 내역',
+        path: '/user/booked',
+      },
+      {
+        icon: <AlignLeftOutlined />,
+        text: '나의 여행 후기',
+        path: '/user/reviews',
+      },
+      {
+        icon: <QuestionCircleOutlined />,
+        text: '자주 찾는 질문',
+        path: '/user/questions',
+      },
+    ],
+    [],
+  );
 
-  const handleClick = (index: number) => {
-    navigate(buttonItems[index].path);
-  };
+  const handleClick = useCallback(
+    (index: number) => {
+      navigate(buttonItems[index].path);
+    },
+    [navigate, buttonItems],
+  );
 
   return (
     <div className="mt-15 flex items-center gap-10">

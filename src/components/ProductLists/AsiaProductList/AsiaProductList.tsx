@@ -3,56 +3,11 @@ import 'dayjs/locale/ko';
 import { ConfigProvider, DatePicker, notification, Space } from 'antd';
 import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
 
 dayjs.locale('ko');
-
-const TRAVEL_DAYS = [
-  {
-    label: '5일',
-    value: 'FIVE_DAYS',
-  },
-  {
-    label: '7일',
-    value: 'SEVEN_DAYS',
-  },
-  {
-    label: '10일',
-    value: 'TEN_DAYS',
-  },
-];
-
-const COUNTRIES = [
-  {
-    label: '태국',
-    value: 'THAILAND',
-    image:
-      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=410&h=280&fit=crop',
-    packageTitle: '6박 7일 태국 방콕 푸켓 힐링 여행 패키지',
-    hashtags: '#방콕#푸켓#왓포사원#파통비치#태국마사지#팟타이',
-    price: '1,190,000원 ~',
-  },
-  {
-    label: '베트남',
-    value: 'VIETNAM',
-    image:
-      'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=410&h=280&fit=crop',
-    packageTitle: '5박 6일 베트남 하노이 하롱베이 호치민 완전정복',
-    hashtags: '#하노이#하롱베이#호치민#쌀국수#바인미#메콩델타',
-    price: '890,000원 ~',
-  },
-  {
-    label: '싱가포르',
-    value: 'SINGAPORE',
-    image:
-      'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=410&h=280&fit=crop',
-    packageTitle: '4박 5일 싱가포르 마리나베이 센토사 럭셔리 투어',
-    hashtags: '#마리나베이#센토사#머라이언#가든스바이더베이#칠리크랩',
-    price: '1,450,000원 ~',
-  },
-];
 
 const AsiaProductList: React.FC = () => {
   const [api, contextHolder] = notification.useNotification({
@@ -61,28 +16,85 @@ const AsiaProductList: React.FC = () => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
-  const openNotification = () => {
+  const TRAVEL_DAYS = useMemo(
+    () => [
+      {
+        label: '5일',
+        value: 'FIVE_DAYS',
+      },
+      {
+        label: '7일',
+        value: 'SEVEN_DAYS',
+      },
+      {
+        label: '10일',
+        value: 'TEN_DAYS',
+      },
+    ],
+    [],
+  );
+
+  const COUNTRIES = useMemo(
+    () => [
+      {
+        label: '태국',
+        value: 'THAILAND',
+        image:
+          'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=410&h=280&fit=crop',
+        packageTitle: '6박 7일 태국 방콕 푸켓 힐링 여행 패키지',
+        hashtags: '#방콕#푸켓#왓포사원#파통비치#태국마사지#팟타이',
+        price: '1,190,000원 ~',
+      },
+      {
+        label: '베트남',
+        value: 'VIETNAM',
+        image:
+          'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=410&h=280&fit=crop',
+        packageTitle: '5박 6일 베트남 하노이 하롱베이 호치민 완전정복',
+        hashtags: '#하노이#하롱베이#호치민#쌀국수#바인미#메콩델타',
+        price: '890,000원 ~',
+      },
+      {
+        label: '싱가포르',
+        value: 'SINGAPORE',
+        image:
+          'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=410&h=280&fit=crop',
+        packageTitle: '4박 5일 싱가포르 마리나베이 센토사 럭셔리 투어',
+        hashtags: '#마리나베이#센토사#머라이언#가든스바이더베이#칠리크랩',
+        price: '1,450,000원 ~',
+      },
+    ],
+    [],
+  );
+
+  const selectedCountryData = useMemo(() => {
+    return COUNTRIES.find((country) => country.value === selectedCountry);
+  }, [COUNTRIES, selectedCountry]);
+
+  const openNotification = useCallback(() => {
     api.info(TRAVEL_NOTIFICATIONS.ASIA);
-  };
+  }, [api]);
 
-  const handleDayClick = (day: string) => {
-    if (selectedDay === day) {
-      setSelectedDay(null);
-    } else {
-      setSelectedDay(day);
-    }
-  };
+  const handleDayClick = useCallback(
+    (day: string) => {
+      if (selectedDay === day) {
+        setSelectedDay(null);
+      } else {
+        setSelectedDay(day);
+      }
+    },
+    [selectedDay],
+  );
 
-  const handleCountryClick = (country: string) => {
-    if (selectedCountry === country) {
-      setSelectedCountry(null);
-    } else {
-      setSelectedCountry(country);
-    }
-  };
-
-  const selectedCountryData = COUNTRIES.find(
-    (country) => country.value === selectedCountry,
+  const handleCountryClick = useCallback(
+    (country: string) => {
+      if (selectedCountry === country) {
+        setSelectedCountry(null);
+      } else {
+        setSelectedCountry(country);
+      }
+    },
+    [selectedCountry],
   );
 
   return (
@@ -153,7 +165,7 @@ const AsiaProductList: React.FC = () => {
         <Space>
           <div
             className="w-200 cursor-pointer rounded-md bg-gray-200 p-2 text-center"
-            onClick={() => openNotification()}
+            onClick={openNotification}
           >
             <p>🌴 동남아시아 여행시 안내사항을 확인하세요</p>
           </div>

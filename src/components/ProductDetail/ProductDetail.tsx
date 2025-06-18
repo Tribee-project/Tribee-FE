@@ -1,5 +1,5 @@
 import { ConfigProvider, Divider, Tabs, TabsProps } from 'antd';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useProductId } from '@/hooks/useProductId';
 import { getProductById } from '@/services/apis/productsApis';
@@ -13,46 +13,51 @@ const ProductDetail: React.FC = () => {
     const fetchProduct = async () => {
       const response = await getProductById(id as string);
       setProduct(response);
+      console.log(response.detailImage);
     };
     fetchProduct();
   }, [id]);
 
-  const items: TabsProps['items'] = [
-    {
-      key: '1',
-      label: '상품 정보',
-      children: (
-        <div className="mt-5 flex flex-col gap-4 p-4">
-          {product?.detailImage && (
-            <div className="mt-6">
-              <img
-                src={product.detailImage}
-                alt="상품 상세 이미지"
-                className="w-full rounded-lg object-cover"
+  const items: TabsProps['items'] = useMemo(() => {
+    return [
+      {
+        key: '1',
+        label: '상품 정보',
+        children: (
+          <div className="mt-5 flex flex-col gap-4 p-4">
+            {product?.detailImage && (
+              <div className="mt-6">
+                <img
+                  src={product.detailImage}
+                  alt="상품 상세 이미지"
+                  className="w-full rounded-lg object-cover"
+                />
+              </div>
+            )}
+            <div className="mt-10 w-200 self-center rounded-lg border-1 border-gray-300 bg-white p-10 shadow-lg">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: product?.detailContent || '',
+                }}
               />
             </div>
-          )}
-          <div className="mt-10 w-200 self-center rounded-lg border-1 border-gray-300 bg-white p-10 shadow-lg">
-            <div
-              dangerouslySetInnerHTML={{ __html: product?.detailContent || '' }}
-            />
           </div>
-        </div>
-      ),
-    },
-    {
-      key: '2',
-      label: '여행 후기',
-      children: (
-        <div className="mt-5 flex flex-col gap-4 p-4">
-          <div className="text-center text-gray-500">
-            <p>아직 등록된 후기가 없습니다.</p>
-            <p>첫 번째 후기를 남겨보세요!</p>
+        ),
+      },
+      {
+        key: '2',
+        label: '여행 후기',
+        children: (
+          <div className="mt-5 flex flex-col gap-4 p-4">
+            <div className="text-center text-gray-500">
+              <p>아직 등록된 후기가 없습니다.</p>
+              <p>첫 번째 후기를 남겨보세요!</p>
+            </div>
           </div>
-        </div>
-      ),
-    },
-  ];
+        ),
+      },
+    ];
+  }, [product]);
 
   return (
     <div className="my-25 flex w-250 flex-col gap-1">

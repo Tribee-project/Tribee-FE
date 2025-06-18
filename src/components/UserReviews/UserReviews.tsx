@@ -10,6 +10,7 @@ import {
 } from 'antd';
 import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
+import { useMemo } from 'react';
 
 import { Product } from '@/types';
 
@@ -30,51 +31,54 @@ const reviewsData = [
 const handleDateChange: DatePickerProps['onChange'] = () => {};
 
 const UserReviews: React.FC = () => {
-  const columns = [
-    {
-      title: '작성 날짜',
-      dataIndex: 'reservationDate',
-      key: 'reservationDate',
-      width: 30,
-      align: 'center' as const,
-      render: (reservationDate: string) =>
-        dayjs(reservationDate).format('YYYY-MM-DD'),
-    },
-    {
-      title: '예약 코드',
-      dataIndex: 'id',
-      key: 'id',
-      width: 30,
-      align: 'center' as const,
-      render: (id: string) => id.split('-')[0].toUpperCase(),
-    },
-    {
-      title: '상품명',
-      dataIndex: 'product',
-      key: 'product',
-      width: 150,
-      align: 'center' as const,
-      ellipsis: true,
-      render: (product: Product) => product.title,
-    },
-    {
-      title: '후기',
-      dataIndex: 'review',
-      key: 'review',
-      width: 250,
-      align: 'center' as const,
-      ellipsis: true,
-    },
-    {
-      title: '출국일',
-      dataIndex: 'departureDate',
-      key: 'departureDate',
-      width: 50,
-      align: 'center' as const,
-      render: (departureDate: string) =>
-        dayjs(departureDate).format('YYYY-MM-DD'),
-    },
-  ];
+  const columns = useMemo(
+    () => [
+      {
+        title: '작성 날짜',
+        dataIndex: 'reservationDate',
+        key: 'reservationDate',
+        width: 30,
+        align: 'center' as const,
+        render: (reservationDate: string) =>
+          dayjs(reservationDate).format('YYYY-MM-DD'),
+      },
+      {
+        title: '예약 코드',
+        dataIndex: 'id',
+        key: 'id',
+        width: 30,
+        align: 'center' as const,
+        render: (id: string) => id.split('-')[0].toUpperCase(),
+      },
+      {
+        title: '상품명',
+        dataIndex: 'product',
+        key: 'product',
+        width: 150,
+        align: 'center' as const,
+        ellipsis: true,
+        render: (product: Product) => product.title,
+      },
+      {
+        title: '후기',
+        dataIndex: 'review',
+        key: 'review',
+        width: 250,
+        align: 'center' as const,
+        ellipsis: true,
+      },
+      {
+        title: '출국일',
+        dataIndex: 'departureDate',
+        key: 'departureDate',
+        width: 50,
+        align: 'center' as const,
+        render: (departureDate: string) =>
+          dayjs(departureDate).format('YYYY-MM-DD'),
+      },
+    ],
+    [],
+  );
 
   return (
     <div className="mt-10 mb-10 flex flex-col items-center">

@@ -3,7 +3,7 @@ import 'dayjs/locale/ko';
 import { ConfigProvider, DatePicker, notification, Space } from 'antd';
 import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
 import { getProductsByArea } from '@/services/apis/productsApis';
@@ -11,51 +11,52 @@ import type { Product } from '@/types';
 
 dayjs.locale('ko');
 
-const TRAVEL_DAYS = [
-  {
-    label: '3일',
-    value: 3,
-  },
-  {
-    label: '4일',
-    value: 4,
-  },
-];
-
 const DomesticProductList: React.FC = () => {
   const [api, contextHolder] = notification.useNotification({
     maxCount: 1,
   });
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
+
+  const TRAVEL_DAYS = useMemo(
+    () => [
+      {
+        label: '3일',
+        value: 3,
+      },
+      {
+        label: '4일',
+        value: 4,
+      },
+    ],
+    [],
+  );
+
+  const products = useMemo(() => {
+    if (selectedDay === null) {
+      return originalProducts;
+    }
+    return originalProducts.filter(
+      (product) => product.travelDays === selectedDay,
+    );
+  }, [originalProducts, selectedDay]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const productList = await getProductsByArea('DOMESTIC_AREA');
-      setProducts(productList);
       setOriginalProducts(productList);
     };
 
     fetchProducts();
   }, []);
 
-  const openNotification = () => {
+  const openNotification = useCallback(() => {
     api.info(TRAVEL_NOTIFICATIONS.DOMESTIC);
-  };
+  }, [api]);
 
-  const handleDayClick = (day: number) => {
-    if (selectedDay === day) {
-      setSelectedDay(null);
-      setProducts(originalProducts);
-    } else {
-      setSelectedDay(day);
-      const filteredProducts = originalProducts.filter(
-        (product) => product.travelDays === day,
-      );
-      setProducts(filteredProducts);
-    }
-  };
+  const handleDayClick = useCallback((day: number) => {
+    setSelectedDay((prevSelectedDay) => (prevSelectedDay === day ? null : day));
+  }, []);
 
   return (
     <div className="mt-10 mb-10 flex justify-center gap-15">

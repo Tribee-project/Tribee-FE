@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import type { SocialButtonProps, SocialProvider } from '@/types';
 
@@ -18,10 +18,10 @@ const SocialLoginButtons: React.FC = () => {
     },
   ];
 
-  const handleSocialLogin = (provider: SocialProvider) => {
+  const handleSocialLogin = useCallback((provider: SocialProvider) => {
     // 소셜 로그인 처리 로직 구현
     console.log(`${provider} 로그인 시도`);
-  };
+  }, []);
 
   return (
     <div className="mt-7 flex w-full items-center justify-center gap-7">

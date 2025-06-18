@@ -10,7 +10,7 @@ import {
 import locale from 'antd/locale/ko_KR';
 import dayjs, { Dayjs } from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
@@ -21,21 +21,6 @@ import type { Product, QueryParams } from '@/types';
 dayjs.extend(isBetween);
 dayjs.locale('ko');
 
-const TRAVEL_DAYS = [
-  {
-    label: '3일',
-    value: 3,
-  },
-  {
-    label: '4일',
-    value: 4,
-  },
-  {
-    label: '5일',
-    value: 5,
-  },
-];
-
 const JejuProductList: React.FC = () => {
   const [api, contextHolder] = notification.useNotification({
     maxCount: 1,
@@ -45,37 +30,64 @@ const JejuProductList: React.FC = () => {
   const { navigateToProductDetail } = useProductId();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const openNotification = () => {
+  const TRAVEL_DAYS = useMemo(
+    () => [
+      {
+        label: '3일',
+        value: 3,
+      },
+      {
+        label: '4일',
+        value: 4,
+      },
+      {
+        label: '5일',
+        value: 5,
+      },
+    ],
+    [],
+  );
+
+  const openNotification = useCallback(() => {
     api.info(TRAVEL_NOTIFICATIONS.JEJU);
-  };
+  }, [api]);
 
-  const handleDayClick = (day: number) => {
-    const newSelectedDay = selectedDay === day ? null : day;
-    setSelectedDay(newSelectedDay);
-    if (newSelectedDay) {
-      searchParams.set('travelDays', newSelectedDay.toString());
-    } else {
-      searchParams.delete('travelDays');
-    }
-    setSearchParams(searchParams);
-  };
+  const handleDayClick = useCallback(
+    (day: number) => {
+      const newSelectedDay = selectedDay === day ? null : day;
+      setSelectedDay(newSelectedDay);
+      if (newSelectedDay) {
+        searchParams.set('travelDays', newSelectedDay.toString());
+      } else {
+        searchParams.delete('travelDays');
+      }
+      setSearchParams(searchParams);
+    },
+    [selectedDay, searchParams, setSearchParams],
+  );
 
-  const handleMonthChange: DatePickerProps['onChange'] = (date) => {
-    if (date) {
-      searchParams.set('startDate', date.format('YYYY-MM'));
-    } else {
-      searchParams.delete('startDate');
-    }
-    setSearchParams(searchParams);
-  };
+  const handleMonthChange: DatePickerProps['onChange'] = useCallback(
+    (date: Dayjs | null) => {
+      if (date) {
+        searchParams.set('startDate', date.format('YYYY-MM'));
+      } else {
+        searchParams.delete('startDate');
+      }
+      setSearchParams(searchParams);
+    },
+    [searchParams, setSearchParams],
+  );
 
-  const handleProductClick = (productId: string) => {
-    navigateToProductDetail(productId);
-  };
+  const handleProductClick = useCallback(
+    (productId: string) => {
+      navigateToProductDetail(productId);
+    },
+    [navigateToProductDetail],
+  );
 
-  const disabledDate = (current: Dayjs) => {
+  const disabledDate = useCallback((current: Dayjs) => {
     return current && current.isBefore(dayjs(), 'month');
-  };
+  }, []);
 
   useEffect(() => {
     const travelDays = Number(searchParams.get('travelDays'));
@@ -157,7 +169,7 @@ const JejuProductList: React.FC = () => {
         <Space>
           <div
             className="mb-8 w-200 cursor-pointer rounded-md bg-gray-200 p-2 text-center"
-            onClick={() => openNotification()}
+            onClick={openNotification}
           >
             <p>🍊 제주도 여행시 안내사항을 확인하세요</p>
           </div>

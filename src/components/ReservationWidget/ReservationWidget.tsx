@@ -13,7 +13,7 @@ import {
 } from 'antd';
 import locale from 'antd/es/date-picker/locale/ko_KR';
 import dayjs, { Dayjs } from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { getDynamicPrice } from '@/services/apis/priceApis';
@@ -31,93 +31,119 @@ const ReservationWidget = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const onChange: DatePickerProps['onChange'] = (date) => {
-    setSelectedDate(date);
-    setSelectedPrice(
-      dynamicPrices.length > 0 ? dynamicPrices[date?.date() - 1]?.price : 0,
-    );
-  };
+  const onChange: DatePickerProps['onChange'] = useCallback(
+    (date: Dayjs | null) => {
+      setSelectedDate(date || undefined);
+      setSelectedPrice(
+        dynamicPrices.length > 0 && date
+          ? dynamicPrices[date.date() - 1]?.price || 0
+          : 0,
+      );
+    },
+    [dynamicPrices],
+  );
 
-  const onOpenChange = (open: boolean) => {
+  const onOpenChange = useCallback((open: boolean) => {
     if (open) {
       setCurrentViewMonth(dayjs());
     }
-  };
+  }, []);
 
-  const onPanelChange = (value: Dayjs, mode: string) => {
+  const onPanelChange = useCallback((value: Dayjs, mode: string) => {
     if (mode === 'date') {
       setCurrentViewMonth(value);
     }
-  };
+  }, []);
 
-  const disabledDate: DatePickerProps['disabledDate'] = (current) => {
-    const today = dayjs();
-    const sevenDaysLater = today.add(7, 'day');
-    const fiveMonthsLater = today.add(5, 'month');
+  const disabledDate: DatePickerProps['disabledDate'] = useCallback(
+    (current: Dayjs) => {
+      const today = dayjs();
+      const sevenDaysLater = today.add(7, 'day');
+      const fiveMonthsLater = today.add(5, 'month');
 
-    return current && (current <= sevenDaysLater || current >= fiveMonthsLater);
-  };
+      return (
+        current && (current <= sevenDaysLater || current >= fiveMonthsLater)
+      );
+    },
+    [],
+  );
 
-  const totalPrice = selectedPrice * personCount;
+  const totalPrice = useMemo(() => {
+    return selectedPrice * personCount;
+  }, [selectedPrice, personCount]);
 
-  const cellRender: DatePickerProps['cellRender'] = (current) => {
-    if (!dayjs.isDayjs(current)) return <div>{current}</div>;
-
-    const today = dayjs();
-    const sevenDaysLater = today.add(7, 'day');
-    const fiveMonthsLater = today.add(5, 'month');
-    const isDisabled =
-      current && (current <= sevenDaysLater || current >= fiveMonthsLater);
-
-    const viewingMonth = currentViewMonth;
-    const isDifferentMonth = !current.isSame(viewingMonth, 'month');
-
-    const averagePrice =
-      dynamicPrices.length > 0
-        ? dynamicPrices.reduce((sum, item) => sum + item.price, 0) /
+  const averagePrice = useMemo(() => {
+    return dynamicPrices.length > 0
+      ? dynamicPrices.reduce((sum, item) => sum + item.price, 0) /
           dynamicPrices.length
-        : 0;
+      : 0;
+  }, [dynamicPrices]);
 
-    const currentPrice =
-      dynamicPrices && dynamicPrices[current.date() - 1]?.price;
-    const isExpensive = currentPrice && currentPrice > averagePrice;
+  const cellRender: DatePickerProps['cellRender'] = useCallback(
+    (current: string | number | Dayjs) => {
+      if (!dayjs.isDayjs(current)) return <div>{current}</div>;
 
-    const price = isPriceLoading
-      ? '. . .'
-      : isDisabled || isDifferentMonth
-        ? '-'
-        : currentPrice
-          ? (currentPrice / 10000).toFixed(1) + '만원'
-          : '-';
+      const today = dayjs();
+      const sevenDaysLater = today.add(7, 'day');
+      const fiveMonthsLater = today.add(5, 'month');
+      const isDisabled =
+        current && (current <= sevenDaysLater || current >= fiveMonthsLater);
 
-    const priceColor = isExpensive ? 'text-orange-500' : 'text-gray-500';
+      const viewingMonth = currentViewMonth;
+      const isDifferentMonth = !current.isSame(viewingMonth, 'month');
 
-    return (
-      <>
-        <div className="flex flex-col items-center">
-          <div>{current.date()}</div>
-          <div className={`text-[11px] ${priceColor}`}>{price}</div>
-        </div>
-      </>
-    );
-  };
+      const currentPrice =
+        dynamicPrices && dynamicPrices[current.date() - 1]?.price;
+      const isExpensive = currentPrice && currentPrice > averagePrice;
 
-  const handleReservation = async () => {
+      const price = isPriceLoading
+        ? '. . .'
+        : isDisabled || isDifferentMonth
+          ? '-'
+          : currentPrice
+            ? (currentPrice / 10000).toFixed(1) + '만원'
+            : '-';
+
+      const priceColor = isExpensive ? 'text-orange-500' : 'text-gray-500';
+
+      return (
+        <>
+          <div className="flex flex-col items-center">
+            <div>{current.date()}</div>
+            <div className={`text-[11px] ${priceColor}`}>{price}</div>
+          </div>
+        </>
+      );
+    },
+    [dynamicPrices, currentViewMonth, isPriceLoading, averagePrice],
+  );
+
+  const handleReservation = useCallback(async () => {
     if (!selectedDate || !totalPrice || !personCount || !id) return;
 
     setIsReservationLoading(true);
-    await createReservation({
-      prodId: id as string,
-      reservationDate: dayjs().format('YYYY-MM-DD') as string,
-      departureDate: selectedDate?.format('YYYY-MM-DD') as string,
-      cost: totalPrice,
-      personnel: personCount,
-      category: 'PACKAGE',
-    });
-    setIsReservationLoading(false);
-    alert('예약이 완료되었습니다.');
-    navigate('/user/booked');
-  };
+    try {
+      await createReservation({
+        prodId: id as string,
+        reservationDate: dayjs().format('YYYY-MM-DD') as string,
+        departureDate: selectedDate?.format('YYYY-MM-DD') as string,
+        cost: totalPrice,
+        personnel: personCount,
+        category: 'PACKAGE',
+      });
+      alert('예약이 완료되었습니다.');
+      navigate('/user/booked');
+    } catch (error) {
+      console.error('예약 실패:', error);
+      alert('예약에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsReservationLoading(false);
+    }
+  }, [selectedDate, totalPrice, personCount, id, navigate]);
+
+  const handlePersonCountChange = useCallback((value: number | null) => {
+    setPersonCount(value || 1);
+  }, []);
 
   useEffect(() => {
     const fetchDynamicPrices = async () => {
@@ -202,7 +228,7 @@ const ReservationWidget = () => {
               min={1}
               max={15}
               value={personCount}
-              onChange={(value) => setPersonCount(value || 1)}
+              onChange={handlePersonCountChange}
               size="large"
               className="w-20"
             />
