@@ -7,14 +7,12 @@ const EventProductList: React.FC = () => {
     <div className="my-10 flex flex-col items-center gap-10">
       <div className="flex items-center gap-30 text-lg text-gray-700">
         <span
-          id="inProgress"
           onClick={() => setActiveTab('inProgress')}
           className={`cursor-pointer ${activeTab === 'inProgress' ? 'border-b-2 font-bold' : ''}`}
         >
           진행중인 이벤트
         </span>
         <span
-          id="ended"
           onClick={() => setActiveTab('ended')}
           className={`cursor-pointer ${activeTab === 'ended' ? 'border-b-2 font-bold' : ''}`}
         >
