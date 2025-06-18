@@ -13,7 +13,6 @@ const ProductDetail: React.FC = () => {
     const fetchProduct = async () => {
       const response = await getProductById(id as string);
       setProduct(response);
-      console.log(response.detailImage);
     };
     fetchProduct();
   }, [id]);
