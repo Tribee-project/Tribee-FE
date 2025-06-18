@@ -1,6 +1,7 @@
 import 'dayjs/locale/ko';
 
 import {
+  Button,
   ConfigProvider,
   DatePicker,
   DatePickerProps,
@@ -21,6 +22,7 @@ dayjs.locale('ko');
 const UserBooked: React.FC = () => {
   const [bookingData, setBookingData] = useState<UserBooked[]>([]);
   const [originalData, setOriginalData] = useState<UserBooked[]>([]);
+  const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
 
   const handleDateChange: DatePickerProps['onChange'] = useCallback(
     (date: dayjs.Dayjs | null) => {
@@ -41,6 +43,22 @@ const UserBooked: React.FC = () => {
       setOriginalData(data);
       setBookingData(data);
     });
+  }, []);
+
+  const handleRowMouseEnter = useCallback((record: UserBooked) => {
+    if (record.status === 0) {
+      setHoveredRowId(record.id);
+    }
+  }, []);
+
+  const handleRowMouseLeave = useCallback(() => {
+    setHoveredRowId(null);
+  }, []);
+
+  const handleWriteReview = useCallback((booking: UserBooked) => {
+    // 리뷰 작성 로직 구현
+    console.log('리뷰 작성:', booking);
+    // TODO: 리뷰 작성 모달이나 페이지로 이동하는 로직 추가
   }, []);
 
   const renderReservationDate = useCallback(
@@ -202,7 +220,10 @@ const UserBooked: React.FC = () => {
               />
             </Space>
             <Divider />
-            <div>
+            <div
+              style={{ position: 'relative' }}
+              onMouseLeave={handleRowMouseLeave}
+            >
               <Table
                 dataSource={bookingData}
                 columns={columns}
@@ -212,7 +233,87 @@ const UserBooked: React.FC = () => {
                 tableLayout="fixed"
                 scroll={{ x: 'max-content' }}
                 className="overflow-hidden rounded-xl"
+                onRow={(record) => ({
+                  onMouseEnter: () => handleRowMouseEnter(record),
+                  style: {
+                    backgroundColor:
+                      hoveredRowId === record.id
+                        ? 'rgba(0, 0, 0, 0.15)'
+                        : 'transparent',
+                    cursor: record.status === 0 ? 'pointer' : 'default',
+                    transition: 'background-color 0.3s ease',
+                    position: 'relative',
+                  },
+                })}
               />
+              {hoveredRowId && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    pointerEvents: 'none',
+                    zIndex: 1000,
+                  }}
+                >
+                  {bookingData.map((booking, index) => {
+                    if (booking.id !== hoveredRowId) {
+                      return null;
+                    }
+
+                    const rowHeight = 47;
+                    const headerHeight = 47;
+                    const topPosition = headerHeight + index * rowHeight;
+
+                    return (
+                      <div
+                        key={booking.id}
+                        style={{
+                          position: 'absolute',
+                          top: `${topPosition}px`,
+                          left: 0,
+                          right: 0,
+                          height: `${rowHeight}px`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          pointerEvents: 'auto',
+                          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                          zIndex: 1001,
+                          overflow: 'hidden',
+                          borderRadius:
+                            index === 0
+                              ? '0'
+                              : index === bookingData.length - 1
+                                ? '0 0 12px 12px'
+                                : '0',
+                        }}
+                      >
+                        <Button
+                          type="primary"
+                          onClick={() => handleWriteReview(booking)}
+                          style={{
+                            backgroundColor: '#FECA3A',
+                            borderColor: '#FECA3A',
+                            color: '#000',
+                            fontSize: '14px',
+                            height: '30px',
+                            boxShadow: '0 4px 12px rgba(254, 202, 58, 0.4)',
+                            border: '1px solid #fff',
+                          }}
+                          onMouseEnter={(e) => {
+                            e.stopPropagation();
+                          }}
+                        >
+                          리뷰 작성하기
+                        </Button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </ConfigProvider>
         </div>
