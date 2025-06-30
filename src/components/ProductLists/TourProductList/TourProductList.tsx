@@ -1,37 +1,56 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { getTourList } from '@/services/apis/tourApis';
+import { Tour } from '@/types/models/tour';
 
 const TourProductList: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('tour');
+  const [activeTab, setActiveTab] = useState('TOUR');
+  const [tourList, setTourList] = useState<Tour[]>([]);
+
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+  };
+
+  useEffect(() => {
+    const fetchTourList = async () => {
+      const response = await getTourList(activeTab);
+      setTourList(response);
+    };
+
+    fetchTourList();
+  }, [activeTab]);
+
   return (
     <div className="my-10 flex flex-col items-center gap-10">
       <div className="flex items-center gap-30 text-lg text-gray-700">
         <span
-          onClick={() => setActiveTab('tour')}
-          className={`cursor-pointer ${activeTab === 'tour' ? 'border-b-2 font-bold' : ''}`}
+          onClick={() => handleTabClick('TOUR')}
+          className={`cursor-pointer ${activeTab === 'TOUR' ? 'border-b-2 font-bold' : ''}`}
         >
           투어 상품
         </span>
         <span
-          onClick={() => setActiveTab('ticket')}
-          className={`cursor-pointer ${activeTab === 'ticket' ? 'border-b-2 font-bold' : ''}`}
+          onClick={() => handleTabClick('TICKET')}
+          className={`cursor-pointer ${activeTab === 'TICKET' ? 'border-b-2 font-bold' : ''}`}
         >
           입장권
         </span>
       </div>
-      <div className="flex items-center gap-10">
-        <div className="flex h-80 w-70 flex-col gap-3 overflow-hidden rounded-xl">
-          <img
-            src="https://images.unsplash.com/photo-1617089268741-035d1a43fad9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8JUVCJUIyJTlBJUVBJUJEJTgzfGVufDB8fDB8fHww"
-            alt="event"
-            className="h-60 w-70 rounded-xl object-cover"
-          />
-          <div className="flex flex-col gap-2">
-            <span className="text-lg">🌸오사카 봄맞이 벚꽃 투어!</span>
-            <span className="text-sm text-gray-600">
-              2025.06.18 ~ 2025.06.20
-            </span>
+      <div className="flex w-350 flex-wrap items-center justify-center gap-10">
+        {tourList.map((tour) => (
+          <div className="flex items-center gap-5" key={tour._id}>
+            <div className="flex h-80 w-70 flex-col gap-3 overflow-hidden rounded-xl">
+              <img
+                src={tour.image[0]}
+                alt="tour"
+                className="h-60 w-70 overflow-hidden rounded-xl bg-gray-200 object-cover"
+              />
+              <div className="flex flex-col gap-2">
+                <span className="text-lg">{tour.title}</span>
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );
