@@ -8,13 +8,24 @@ const eventApi = axios.create({
 });
 
 const getEventList = async (status: string) => {
-  const response = await eventApi.get(`?status=${status}`);
-  return response.data;
+  try {
+    const response = await eventApi.get(`?status=${status}`);
+    return response.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status && error.response.status >= 500) {
+        throw new Error('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      } else if (!error.response) {
+        throw new Error('네트워크 연결을 확인해주세요.');
+      }
+
+      const message =
+        error.response?.data?.message ||
+        '상품 목록을 불러오는 중 오류가 발생했습니다.';
+      throw new Error(message);
+    }
+    throw new Error('상품 목록을 불러오는 중 오류가 발생했습니다.');
+  }
 };
 
-const getEventDetail = async (eventId: string) => {
-  const response = await eventApi.get(`/${eventId}`);
-  return response.data;
-};
-
-export { getEventDetail, getEventList };
+export { getEventList };

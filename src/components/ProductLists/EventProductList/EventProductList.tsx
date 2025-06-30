@@ -41,7 +41,7 @@ const EventProductList: React.FC = () => {
           <div className="flex items-center gap-5" key={event._id}>
             <div className="flex h-80 w-70 flex-col gap-3 overflow-hidden rounded-xl">
               <img
-                src={event.image}
+                src={event.image[0]}
                 alt="event"
                 className="h-60 w-70 overflow-hidden rounded-xl bg-gray-200 object-cover"
               />

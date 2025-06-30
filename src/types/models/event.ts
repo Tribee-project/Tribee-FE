@@ -5,6 +5,6 @@ export interface Event {
   startDate: string;
   endDate: string;
   detailContent: string;
-  detailImage: [];
+  detailImage: string[];
   status: string;
 }
