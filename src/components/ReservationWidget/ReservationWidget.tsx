@@ -1,4 +1,5 @@
 import 'dayjs/locale/ko';
+import './ReservationWidget.css';
 
 import { CreditCardOutlined, UserOutlined } from '@ant-design/icons';
 import {
@@ -230,7 +231,10 @@ const ReservationWidget = () => {
               value={personCount}
               onChange={handlePersonCountChange}
               size="large"
-              className="w-20"
+              className="custom-input-number w-20"
+              style={{
+                borderColor: '#facc15',
+              }}
             />
           </div>
           <div className="flex items-center justify-between gap-10 text-gray-800">
