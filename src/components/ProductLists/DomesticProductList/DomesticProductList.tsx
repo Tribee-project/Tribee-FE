@@ -1,14 +1,24 @@
 import 'dayjs/locale/ko';
 
-import { ConfigProvider, DatePicker, notification, Space } from 'antd';
+import {
+  ConfigProvider,
+  DatePicker,
+  DatePickerProps,
+  notification,
+  Space,
+} from 'antd';
 import locale from 'antd/locale/ko_KR';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { TRAVEL_NOTIFICATIONS } from '@/constants/travelNotifications';
-import { getProductsByArea } from '@/services/apis/productsApis';
-import type { Product } from '@/types';
+import { useProductId } from '@/hooks/useProductId';
+import { getProductsByQueryParams } from '@/services/apis/productsApis';
+import type { Product, QueryParams } from '@/types';
 
+dayjs.extend(isBetween);
 dayjs.locale('ko');
 
 const DomesticProductList: React.FC = () => {
@@ -16,7 +26,9 @@ const DomesticProductList: React.FC = () => {
     maxCount: 1,
   });
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [originalProducts, setOriginalProducts] = useState<Product[]>([]);
+  const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
+  const { navigateToProductDetail } = useProductId();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const TRAVEL_DAYS = useMemo(
     () => [
@@ -32,31 +44,71 @@ const DomesticProductList: React.FC = () => {
     [],
   );
 
-  const products = useMemo(() => {
-    if (selectedDay === null) {
-      return originalProducts;
-    }
-    return originalProducts.filter(
-      (product) => product.travelDays === selectedDay,
-    );
-  }, [originalProducts, selectedDay]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const productList = await getProductsByArea('DOMESTIC_AREA');
-      setOriginalProducts(productList);
-    };
-
-    fetchProducts();
-  }, []);
-
   const openNotification = useCallback(() => {
     api.info(TRAVEL_NOTIFICATIONS.DOMESTIC);
   }, [api]);
 
-  const handleDayClick = useCallback((day: number) => {
-    setSelectedDay((prevSelectedDay) => (prevSelectedDay === day ? null : day));
+  const handleDayClick = useCallback(
+    (day: number) => {
+      const newSelectedDay = selectedDay === day ? null : day;
+      setSelectedDay(newSelectedDay);
+      if (newSelectedDay) {
+        searchParams.set('travelDays', newSelectedDay.toString());
+      } else {
+        searchParams.delete('travelDays');
+      }
+      setSearchParams(searchParams);
+    },
+    [selectedDay, searchParams, setSearchParams],
+  );
+
+  const handleMonthChange: DatePickerProps['onChange'] = useCallback(
+    (date: Dayjs | null) => {
+      if (date) {
+        searchParams.set('startDate', date.format('YYYY-MM'));
+      } else {
+        searchParams.delete('startDate');
+      }
+      setSearchParams(searchParams);
+    },
+    [searchParams, setSearchParams],
+  );
+
+  const handleProductClick = useCallback(
+    (productId: string) => {
+      navigateToProductDetail(productId);
+    },
+    [navigateToProductDetail],
+  );
+
+  const disabledDate = useCallback((current: Dayjs) => {
+    return current && current.isBefore(dayjs(), 'month');
   }, []);
+
+  useEffect(() => {
+    const travelDays = Number(searchParams.get('travelDays'));
+    const startDate = searchParams.get('startDate');
+
+    const fetchProducts = async () => {
+      const queryParams: QueryParams = {
+        area: 'DOMESTIC_AREA',
+        params: {},
+      };
+
+      if (travelDays && !isNaN(travelDays)) {
+        queryParams.params.travelDays = travelDays;
+      }
+
+      if (startDate && dayjs(startDate).isValid()) {
+        queryParams.params.startDate = dayjs(startDate).format('YYYY-MM');
+      }
+
+      const productList = await getProductsByQueryParams(queryParams);
+      setCurrentProducts(productList);
+    };
+
+    fetchProducts();
+  }, [searchParams]);
 
   return (
     <div className="mt-10 mb-10 flex justify-center gap-15">
@@ -88,13 +140,18 @@ const DomesticProductList: React.FC = () => {
                   colorBorder: '#FECA3A',
                   hoverBorderColor: '#FECA3A',
                   activeBorderColor: '#FECA3A',
+                  colorPrimary: '#FECA3A',
+                  colorPrimaryHover: '#FED047',
+                  colorPrimaryActive: '#FEB800',
+                  colorTextLightSolid: '#000000',
                 },
               },
             }}
           >
             <Space direction="vertical" style={{ width: '100%' }}>
               <DatePicker
-                onChange={() => {}}
+                onChange={handleMonthChange}
+                disabledDate={disabledDate}
                 picker="month"
                 placeholder="출발 월"
                 size="middle"
@@ -104,19 +161,20 @@ const DomesticProductList: React.FC = () => {
           </ConfigProvider>
         </div>
       </div>
-      <div className="flex w-200 flex-col items-center gap-15">
+      <div className="flex w-200 flex-col items-center gap-10">
         <Space>
           <div
-            className="w-200 cursor-pointer rounded-md bg-gray-200 p-2 text-center"
-            onClick={() => openNotification()}
+            className="mb-8 w-200 cursor-pointer rounded-md bg-gray-200 p-2 text-center"
+            onClick={openNotification}
           >
             <p>🏔️ 국내 여행시 안내사항을 확인하세요</p>
           </div>
         </Space>
-        {products.map((product) => (
+        {currentProducts.map((product) => (
           <div
-            className="flex w-full cursor-pointer flex-col gap-5 border-1 border-gray-200 shadow-lg"
+            className="flex w-full cursor-pointer flex-col border-1 border-gray-200 shadow-lg"
             key={product._id}
+            onClick={() => handleProductClick(product._id)}
           >
             <div className="flex">
               <div className="h-50 w-50">
@@ -146,7 +204,7 @@ const DomesticProductList: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="text-lg font-bold">
+                  <div className="text-red-450 text-lg font-bold text-red-400">
                     <p>{product.standardPrice.toLocaleString()} 원 ~</p>
                   </div>
                 </div>
