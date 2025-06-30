@@ -18,6 +18,6 @@ export interface QueryParams {
   params: {
     travelDays?: number;
     startDate?: string;
-    country?: string;
+    area2?: string;
   };
 }

@@ -53,15 +53,12 @@ const AsiaProductList: React.FC = () => {
     () => [
       {
         label: '태국',
-        value: 'THAILAND',
       },
       {
         label: '베트남',
-        value: 'VIETNAM',
       },
       {
         label: '싱가포르',
-        value: 'SINGAPORE',
       },
     ],
     [],
@@ -90,9 +87,9 @@ const AsiaProductList: React.FC = () => {
       const newSelectedCountry = selectedCountry === country ? null : country;
       setSelectedCountry(newSelectedCountry);
       if (newSelectedCountry) {
-        searchParams.set('country', newSelectedCountry);
+        searchParams.set('area2', newSelectedCountry);
       } else {
-        searchParams.delete('country');
+        searchParams.delete('area2');
       }
       setSearchParams(searchParams);
     },
@@ -125,11 +122,11 @@ const AsiaProductList: React.FC = () => {
   useEffect(() => {
     const travelDays = Number(searchParams.get('travelDays'));
     const startDate = searchParams.get('startDate');
-    const country = searchParams.get('country');
+    const country = searchParams.get('area2');
 
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
-        area: 'ASIA',
+        area: 'SOUTHEAST_ASIA',
         params: {},
       };
 
@@ -142,7 +139,7 @@ const AsiaProductList: React.FC = () => {
       }
 
       if (country) {
-        queryParams.params.country = country;
+        queryParams.params.area2 = country;
       }
 
       const productList = await getProductsByQueryParams(queryParams);
@@ -161,13 +158,13 @@ const AsiaProductList: React.FC = () => {
           <div className="flex flex-wrap gap-2">
             {COUNTRIES.map((country) => (
               <button
-                key={country.value}
+                key={country.label}
                 className={`cursor-pointer rounded-md border-1 border-amber-300 px-3 py-1 text-sm ${
-                  selectedCountry === country.value
+                  selectedCountry === country.label
                     ? 'bg-amber-300'
                     : 'bg-white'
                 }`}
-                onClick={() => handleCountryClick(country.value)}
+                onClick={() => handleCountryClick(country.label)}
               >
                 {country.label}
               </button>
