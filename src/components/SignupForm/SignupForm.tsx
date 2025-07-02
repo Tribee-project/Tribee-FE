@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
-import tribeeLogo from '@/assets/Tribee.png';
+import tribeeLogo from '@/assets/Tribee.webp';
 
 import SignupEmailValidateInput from '../SignupEmailValidateInput/SignupEmailValidateInput';
 import SignupNextButton from '../SignupNextButton/SignupNextButton';

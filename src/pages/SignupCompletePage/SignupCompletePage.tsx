@@ -1,4 +1,4 @@
-import signupCongratulation from '@/assets/congrat.png';
+import signupCongratulation from '@/assets/congrat.webp';
 import SignupCompleteLoginButton from '@/components/SignupCompleteLoginButton/SignupCompleteLoginButton';
 
 const SignupCompletePage: React.FC = () => {

@@ -7,7 +7,7 @@ const SearchBar: React.FC = () => {
   return (
     <div className="flex w-full items-center">
       <img
-        src={'/src/assets/tribee.png'}
+        src={'/src/assets/Tribee.webp'}
         alt="logo"
         className="h-25 w-25 cursor-pointer"
         onClick={() => {

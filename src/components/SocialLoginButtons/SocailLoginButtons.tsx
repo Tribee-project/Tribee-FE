@@ -6,15 +6,15 @@ const SocialLoginButtons: React.FC = () => {
   const socialButtons: SocialButtonProps[] = [
     {
       name: 'naver',
-      imagePath: '/src/assets/naver.png',
+      imagePath: '/src/assets/naver.webp',
     },
     {
       name: 'kakao',
-      imagePath: '/src/assets/kakao.png',
+      imagePath: '/src/assets/kakao.webp',
     },
     {
       name: 'google',
-      imagePath: '/src/assets/google.png',
+      imagePath: '/src/assets/google.webp',
     },
   ];
 
