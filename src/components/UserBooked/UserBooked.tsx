@@ -14,8 +14,10 @@ import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { getUserBooked } from '@/services/apis/userApis';
-import type { Product, UserBooked } from '@/types';
+import { getUserBooked, getUserReviews } from '@/services/apis/userApis';
+import type { Product, Review, UserBooked } from '@/types';
+
+import ReviewWidget from '../ReviewWidget/ReviewWidget';
 
 dayjs.locale('ko');
 
@@ -23,6 +25,11 @@ const UserBooked: React.FC = () => {
   const [bookingData, setBookingData] = useState<UserBooked[]>([]);
   const [originalData, setOriginalData] = useState<UserBooked[]>([]);
   const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState<UserBooked | null>(
+    null,
+  );
+  const [myReviews, setMyReviews] = useState<Review[]>([]);
 
   const handleDateChange: DatePickerProps['onChange'] = useCallback(
     (date: dayjs.Dayjs | null) => {
@@ -43,6 +50,26 @@ const UserBooked: React.FC = () => {
       setOriginalData(data);
       setBookingData(data);
     });
+
+    const fetchReviews = async () => {
+      const reviewData = await getUserReviews();
+      setMyReviews(reviewData);
+    };
+    fetchReviews();
+  }, []);
+
+  const handleCancel = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedBooking(null);
+  }, []);
+
+  const handleReviewUpdate = useCallback(async () => {
+    try {
+      const reviewData = await getUserReviews();
+      setMyReviews(reviewData);
+    } catch (error) {
+      console.error('리뷰 데이터 업데이트 오류:', error);
+    }
   }, []);
 
   const handleRowMouseEnter = useCallback((record: UserBooked) => {
@@ -56,9 +83,8 @@ const UserBooked: React.FC = () => {
   }, []);
 
   const handleWriteReview = useCallback((booking: UserBooked) => {
-    // 리뷰 작성 로직 구현
-    console.log('리뷰 작성:', booking);
-    // TODO: 리뷰 작성 모달이나 페이지로 이동하는 로직 추가
+    setSelectedBooking(booking);
+    setIsModalOpen(true);
   }, []);
 
   const renderReservationDate = useCallback(
@@ -234,7 +260,10 @@ const UserBooked: React.FC = () => {
                 scroll={{ x: 'max-content' }}
                 className="overflow-hidden rounded-xl"
                 onRow={(record) => ({
-                  onMouseEnter: () => handleRowMouseEnter(record),
+                  onMouseEnter: (e) => {
+                    e.stopPropagation();
+                    handleRowMouseEnter(record);
+                  },
                   style: {
                     backgroundColor:
                       hoveredRowId === record.id
@@ -266,6 +295,10 @@ const UserBooked: React.FC = () => {
                     const rowHeight = 47;
                     const headerHeight = 47;
                     const topPosition = headerHeight + index * rowHeight;
+
+                    const hasExistingReview = myReviews.some(
+                      (review) => review.reservation.id === booking.id,
+                    );
 
                     return (
                       <div
@@ -307,7 +340,9 @@ const UserBooked: React.FC = () => {
                             e.stopPropagation();
                           }}
                         >
-                          리뷰 작성하기
+                          {hasExistingReview
+                            ? '리뷰 수정하기'
+                            : '리뷰 작성하기'}
                         </Button>
                       </div>
                     );
@@ -318,6 +353,15 @@ const UserBooked: React.FC = () => {
           </ConfigProvider>
         </div>
       </div>
+      {selectedBooking && (
+        <ReviewWidget
+          isModalOpen={isModalOpen}
+          booking={selectedBooking}
+          handleCancel={handleCancel}
+          myReviews={myReviews}
+          onReviewUpdate={handleReviewUpdate}
+        />
+      )}
     </div>
   );
 };

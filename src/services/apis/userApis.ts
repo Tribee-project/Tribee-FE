@@ -4,6 +4,8 @@ import type {
   EditUserNicknameRequest,
   EditUserPasswordRequest,
   ReservationRequest,
+  ReviewRequest,
+  UpdateReviewRequest,
   UserBooked,
   UserInfo,
 } from '@/types';
@@ -154,10 +156,77 @@ const createReservation = async (data: ReservationRequest): Promise<void> => {
   }
 };
 
+const createReview = async (data: ReviewRequest): Promise<void> => {
+  try {
+    await userApi.post('/review', data);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 401) {
+        throw new Error('로그인이 필요합니다.');
+      } else if (error.response?.status && error.response.status >= 500) {
+        throw new Error('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      } else if (!error.response) {
+        throw new Error('네트워크 연결을 확인해주세요.');
+      }
+
+      const message =
+        error.response?.data?.message || '리뷰 작성 중 오류가 발생했습니다.';
+      throw new Error(message);
+    }
+    throw new Error('리뷰 작성 중 오류가 발생했습니다.');
+  }
+};
+
+const getUserReviews = async () => {
+  try {
+    const response = await userApi.get('/review');
+    return response.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 401) {
+        throw new Error('로그인이 필요합니다.');
+      } else if (error.response?.status && error.response.status >= 500) {
+        throw new Error('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      } else if (!error.response) {
+        throw new Error('네트워크 연결을 확인해주세요.');
+      }
+
+      const message =
+        error.response?.data?.message ||
+        '리뷰 내역을 불러오는 중 오류가 발생했습니다.';
+      throw new Error(message);
+    }
+  }
+};
+
+const updateReview = async (data: UpdateReviewRequest): Promise<void> => {
+  try {
+    await userApi.put(`/review/${data.reviewId}`, { content: data.content });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 401) {
+        throw new Error('로그인이 필요합니다.');
+      } else if (error.response?.status && error.response.status >= 500) {
+        throw new Error('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      } else if (!error.response) {
+        throw new Error('네트워크 연결을 확인해주세요.');
+      }
+
+      const message =
+        error.response?.data?.message || '리뷰 수정 중 오류가 발생했습니다.';
+      throw new Error(message);
+    }
+    throw new Error('리뷰 수정 중 오류가 발생했습니다.');
+  }
+};
+
 export {
   createReservation,
+  createReview,
   editUserNickname,
   editUserPassword,
   getUserBooked,
   getUserInfo,
+  getUserReviews,
+  updateReview,
 };
