@@ -95,8 +95,10 @@ const WorkshopProductList: React.FC = () => {
 
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
-        area: 'WORKSHOP',
-        params: {},
+        area: null,
+        params: {
+          category: 'WORKSHOP',
+        },
       };
 
       if (travelDays && !isNaN(travelDays)) {

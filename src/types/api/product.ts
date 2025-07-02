@@ -14,10 +14,11 @@ export interface ProductsByAreaParams {
 }
 
 export interface QueryParams {
-  area: string;
+  area: string | null;
   params: {
     travelDays?: number;
     startDate?: string;
     area2?: string;
+    category?: string;
   };
 }

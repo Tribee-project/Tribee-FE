@@ -95,7 +95,7 @@ const ChinaProductList: React.FC = () => {
 
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
-        area: 'CHINA',
+        area: 'GREATER_CHINA',
         params: {},
       };
 

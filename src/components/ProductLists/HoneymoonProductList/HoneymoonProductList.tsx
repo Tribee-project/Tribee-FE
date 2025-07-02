@@ -95,8 +95,10 @@ const HoneymoonProductList: React.FC = () => {
 
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
-        area: 'HONEYMOON',
-        params: {},
+        area: null,
+        params: {
+          category: 'HONEYMOON',
+        },
       };
 
       if (travelDays && !isNaN(travelDays)) {

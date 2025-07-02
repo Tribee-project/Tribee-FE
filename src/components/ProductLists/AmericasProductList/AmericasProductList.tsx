@@ -95,7 +95,7 @@ const AmericasProductList: React.FC = () => {
 
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
-        area: 'AMERICAS',
+        area: 'GUAM_SAIPAN',
         params: {},
       };
 

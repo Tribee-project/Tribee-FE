@@ -108,7 +108,7 @@ const ProductDetail: React.FC = () => {
         <div className="flex gap-2">
           <p className="text-gray-600">후기</p>
           <div className="flex">
-            <p>100</p>
+            <p>{reviews.length}</p>
             <p className="text-gray-600">건</p>
           </div>
         </div>

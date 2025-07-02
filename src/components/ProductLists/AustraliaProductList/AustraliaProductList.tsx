@@ -95,7 +95,7 @@ const AustraliaProductList: React.FC = () => {
 
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
-        area: 'AUSTRALIA',
+        area: 'AUSTRALIA_NEWZEALAND',
         params: {},
       };
 
