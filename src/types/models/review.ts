@@ -3,6 +3,7 @@ export interface Review {
   createdAt: string;
   id: string;
   prodId: string;
+  nickname: string;
   productTitle: string;
   reservation: {
     category: string;
@@ -17,5 +18,4 @@ export interface Review {
     userId: string;
   };
   updatedAt: string;
-  userId: string;
 }
