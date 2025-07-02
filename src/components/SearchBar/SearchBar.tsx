@@ -9,7 +9,7 @@ const SearchBar: React.FC = () => {
       <img
         src={'/src/assets/tribee.png'}
         alt="logo"
-        className="w-25 cursor-pointer"
+        className="h-25 w-25 cursor-pointer"
         onClick={() => {
           navigate('/');
         }}
