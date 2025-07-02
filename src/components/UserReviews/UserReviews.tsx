@@ -54,7 +54,7 @@ const UserReviews: React.FC = () => {
         title: '상품명',
         dataIndex: 'productTitle',
         key: 'productTitle',
-        width: 150,
+        width: 100,
         align: 'center' as const,
         ellipsis: true,
         render: (productTitle: string) => productTitle,
@@ -118,7 +118,7 @@ const UserReviews: React.FC = () => {
                 pagination={false}
                 size="middle"
                 tableLayout="fixed"
-                scroll={{ x: 'max-content' }}
+                scroll={{ x: 800 }}
                 className="overflow-hidden rounded-xl"
               />
             </div>
