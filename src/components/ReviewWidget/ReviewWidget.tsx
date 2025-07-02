@@ -154,7 +154,7 @@ const ReviewWidget = ({
 
           {existingReview && (
             <>
-              <div className="mb-3">
+              <div className="mt-4 mb-1">
                 <span className="text-sm font-medium text-gray-700">
                   기존 리뷰 (작성일:{' '}
                   {dayjs(existingReview.createdAt).format('YYYY-MM-DD HH:mm')})
@@ -169,7 +169,7 @@ const ReviewWidget = ({
             </>
           )}
 
-          <div className="mb-3">
+          <div className="mb-1">
             <span className="text-sm font-medium text-gray-700">
               {existingReview ? '리뷰 수정' : '리뷰 작성'}
             </span>

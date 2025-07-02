@@ -31,8 +31,6 @@ const UserReviews: React.FC = () => {
     fetchReviews();
   }, []);
 
-  console.log(reviewsData);
-
   const columns = useMemo(
     () => [
       {
