@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
+
 const tourApi = axios.create({
-  baseURL: 'https://tribee-be.onrender.com/api/v1/tour-ticket',
+  baseURL: `${baseURL}/api/v1/tour-ticket`,
   headers: {
     'ngrok-skip-browser-warning': '69420',
   },

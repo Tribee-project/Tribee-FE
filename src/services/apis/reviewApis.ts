@@ -2,8 +2,10 @@ import axios from 'axios';
 
 import type { Review } from '@/types';
 
+const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
+
 const reviewApi = axios.create({
-  baseURL: 'https://tribee-be.onrender.com/api/v1/review',
+  baseURL: `${baseURL}/api/v1/review`,
 });
 
 const getProductReviews = async (id: string): Promise<Review[]> => {

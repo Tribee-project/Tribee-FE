@@ -2,8 +2,10 @@ import axios from 'axios';
 
 import type { Product, QueryParams } from '@/types';
 
+const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
+
 const productsApi = axios.create({
-  baseURL: 'https://tribee-be.onrender.com/api/v1/product',
+  baseURL: `${baseURL}/api/v1/product`,
   headers: {
     'ngrok-skip-browser-warning': '69420',
   },

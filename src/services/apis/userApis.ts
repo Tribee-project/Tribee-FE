@@ -10,8 +10,10 @@ import type {
   UserInfo,
 } from '@/types';
 
+const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
+
 const userApi = axios.create({
-  baseURL: 'https://tribee-be.onrender.com/api/v1',
+  baseURL: `${baseURL}/api/v1`,
   headers: {
     'ngrok-skip-browser-warning': '69420',
   },

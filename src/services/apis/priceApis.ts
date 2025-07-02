@@ -2,8 +2,10 @@ import axios from 'axios';
 
 import type { DynamicPrice } from '@/types';
 
+const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
+
 const priceApi = axios.create({
-  baseURL: 'https://tribee-be.onrender.com/api/v1/price',
+  baseURL: `${baseURL}/api/v1/price`,
   headers: {
     'ngrok-skip-browser-warning': '69420',
   },
