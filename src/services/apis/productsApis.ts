@@ -5,7 +5,7 @@ import type { Product, QueryParams } from '@/types';
 const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
 
 const productsApi = axios.create({
-  baseURL: `${baseURL}/api/v1/product`,
+  baseURL: `${baseURL}/product`,
   headers: {
     'ngrok-skip-browser-warning': '69420',
   },

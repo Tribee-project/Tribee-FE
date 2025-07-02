@@ -13,7 +13,7 @@ import type {
 const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
 
 const userApi = axios.create({
-  baseURL: `${baseURL}/api/v1`,
+  baseURL: `${baseURL}`,
   headers: {
     'ngrok-skip-browser-warning': '69420',
   },
@@ -203,7 +203,10 @@ const getUserReviews = async () => {
 
 const updateReview = async (data: UpdateReviewRequest): Promise<void> => {
   try {
-    await userApi.put(`/review/${data.reviewId}`, { content: data.content });
+    await userApi.put(`/review`, {
+      content: data.content,
+      reviewId: data.reviewId,
+    });
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 401) {

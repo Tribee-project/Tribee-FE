@@ -5,7 +5,7 @@ import type { LoginData, SignUpData } from '@/types';
 const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
 
 const authApi = axios.create({
-  baseURL: `${baseURL}/api/v1/auth`,
+  baseURL: `${baseURL}/auth`,
   headers: {
     'Content-Type': 'application/json',
     'ngrok-skip-browser-warning': '69420',

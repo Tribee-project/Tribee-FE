@@ -5,7 +5,7 @@ import type { Review } from '@/types';
 const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
 
 const reviewApi = axios.create({
-  baseURL: `${baseURL}/api/v1/review`,
+  baseURL: `${baseURL}/review`,
 });
 
 const getProductReviews = async (id: string): Promise<Review[]> => {

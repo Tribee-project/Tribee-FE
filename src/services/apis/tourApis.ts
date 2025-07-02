@@ -3,7 +3,7 @@ import axios from 'axios';
 const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
 
 const tourApi = axios.create({
-  baseURL: `${baseURL}/api/v1/tour-ticket`,
+  baseURL: `${baseURL}/tour-ticket`,
   headers: {
     'ngrok-skip-browser-warning': '69420',
   },

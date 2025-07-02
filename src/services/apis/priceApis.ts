@@ -5,7 +5,7 @@ import type { DynamicPrice } from '@/types';
 const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
 
 const priceApi = axios.create({
-  baseURL: `${baseURL}/api/v1/price`,
+  baseURL: `${baseURL}/price`,
   headers: {
     'ngrok-skip-browser-warning': '69420',
   },

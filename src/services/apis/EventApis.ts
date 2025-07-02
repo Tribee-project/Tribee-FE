@@ -3,7 +3,7 @@ import axios from 'axios';
 const baseURL = import.meta.env.VITE_SERVER_API_BASEURL;
 
 const eventApi = axios.create({
-  baseURL: `${baseURL}/api/v1/event`,
+  baseURL: `${baseURL}/event`,
   headers: {
     'ngrok-skip-browser-warning': '69420',
   },
