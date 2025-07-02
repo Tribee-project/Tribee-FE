@@ -10,71 +10,74 @@ import {
 } from 'antd';
 import locale from 'antd/locale/ko_KR';
 import dayjs from 'dayjs';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-import { Product } from '@/types';
+import { getUserReviews } from '@/services/apis/userApis';
+import { Review } from '@/types';
+import { Reservation } from '@/types/models/reservation';
 
 dayjs.locale('ko');
-
-const reviewsData = [
-  {
-    id: '1',
-    reservationDate: '2024-01-01',
-    product: {
-      title: '오사카 여행',
-    },
-    review: '오사카 여행 후기 입니다~',
-    departureDate: '2024-04-01',
-  },
-];
 
 const handleDateChange: DatePickerProps['onChange'] = () => {};
 
 const UserReviews: React.FC = () => {
+  const [reviewsData, setReviewsData] = useState<Review[]>([]);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const reviews = await getUserReviews();
+      setReviewsData(reviews);
+    };
+    fetchReviews();
+  }, []);
+
+  console.log(reviewsData);
+
   const columns = useMemo(
     () => [
       {
         title: '작성 날짜',
-        dataIndex: 'reservationDate',
-        key: 'reservationDate',
+        dataIndex: 'createdAt',
+        key: 'createdAt',
         width: 30,
         align: 'center' as const,
-        render: (reservationDate: string) =>
-          dayjs(reservationDate).format('YYYY-MM-DD'),
+        render: (createdAt: string) => dayjs(createdAt).format('YYYY-MM-DD'),
       },
       {
         title: '예약 코드',
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'reservation',
+        key: 'reservation',
         width: 30,
         align: 'center' as const,
-        render: (id: string) => id.split('-')[0].toUpperCase(),
+        render: (reservation: Reservation) =>
+          reservation.id.split('-')[0].toUpperCase(),
       },
       {
         title: '상품명',
-        dataIndex: 'product',
-        key: 'product',
+        dataIndex: 'productTitle',
+        key: 'productTitle',
         width: 150,
         align: 'center' as const,
         ellipsis: true,
-        render: (product: Product) => product.title,
+        render: (productTitle: string) => productTitle,
       },
       {
         title: '후기',
-        dataIndex: 'review',
-        key: 'review',
+        dataIndex: 'content',
+        key: 'content',
         width: 250,
         align: 'center' as const,
         ellipsis: true,
+        render: (content: string) => content,
       },
       {
         title: '출국일',
-        dataIndex: 'departureDate',
-        key: 'departureDate',
+        dataIndex: 'reservation',
+        key: 'reservation',
         width: 50,
         align: 'center' as const,
-        render: (departureDate: string) =>
-          dayjs(departureDate).format('YYYY-MM-DD'),
+        render: (reservation: Reservation) =>
+          dayjs(reservation.departureDate).format('YYYY-MM-DD'),
       },
     ],
     [],

@@ -33,16 +33,16 @@ const AustraliaProductList: React.FC = () => {
   const TRAVEL_DAYS = useMemo(
     () => [
       {
-        label: '7일',
-        value: 7,
-      },
-      {
         label: '10일',
         value: 10,
       },
       {
-        label: '14일',
-        value: 14,
+        label: '11일',
+        value: 11,
+      },
+      {
+        label: '12일',
+        value: 12,
       },
     ],
     [],
@@ -96,7 +96,7 @@ const AustraliaProductList: React.FC = () => {
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
         area: 'AUSTRALIA_NEWZEALAND',
-        params: {},
+        params: { category: 'INTERNATIONAL' },
       };
 
       if (travelDays && !isNaN(travelDays)) {

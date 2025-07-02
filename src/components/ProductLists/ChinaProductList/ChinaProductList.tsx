@@ -33,16 +33,16 @@ const ChinaProductList: React.FC = () => {
   const TRAVEL_DAYS = useMemo(
     () => [
       {
+        label: '3일',
+        value: 3,
+      },
+      {
         label: '4일',
         value: 4,
       },
       {
         label: '5일',
         value: 5,
-      },
-      {
-        label: '7일',
-        value: 7,
       },
     ],
     [],
@@ -96,7 +96,7 @@ const ChinaProductList: React.FC = () => {
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
         area: 'GREATER_CHINA',
-        params: {},
+        params: { category: 'INTERNATIONAL' },
       };
 
       if (travelDays && !isNaN(travelDays)) {

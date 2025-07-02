@@ -33,16 +33,20 @@ const UsProductList: React.FC = () => {
   const TRAVEL_DAYS = useMemo(
     () => [
       {
-        label: '7일',
-        value: 7,
+        label: '12일',
+        value: 12,
       },
       {
-        label: '10일',
-        value: 10,
+        label: '13일',
+        value: 13,
       },
       {
         label: '14일',
         value: 14,
+      },
+      {
+        label: '15일',
+        value: 15,
       },
     ],
     [],
@@ -96,7 +100,7 @@ const UsProductList: React.FC = () => {
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
         area: 'AMERICAS_HAWAII_CANADA',
-        params: {},
+        params: { category: 'INTERNATIONAL' },
       };
 
       if (travelDays && !isNaN(travelDays)) {

@@ -92,7 +92,7 @@ const DomesticProductList: React.FC = () => {
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
         area: 'DOMESTIC_AREA',
-        params: {},
+        params: { category: 'DOMESTIC' },
       };
 
       if (travelDays && !isNaN(travelDays)) {

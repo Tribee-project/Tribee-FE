@@ -33,10 +33,6 @@ const AmericasProductList: React.FC = () => {
   const TRAVEL_DAYS = useMemo(
     () => [
       {
-        label: '3일',
-        value: 3,
-      },
-      {
         label: '4일',
         value: 4,
       },
@@ -96,7 +92,7 @@ const AmericasProductList: React.FC = () => {
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
         area: 'GUAM_SAIPAN',
-        params: {},
+        params: { category: 'INTERNATIONAL' },
       };
 
       if (travelDays && !isNaN(travelDays)) {

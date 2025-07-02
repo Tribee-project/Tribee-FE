@@ -96,7 +96,7 @@ const JapanProductList: React.FC = () => {
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
         area: 'JAPAN',
-        params: {},
+        params: { category: 'INTERNATIONAL' },
       };
 
       if (travelDays && !isNaN(travelDays)) {

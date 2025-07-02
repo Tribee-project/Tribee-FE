@@ -34,16 +34,12 @@ const AsiaProductList: React.FC = () => {
   const TRAVEL_DAYS = useMemo(
     () => [
       {
+        label: '4일',
+        value: 4,
+      },
+      {
         label: '5일',
         value: 5,
-      },
-      {
-        label: '7일',
-        value: 7,
-      },
-      {
-        label: '10일',
-        value: 10,
       },
     ],
     [],
@@ -127,7 +123,7 @@ const AsiaProductList: React.FC = () => {
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
         area: 'SOUTHEAST_ASIA',
-        params: {},
+        params: { category: 'INTERNATIONAL' },
       };
 
       if (travelDays && !isNaN(travelDays)) {

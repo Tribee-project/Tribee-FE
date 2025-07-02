@@ -96,7 +96,7 @@ const JejuProductList: React.FC = () => {
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
         area: 'JEJU',
-        params: {},
+        params: { category: 'DOMESTIC' },
       };
 
       if (travelDays && !isNaN(travelDays)) {

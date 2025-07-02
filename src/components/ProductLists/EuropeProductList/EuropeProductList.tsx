@@ -33,12 +33,12 @@ const EuropeProductList: React.FC = () => {
   const TRAVEL_DAYS = useMemo(
     () => [
       {
-        label: '8일',
-        value: 8,
-      },
-      {
         label: '10일',
         value: 10,
+      },
+      {
+        label: '11일',
+        value: 11,
       },
       {
         label: '12일',
@@ -96,7 +96,7 @@ const EuropeProductList: React.FC = () => {
     const fetchProducts = async () => {
       const queryParams: QueryParams = {
         area: 'EUROPE',
-        params: {},
+        params: { category: 'INTERNATIONAL' },
       };
 
       if (travelDays && !isNaN(travelDays)) {
