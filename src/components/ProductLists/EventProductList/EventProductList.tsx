@@ -36,22 +36,23 @@ const EventProductList: React.FC = () => {
           종료된 이벤트
         </span>
       </div>
-      <div className="flex w-350 flex-wrap items-center justify-center gap-10">
+      <div className="flex w-350 flex-wrap justify-start gap-10">
         {eventList.map((event) => (
-          <div className="flex items-center gap-5" key={event._id}>
-            <div className="flex h-80 w-70 flex-col gap-3 overflow-hidden rounded-xl">
-              <img
-                src={event.image}
-                alt="event"
-                className="h-60 w-70 overflow-hidden rounded-xl bg-gray-200 object-cover"
-              />
-              <div className="flex flex-col gap-2">
-                <span className="text-lg">{event.title}</span>
-                <span className="text-sm text-gray-600">
-                  {new Date(event.startDate).toLocaleDateString()} ~{' '}
-                  {new Date(event.endDate).toLocaleDateString()}
-                </span>
-              </div>
+          <div
+            className="flex h-80 w-70 flex-col gap-3 overflow-hidden rounded-xl"
+            key={event._id}
+          >
+            <img
+              src={event.image}
+              alt="event"
+              className="h-60 w-70 overflow-hidden rounded-xl bg-gray-200 object-cover"
+            />
+            <div className="flex flex-col gap-2">
+              <span className="text-lg">{event.title}</span>
+              <span className="text-sm text-gray-600">
+                {new Date(event.startDate).toLocaleDateString()} ~{' '}
+                {new Date(event.endDate).toLocaleDateString()}
+              </span>
             </div>
           </div>
         ))}

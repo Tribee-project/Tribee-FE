@@ -36,18 +36,19 @@ const TourProductList: React.FC = () => {
           입장권
         </span>
       </div>
-      <div className="flex w-350 flex-wrap items-center justify-center gap-10">
+      <div className="flex w-350 flex-wrap justify-start gap-10">
         {tourList.map((tour) => (
-          <div className="flex items-center gap-5" key={tour._id}>
-            <div className="flex h-80 w-70 flex-col gap-3 overflow-hidden rounded-xl">
-              <img
-                src={tour.image[0]}
-                alt="tour"
-                className="h-60 w-70 overflow-hidden rounded-xl bg-gray-200 object-cover"
-              />
-              <div className="flex flex-col gap-2">
-                <span className="text-lg">{tour.title}</span>
-              </div>
+          <div
+            className="flex h-80 w-70 flex-col gap-3 overflow-hidden rounded-xl"
+            key={tour._id}
+          >
+            <img
+              src={tour.image[0]}
+              alt="tour"
+              className="h-60 w-70 overflow-hidden rounded-xl bg-gray-200 object-cover"
+            />
+            <div className="flex flex-col gap-2">
+              <span className="text-lg">{tour.title}</span>
             </div>
           </div>
         ))}
