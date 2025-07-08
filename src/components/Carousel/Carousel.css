@@ -4,6 +4,8 @@
   position: relative;
 }
 .embla__container {
+  margin-top: 40px;
+  margin-bottom: 40px;
   display: flex;
   backface-visibility: hidden;
 }
@@ -13,7 +15,6 @@
   max-width: 400px;
   padding-left: 30px;
   position: relative;
-  overflow: hidden;
 }
 
 .embla__slide img {
@@ -22,7 +23,6 @@
   width: 100%;
   object-fit: cover;
   border-radius: 20px;
-  overflow: hidden;
 }
 
 .embla__slide__title {
