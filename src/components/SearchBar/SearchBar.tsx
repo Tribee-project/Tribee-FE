@@ -1,8 +1,26 @@
 import { SearchOutlined } from '@ant-design/icons';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SearchBar: React.FC = () => {
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleSearchValue = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchValue(e.target.value);
+    },
+    [],
+  );
+
+  const handleSearch = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter' && searchValue.length > 0) {
+        navigate(`/search?q=${searchValue}`);
+      }
+    },
+    [searchValue, navigate],
+  );
 
   return (
     <div className="flex w-full items-center">
@@ -20,6 +38,8 @@ const SearchBar: React.FC = () => {
           placeholder="✈️ 어디로 떠나볼까요?"
           className="w-[87%] border-none outline-none"
           maxLength={30}
+          onChange={handleSearchValue}
+          onKeyDown={handleSearch}
         />
         <SearchOutlined style={{ color: '#FCD34D' }} className="text-2xl" />
       </div>

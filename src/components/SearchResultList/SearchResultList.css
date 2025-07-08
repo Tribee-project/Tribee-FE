@@ -38,6 +38,7 @@
   background: white;
   clip-path: polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%);
   z-index: -1;
+  transition: background 0.3s ease;
 }
 
 .hexagon-button:hover {
@@ -52,4 +53,15 @@
 
 .hexagon-button:active {
   transform: scale(0.95);
+}
+
+/* 선택된 상태 스타일 */
+.hexagon-button.selected {
+  color: white;
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+}
+
+.hexagon-button.selected::after {
+  background: #f59e0b;
 }
